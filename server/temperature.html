@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Temperature Data</title>
+
+</head>
+
+<body>
+
+<h1>Temperature Data</h1>
+
+<div id="temperatureData"></div>
+
+  
+
+<script>
+
+// JavaScript to fetch and display temperature data
+
+fetch('/seeTemperature')
+
+.then(response => response.json())
+
+.then(data => {
+
+document.getElementById('temperatureData').innerText = JSON.stringify(data);
+
+})
+
+.catch(error => console.error('Error fetching temperature data:', error));
+
+</script>
+
+</body>
+
+</html>
