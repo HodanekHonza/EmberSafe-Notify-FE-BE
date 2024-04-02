@@ -1,45 +1,39 @@
-
 const express = require("express");
 const cors = require("cors");
 
-const videoRouter = require("./controller/video-controller");
-const favoriteVideoRouter = require("./controller/favorite-video-controller");
-const topicsRouter = require("./controller/topics-controller");
-//const { addAbortSignal } = require("stream");
-
-
-
-const express = require('express');
 const app = express();
+const port = process.env.PORT || 3000;
 
-const port = process.env.PORT || 8000;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-
-app.use(express.json()); 
-app.use(express.urlencoded({ extended: true })); 
-
-app.use(cors())
-
+let temperatureData = null; // Variable to store temperature data
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-app.use("/room", roomRouter);
-app.use("/notifications", favoriteVideoRouter);
-//app.use("/", topicsRouter);
+app.post('/postTemperature', (req, res) => {
+    // Assuming you receive temperature data in the request body
+    temperatureData = req.body.temp;
+    console.log("Received temperature data:", temperatureData);
+    res.send("Temperature data received successfully!");
+});
 
+app.get('/seeTemperature', (req, res) => {
+    if (temperatureData !== null) {
+        res.json({ temp: temperatureData });
+    } else {
+        res.status(404).send("No temperature data available.");
+    }
+});
 
-
-
-//
-
-
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+// Serve the temperature.html file
+app.get('/temperature.html', (req, res) => {
+  res.sendFile(__dirname + '/temperature.html');
 });
 
 app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+    console.log(`Server listening at http://localhost:${port}`);
 });
