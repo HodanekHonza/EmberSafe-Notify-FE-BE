@@ -1,10 +1,10 @@
 const path = require("path");
 const Ajv = require("ajv").default;
-const RoomDao = require("../../dao/video-dao");
-let dao = new VideoDao(
+const RoomDao = require("../../dao/room-dao");
+let dao = new RoomDao(
     path.join(__dirname, "..", "..", "storage", "room.json")
 );
-//change schema 
+
 let schema = {
     type: "object",
     properties: {
@@ -25,7 +25,7 @@ async function CreateAbl(req, res) {
         const valid = ajv.validate(schema, req.body);
         if (valid) {
             let video = req.body;
-            video = await dao.createVideo(video);
+            video = await dao.createRoom(video);
             res.json(video);
         } else {
             res.status(400).send({
@@ -35,7 +35,7 @@ async function CreateAbl(req, res) {
             });
         }
     } catch (e) {
-        if (e.includes("Video with name ")) {
+        if (e.includes("Room with name ")) {
             res.status(400).send({ errorMessage: e, params: req.body });
         } else {
             res.status(500).send(e);
