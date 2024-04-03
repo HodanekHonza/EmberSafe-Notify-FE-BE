@@ -11,31 +11,91 @@ const DEFAULT_STORAGE_PATH = path.join(__dirname, "storage", "rooms.json");
 
 class RoomDao {
   constructor(storagePath) {
-    this.videoStoragePath = storagePath ? storagePath : DEFAULT_STORAGE_PATH;
+    this.roomStoragePath = storagePath ? storagePath : DEFAULT_STORAGE_PATH;
   }
 
   async createRoom(room) {
-    
-}
+    let roomList = await this._loadAllRooms();
+    const currentRoom = roomList.find(
+      (item) => item.name === room.name
+    );
+
+    if (currentRoom) {
+      throw `Room with name ${room.name} already exists in db`;
+    }
+    // move this to abl
+    room.id = crypto.randomBytes(8).toString("hex");
 
 
-  async getRoom(id) {
+    roomList.push(room);
+
+    await wf(this._getStorageLocation(), JSON.stringify(roomList, null, 2));
+
+    return room;
+  }
+
+
+  async getVideo(id) {
+    let videolist = await this._loadAllRooms();
+    const result = videolist.find((video) => video.id === id);
+    return result;
   }
 
   async updateRoom(room) {
+    let roomlist = await this._loadAllRooms();
+    const roomIndex = roomlist.findIndex((b) => b.id === room.id);
+    if (roomIndex < 0) {
+      throw new Error(`Room with given id ${room.id} does not exists`);
+    } else {
+      roomlist[roomIndex] = {
+        ...roomlist[roomIndex],
+        ...room,
+      };
+    }
+    await wf(this._getStorageLocation(), JSON.stringify(roomlist, null, 2));
+    return roomlist[roomIndex];
   }
 
   async deleteRoom(id) {
-  }
-  
-// mabye not needed 
-  async listRooms() {
+    let roomList = await this._loadAllRooms();
+
+    const roomIndex = roomList.findIndex((b) => b.id === id);
+
+    if (roomIndex >= 0) {
+      roomList.splice(roomIndex, 1);
+    } else {
+      console.log("Room not found, cannot deleting.");
+    }
+    await wf(this._getStorageLocation(), JSON.stringify(roomList, null, 2));
+    return {};
   }
 
-  async _loadAllVideos() {
+
+  async listRooms() {
+    let roomlist = await this._loadAllRooms();
+    return roomlist;
+  }
+
+  async _loadAllRooms() {
+    let roomlist;
+    try {
+      roomlist = JSON.parse(await rf(this._getStorageLocation()));
+    } catch (e) {
+      if (e.code === "ENOENT") {
+        console.info("No storage found, initializing new one...");
+        roomlist = [];
+      } else {
+        throw new Error(
+          "Unable to read from storage. Wrong data format. " +
+          this._getStorageLocation()
+        );
+      }
+    }
+    return roomlist;
   }
 
   _getStorageLocation() {
+    return this.roomStoragePath;
   }
 }
 
