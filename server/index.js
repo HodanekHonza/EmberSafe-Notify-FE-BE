@@ -1,5 +1,13 @@
 const express = require("express");
 const cors = require("cors");
+const roomRouter = require("./controller/room-controller");
+//const favoriteVideoRouter = require("./controller/favorite-video-controller");
+//const topicsRouter = require("./controller/topics-controller");
+
+
+
+
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -7,7 +15,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-
+app.use("/room", roomRouter);
 let temperatureData = null;
 let temperatureTimeStamp = null;
 app.get("/", (req, res) => {

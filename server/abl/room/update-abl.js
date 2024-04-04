@@ -1,6 +1,6 @@
 const path = require("path");
 const Ajv = require("ajv").default;
-const VideoDao = require("../../dao/video-dao");
+const VideoDao = require("../../dao/room-dao");
 let dao = new VideoDao(
     path.join(__dirname, "..", "..", "storage", "videos.json")
 );
@@ -8,17 +8,50 @@ let dao = new VideoDao(
 let schema = {
     type: "object",
     properties: {
-        url: { type: "string" },
-        name: { type: "string" },
-        creator: { type: "string" },
-        length: { type: "number" },
-        dateofcreation: { type: "date" },
-        topic: { type: "string" },
-        description: { type: "string" },
+        idOfDevice: { type: "string" },
+        lastKnownTemperature: { type: "number" },
+        thresholds: {
+            type: "object",
+            properties: {
+                thresholdCold: {
+                    type: "object",
+                    properties: {
+                        low: { type: "number" },
+                        high: { type: "number" }
+                    },
+                    required: ["low", "high"]
+                },
+                thresholdNormal: {
+                    type: "object",
+                    properties: {
+                        low: { type: "number" },
+                        high: { type: "number" }
+                    },
+                    required: ["low", "high"]
+                },
+                thresholdHot: {
+                    type: "object",
+                    properties: {
+                        low: { type: "number" },
+                        high: { type: "number" }
+                    },
+                    required: ["low", "high"]
+                },
+                thresholdDanger: {
+                    type: "object",
+                    properties: {
+                        low: { type: "number" },
+                        high: { type: "number" }
+                    },
+                    required: ["low", "high"]
+                }
+            },
+            required: ["thresholdCold", "thresholdNormal", "thresholdHot", "thresholdDanger"]
+        },
+        typeOfRoom: { type: "string" }
     },
-    required: ["name", "url"],
+    required: ["idOfDevice", "lastKnownTemperature", "thresholds", "typeOfRoom"]
 };
-
 
 async function UpdateAbl(req, res) {
     try {
@@ -26,7 +59,7 @@ async function UpdateAbl(req, res) {
         let video = req.body;
         const valid = ajv.validate(schema, video);
         if (valid) {
-            video = await dao.updateVideo(video);
+            video = await dao.updateRoom(video);
             res.json(video);
         } else {
             res.status(400).send({

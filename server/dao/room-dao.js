@@ -17,7 +17,7 @@ class RoomDao {
   async createRoom(room) {
     let roomList = await this._loadAllRooms();
     const currentRoom = roomList.find(
-      (item) => item.name === room.name
+      (item) => item.idOfRoom === room.idOfRoom
     );
 
     if (currentRoom) {
@@ -26,7 +26,6 @@ class RoomDao {
     // move this to abl
     room.id = crypto.randomBytes(8).toString("hex");
 
-
     roomList.push(room);
 
     await wf(this._getStorageLocation(), JSON.stringify(roomList, null, 2));
@@ -34,18 +33,17 @@ class RoomDao {
     return room;
   }
 
-
   async getRoom(id) {
     const roomlist = await this._loadAllRooms();
-    const result = roomlist.find((video) => video.id === id);
+    const result = roomlist.find((video) => video.idOfRoom === id);
     return result;
   }
 
   async updateRoom(room) {
     let roomlist = await this._loadAllRooms();
-    const roomIndex = roomlist.findIndex((b) => b.id === room.id);
+    const roomIndex = roomlist.findIndex((b) => b.idOfRoom === room.idOfRoom);
     if (roomIndex < 0) {
-      throw new Error(`Room with given id ${room.id} does not exists`);
+      throw new Error(`Room with given id ${room.idOfRoom} does not exists`);
     } else {
       roomlist[roomIndex] = {
         ...roomlist[roomIndex],
@@ -59,7 +57,7 @@ class RoomDao {
   async deleteRoom(id) {
     let roomList = await this._loadAllRooms();
 
-    const roomIndex = roomList.findIndex((b) => b.id === id);
+    const roomIndex = roomList.findIndex((b) => b.idOfRoom === id);
 
     if (roomIndex >= 0) {
       roomList.splice(roomIndex, 1);
@@ -69,7 +67,6 @@ class RoomDao {
     await wf(this._getStorageLocation(), JSON.stringify(roomList, null, 2));
     return {};
   }
-
 
   async listRooms() {
     let roomlist = await this._loadAllRooms();
@@ -87,7 +84,7 @@ class RoomDao {
       } else {
         throw new Error(
           "Unable to read from storage. Wrong data format. " +
-          this._getStorageLocation()
+            this._getStorageLocation()
         );
       }
     }
