@@ -5,7 +5,7 @@ let dao = new VideoDao(
   path.join(__dirname, "..", "..", "storage", "videos.json")
 );
 
-let schema = {
+const schema = {
   type: "object",
   properties: {
     idOfDevice: { type: "string" },

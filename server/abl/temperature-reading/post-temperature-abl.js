@@ -5,7 +5,7 @@ let dao = new RoomDao(
   path.join(__dirname, "..", "..", "storage", "rooms.json")
 );
 
-let schema = {
+const schema = {
   type: "object",
   properties: {},
   required: [],

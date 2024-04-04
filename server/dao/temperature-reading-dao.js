@@ -23,14 +23,14 @@ class TemperatureReadingDao {
   async createTemperatureReading(reading) {
     let readingList = await this._loadAllTemperatureReadings();
     const currentReading = readingList.find(
-      (item) => item.idOfDevice === reading.idOfDevice
+      (item) => item.id === reading.id
     );
 
     if (currentReading) {
-      throw `Temperature reading for device with id ${reading.idOfDevice} already exists in db`;
+      throw `Temperature reading for device with id ${reading.id} already exists in db`;
     }
 
-    reading.id = crypto.randomBytes(8).toString("hex");
+    //reading.id = crypto.randomBytes(8).toString("hex");
 
     readingList.push(reading);
 
