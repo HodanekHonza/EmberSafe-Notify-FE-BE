@@ -39,20 +39,36 @@ class RoomDao {
     return result;
   }
 
-  async updateRoom(room) {
+  async updateRoom(id, updates) {
     let roomlist = await this._loadAllRooms();
-    const roomIndex = roomlist.findIndex((b) => b.idOfRoom === room.idOfRoom);
+    const roomIndex = roomlist.findIndex((b) => b.idOfRoom === id);
     if (roomIndex < 0) {
-      throw new Error(`Room with given id ${room.idOfRoom} does not exists`);
+      throw new Error(`Room with given id ${id} does not exist`);
     } else {
+      // Update only the specified properties of the room
       roomlist[roomIndex] = {
         ...roomlist[roomIndex],
-        ...room,
+        ...updates,
       };
     }
     await wf(this._getStorageLocation(), JSON.stringify(roomlist, null, 2));
     return roomlist[roomIndex];
   }
+
+  // async updateRoom(room) {
+  //   let roomlist = await this._loadAllRooms();
+  //   const roomIndex = roomlist.findIndex((b) => b.idOfRoom === room.idOfRoom);
+  //   if (roomIndex < 0) {
+  //     throw new Error(`Room with given id ${room.idOfRoom} does not exists`);
+  //   } else {
+  //     roomlist[roomIndex] = {
+  //       ...roomlist[roomIndex],
+  //       ...room,
+  //     };
+  //   }
+  //   await wf(this._getStorageLocation(), JSON.stringify(roomlist, null, 2));
+  //   return roomlist[roomIndex];
+  // }
 
   async deleteRoom(id) {
     let roomList = await this._loadAllRooms();
@@ -79,6 +95,7 @@ class RoomDao {
       roomlist = JSON.parse(await rf(this._getStorageLocation()));
     } catch (e) {
       if (e.code === "ENOENT") {
+        console.log(e);
         console.info("No storage found, initializing new one...");
         roomlist = [];
       } else {

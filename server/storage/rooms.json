@@ -1,15 +1,15 @@
 [
   {
-    "idOfDevice": "ABC123",
+    "idOfDevice": "A",
     "idOfRoom": "Room12",
-    "lastKnownTemperature": 25,
+    "lastKnownTemperature": 26.31,
     "thresholds": {
       "thresholdCold": {
-        "low": 0,
-        "high": 10
+        "low": 322312,
+        "high": 1022
       },
       "thresholdNormal": {
-        "low": 11,
+        "low": 1122,
         "high": 25
       },
       "thresholdHot": {

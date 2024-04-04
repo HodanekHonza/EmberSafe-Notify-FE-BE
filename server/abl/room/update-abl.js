@@ -1,8 +1,8 @@
 const path = require("path");
 const Ajv = require("ajv").default;
-const VideoDao = require("../../dao/room-dao");
-let dao = new VideoDao(
-  path.join(__dirname, "..", "..", "storage", "videos.json")
+const RoomDao = require("../../dao/room-dao");
+let dao = new RoomDao(
+  path.join(__dirname, "..", "..", "storage", "rooms.json")
 );
 
 const schema = {
@@ -61,20 +61,20 @@ const schema = {
 async function UpdateAbl(req, res) {
   try {
     const ajv = new Ajv();
-    let video = req.body;
-    const valid = ajv.validate(schema, video);
+    let room = req.body;
+    const valid = ajv.validate(schema, room);
     if (valid) {
-      video = await dao.updateRoom(video);
-      res.json(video);
+      room = await dao.updateRoom(room.idOfRoom, room);
+      res.json(room);
     } else {
       res.status(400).send({
         errorMessage: "validation of input failed",
-        params: video,
+        params: room,
         reason: ajv.errors,
       });
     }
   } catch (e) {
-    if (e.message.startsWith("video with given id")) {
+    if (e.message.startsWith("Room with given id")) {
       res.status(400).json({ error: e.message });
     }
     res.status(500).send(e);
