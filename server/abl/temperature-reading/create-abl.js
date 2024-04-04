@@ -1,9 +1,14 @@
 const path = require("path");
 const Ajv = require("ajv").default;
 const crypto = require("crypto");
+const RoomDao = require("../../dao/room-dao");
 const TemperatureReadingDao = require("../../dao/temperature-reading-dao");
-let dao = new TemperatureReadingDao(
+const dao = new TemperatureReadingDao(
   path.join(__dirname, "..", "..", "storage", "temperature-readings.json")
+);
+
+const roomDao = new RoomDao(
+  path.join(__dirname, "..", "..", "storage", "rooms.json")
 );
 
 const schema = {
@@ -25,10 +30,11 @@ async function CreateAbl(req, res) {
       reading.id = crypto.randomBytes(8).toString("hex");
       reading.timeStamp = new Date();
       reading = await dao.createTemperatureReading(reading);
+      roomDao.updateRoom("Room12", { lastKnownTemperature: reading.temp });
       res.status(200);
       res.json(reading);
     } else {
-      console.log("NOT WORKING VALID");
+      console.log("NOT WORKING VALIDATION");
       res.status(400).send({
         errorMessage: "Validation of input failed",
         params: req.body,
