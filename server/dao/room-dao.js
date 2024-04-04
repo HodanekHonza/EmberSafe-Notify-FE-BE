@@ -21,7 +21,7 @@ class RoomDao {
     );
 
     if (currentRoom) {
-      throw `Room with name ${room.name} already exists in db`;
+      throw `Room with id ${room.idOfRoom} already exists in db`;
     }
     // move this to abl
     room.id = crypto.randomBytes(8).toString("hex");
