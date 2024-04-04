@@ -1,8 +1,8 @@
 const path = require("path");
 const Ajv = require("ajv").default;
-const VideoDao = require("../../dao/video-dao");
-let dao = new VideoDao(
-    path.join(__dirname, "..", "..", "storage", "videos.json")
+const RoomDao = require("../../dao/room-dao");
+let dao = new RoomDao(
+    path.join(__dirname, "..", "..", "storage", "rooms.json")
 );
 
 let schema = {
@@ -19,14 +19,14 @@ async function GetAbl(req, res) {
         const body = req.query.id ? req.query : req.body;
         const valid = ajv.validate(schema, body);
         if (valid) {
-            const videoId = body.id;
-            const video = await dao.getVideo(videoId);
-            if (!video) {
+            const roomId = body.id;
+            const room = await dao.getRoom(roomId);
+            if (!room) {
                 res
                     .status(400)
-                    .send({ error: `Video with id '${videoId}' doesn't exist.` });
+                    .send({ error: `Room with id '${roomId}' doesn't exist.` });
             }
-            res.json(video);
+            res.json(room);
         } else {
             res.status(400).send({
                 errorMessage: "validation of input failed",

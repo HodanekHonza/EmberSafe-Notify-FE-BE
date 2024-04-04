@@ -1,13 +1,13 @@
 const path = require("path");
-const VideoDao = require("../../dao/video-dao");
-let dao = new VideoDao(
-    path.join(__dirname, "..", "..", "storage", "videos.json")
+const RoomDao = require("../../dao/room-dao");
+let dao = new RoomDao(
+    path.join(__dirname, "..", "..", "storage", "rooms.json")
 );
 
 async function DeleteAbl(req, res) {
     try {
-        const videoId = req.params.id;
-        await dao.deleteVideo(videoId);
+        const roomId = req.params.id;
+        await dao.deleteRoom(roomId);
         res.json({});
     } catch (e) {
         res.status(500).send(e.message);

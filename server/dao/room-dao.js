@@ -35,9 +35,9 @@ class RoomDao {
   }
 
 
-  async getVideo(id) {
-    let videolist = await this._loadAllRooms();
-    const result = videolist.find((video) => video.id === id);
+  async getRoom(id) {
+    const roomlist = await this._loadAllRooms();
+    const result = roomlist.find((video) => video.id === id);
     return result;
   }
 
