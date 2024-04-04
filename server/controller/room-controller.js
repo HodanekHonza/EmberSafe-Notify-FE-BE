@@ -8,23 +8,23 @@ const DeleteAbl = require("../abl/room/delete-abl");
 const ListAbl = require("../abl/room/list-abl");
 
 router.post("/create", async (req, res) => {
-    await CreateAbl(req, res);
+  await CreateAbl(req, res);
 });
 
 router.get("/get", async (req, res) => {
-    await GetAbl(req, res);
+  await GetAbl(req, res);
 });
 
 router.post("/update", async (req, res) => {
-    await UpdateAbl(req, res);
+  await UpdateAbl(req, res);
 });
 
 router.delete("/delete/:id", async (req, res) => {
-    await DeleteAbl(req, res);
+  await DeleteAbl(req, res);
 });
 
 router.get("/list", async (req, res) => {
-    await ListAbl(req, res);
+  await ListAbl(req, res);
 });
 
 module.exports = router;

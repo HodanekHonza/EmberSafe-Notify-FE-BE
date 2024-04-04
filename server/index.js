@@ -4,11 +4,6 @@ const roomRouter = require("./controller/room-controller");
 //const favoriteVideoRouter = require("./controller/favorite-video-controller");
 //const topicsRouter = require("./controller/topics-controller");
 
-
-
-
-
-
 const app = express();
 const port = process.env.PORT || 3000;
 

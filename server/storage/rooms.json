@@ -1,31 +1,6 @@
 [
   {
     "idOfDevice": "ABC123",
-    "idOfRoom": "Room123",
-    "lastKnownTemperature": 25,
-    "thresholds": {
-      "thresholdCold": {
-        "low": 0,
-        "high": 10
-      },
-      "thresholdNormal": {
-        "low": 11,
-        "high": 25
-      },
-      "thresholdHot": {
-        "low": 26,
-        "high": 35
-      },
-      "thresholdDanger": {
-        "low": 36,
-        "high": 50
-      }
-    },
-    "typeOfRoom": "Living Room",
-    "id": "a048abb553b7685a"
-  },
-  {
-    "idOfDevice": "ABC123",
     "idOfRoom": "Room12",
     "lastKnownTemperature": 25,
     "thresholds": {
@@ -73,5 +48,30 @@
     },
     "typeOfRoom": "Living Room",
     "id": "e5a18d189d19e937"
+  },
+  {
+    "idOfDevice": "ABC123",
+    "idOfRoom": "Room11112213213213",
+    "lastKnownTemperature": 25,
+    "thresholds": {
+      "thresholdCold": {
+        "low": 0,
+        "high": 10
+      },
+      "thresholdNormal": {
+        "low": 11,
+        "high": 25
+      },
+      "thresholdHot": {
+        "low": 26,
+        "high": 35
+      },
+      "thresholdDanger": {
+        "low": 36,
+        "high": 50
+      }
+    },
+    "typeOfRoom": "Living Room",
+    "id": "02b7c616d86e38c1"
   }
 ]
