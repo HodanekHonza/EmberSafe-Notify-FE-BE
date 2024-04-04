@@ -9,6 +9,7 @@ const schema = {
   type: "object",
   properties: {
     idOfDevice: { type: "string" },
+    idOfRoom: { type: "string" },
     lastKnownTemperature: { type: "number" },
     thresholds: {
       type: "object",

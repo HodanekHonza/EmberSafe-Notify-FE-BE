@@ -55,7 +55,7 @@ const schema = {
     },
     typeOfRoom: { type: "string" },
   },
-  required: ["idOfDevice", "lastKnownTemperature", "thresholds", "typeOfRoom"],
+  required: ["idOfRoom", "thresholds"],
 };
 
 async function UpdateAbl(req, res) {
