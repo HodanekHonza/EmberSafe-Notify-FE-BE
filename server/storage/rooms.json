@@ -1,0 +1,77 @@
+[
+  {
+    "idOfDevice": "ABC123",
+    "idOfRoom": "Room123",
+    "lastKnownTemperature": 25,
+    "thresholds": {
+      "thresholdCold": {
+        "low": 0,
+        "high": 10
+      },
+      "thresholdNormal": {
+        "low": 11,
+        "high": 25
+      },
+      "thresholdHot": {
+        "low": 26,
+        "high": 35
+      },
+      "thresholdDanger": {
+        "low": 36,
+        "high": 50
+      }
+    },
+    "typeOfRoom": "Living Room",
+    "id": "a048abb553b7685a"
+  },
+  {
+    "idOfDevice": "ABC123",
+    "idOfRoom": "Room12",
+    "lastKnownTemperature": 25,
+    "thresholds": {
+      "thresholdCold": {
+        "low": 0,
+        "high": 10
+      },
+      "thresholdNormal": {
+        "low": 11,
+        "high": 25
+      },
+      "thresholdHot": {
+        "low": 26,
+        "high": 35
+      },
+      "thresholdDanger": {
+        "low": 36,
+        "high": 50
+      }
+    },
+    "typeOfRoom": "Living Room",
+    "id": "b8f151f5b13f1595"
+  },
+  {
+    "idOfDevice": "ABC123",
+    "idOfRoom": "Room11112",
+    "lastKnownTemperature": 25,
+    "thresholds": {
+      "thresholdCold": {
+        "low": 0,
+        "high": 10
+      },
+      "thresholdNormal": {
+        "low": 11,
+        "high": 25
+      },
+      "thresholdHot": {
+        "low": 26,
+        "high": 35
+      },
+      "thresholdDanger": {
+        "low": 36,
+        "high": 50
+      }
+    },
+    "typeOfRoom": "Living Room",
+    "id": "e5a18d189d19e937"
+  }
+]

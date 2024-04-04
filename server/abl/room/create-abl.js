@@ -61,6 +61,7 @@ async function CreateAbl(req, res) {
         if (valid) {
             let room = req.body;
             room = await dao.createRoom(room);
+            res.status(200);
             res.json(room);
         } else {
             res.status(400).send({
@@ -70,11 +71,12 @@ async function CreateAbl(req, res) {
             });
         }
     } catch (e) {
-        if (e.includes("Room with name ")) {
-            res.status(400).send({ errorMessage: e, params: req.body });
-        } else {
-            res.status(500).send(e);
-        }
+        console.log(e)
+        // if (e.message.indexOf("Room with name") !== -1) {
+        //     res.status(400).send({ errorMessage: e.message, params: req.body });
+        // } else {
+        //     res.status(500).send(e);
+        // }
     }
 }
 
