@@ -4,7 +4,7 @@ const VideoDao = require("../../dao/video-dao");
 let dao = new VideoDao(
     path.join(__dirname, "..", "..", "storage", "videos.json")
 );
-//test3323
+
 let schema = {
     type: "object",
     properties: {

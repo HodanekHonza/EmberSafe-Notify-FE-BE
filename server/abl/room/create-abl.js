@@ -2,31 +2,66 @@ const path = require("path");
 const Ajv = require("ajv").default;
 const RoomDao = require("../../dao/room-dao");
 let dao = new RoomDao(
-    path.join(__dirname, "..", "..", "storage", "room.json")
+    path.join(__dirname, "..", "..", "storage", "rooms.json")
 );
 
 let schema = {
     type: "object",
     properties: {
-        url: { type: "string" },
-        name: { type: "string" },
-        author: { type: "string" },
-        length: { type: "number" },
-        dateofrelease: { type: "string" },
-        genre: { type: "string" },
-        description: { type: "string" },
+        idOfDevice: { type: "string" },
+        lastKnownTemperature: { type: "number" },
+        thresholds: {
+            type: "object",
+            properties: {
+                thresholdCold: {
+                    type: "object",
+                    properties: {
+                        low: { type: "number" },
+                        high: { type: "number" }
+                    },
+                    required: ["low", "high"]
+                },
+                thresholdNormal: {
+                    type: "object",
+                    properties: {
+                        low: { type: "number" },
+                        high: { type: "number" }
+                    },
+                    required: ["low", "high"]
+                },
+                thresholdHot: {
+                    type: "object",
+                    properties: {
+                        low: { type: "number" },
+                        high: { type: "number" }
+                    },
+                    required: ["low", "high"]
+                },
+                thresholdDanger: {
+                    type: "object",
+                    properties: {
+                        low: { type: "number" },
+                        high: { type: "number" }
+                    },
+                    required: ["low", "high"]
+                }
+            },
+            required: ["thresholdCold", "thresholdNormal", "thresholdHot", "thresholdDanger"]
+        },
+        typeOfRoom: { type: "string" }
     },
-    required: ["url", "name", "dateofrelease","genre"],
+    required: ["idOfDevice", "lastKnownTemperature", "thresholds", "typeOfRoom"]
 };
 
+
 async function CreateAbl(req, res) {
-   try {
+    try {
         const ajv = new Ajv();
         const valid = ajv.validate(schema, req.body);
         if (valid) {
-            let video = req.body;
-            video = await dao.createRoom(video);
-            res.json(video);
+            let room = req.body;
+            room = await dao.createRoom(room);
+            res.json(room);
         } else {
             res.status(400).send({
                 errorMessage: "validation of input failed",
