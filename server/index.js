@@ -17,6 +17,16 @@ app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
 
+
+
+
+
+
+
+
+
+
+
 // let temperatureData = {};
 // let temperatureTimeStamp = null;
 // app.get("/", (req, res) => {
