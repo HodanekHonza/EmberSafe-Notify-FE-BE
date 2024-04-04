@@ -5,7 +5,7 @@ let dao = new RoomDao(
   path.join(__dirname, "..", "..", "storage", "rooms.json")
 );
 
-let schema = {
+const schema = {
   type: "object",
   properties: {
     idOfDevice: { type: "string" },
@@ -56,6 +56,7 @@ let schema = {
     typeOfRoom: { type: "string" },
   },
   required: ["idOfDevice", "lastKnownTemperature", "thresholds", "typeOfRoom"],
+  additionalProperties: false,
 };
 
 async function CreateAbl(req, res) {
