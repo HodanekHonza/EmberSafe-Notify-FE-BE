@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 export default function RoomsPage() {
     return (
         <div >
-         SADSCSACSSACAS
+            ROOMS PAGE
         </div>
     )
 }

@@ -1,26 +1,27 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import EditRoomPage from './routes/EditRoomPage.jsx'
-import RoomPage from './routes/RoomPage.jsx'
-import AddRoomPage from './routes/AddRoomPage.jsx'
+import EditRoomPage from './routes/dashboard/EditRoomPage.jsx'
+import RoomPage from './routes/dashboard/RoomPage.jsx'
+import AddRoomPage from './routes/dashboard/AddRoomPage.jsx'
 import './index.css'
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import { ClerkProvider, SignUp } from '@clerk/clerk-react'
-import ErrorPage from './routes/ErrorPage.jsx';
-import Root from './routes/Root.jsx'
-import RoomsPage from './routes/RoomsPage.jsx'
+import ErrorPage from './routes/root/ErrorPage.jsx';
+import RootLayout from './layouts/RootLayout.jsx'
+import RoomsPage from './routes/dashboard/RoomsPage.jsx'
 import DashboardLayout from './layouts/DashboardLayout.jsx'
-import IndexPage from './routes/IndexPage.jsx'
-import ContactPage from './routes/ContactPage.jsx'
-import SignInPage from './routes/SignInPage.jsx'
-import SignUpPage from './routes/SignUpPage.jsx'
+import IndexPage from './routes/root/IndexPage.jsx'
+import ContactPage from './routes/root/ContactPage.jsx'
+import SignInPage from './routes/root/SignInPage.jsx'
+import SignUpPage from './routes/root/SignUpPage.jsx'
+import UserProfilePage from './routes/root/UserProfilePage.jsx'
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 const router = createBrowserRouter([
   {
-    element: <Root />,
+    element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
       { path: '/', element: <IndexPage /> },
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
         element: <DashboardLayout />,
         path: 'dashboard',
         children: [
+          {
+            path: "/dashboard/user-profile",
+            element: <UserProfilePage />,
+          },
           {
             path: "/dashboard/rooms",
             element: <RoomsPage />,
