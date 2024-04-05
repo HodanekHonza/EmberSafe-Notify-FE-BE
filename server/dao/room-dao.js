@@ -6,7 +6,6 @@ const crypto = require("crypto");
 
 const rf = fs.promises.readFile;
 const wf = fs.promises.writeFile;
-
 const DEFAULT_STORAGE_PATH = path.join(__dirname, "storage", "rooms.json");
 
 class RoomDao {
