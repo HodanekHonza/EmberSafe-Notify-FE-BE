@@ -4,7 +4,7 @@
     "idOfRoom": "Room12",
     "lastKnownTemperature": 26.75,
     "thresholds": {
-      "thresholdCold": { 
+      "thresholdCold": {
         "low": 322312,
         "high": 1022
       },
@@ -73,5 +73,30 @@
     },
     "typeOfRoom": "Living Room",
     "id": "475d4bb5f82018a6"
+  },
+  {
+    "idOfDevice": "Aaa",
+    "idOfRoom": "Room1212",
+    "lastKnownTemperature": 26.75,
+    "thresholds": {
+      "thresholdCold": {
+        "low": 322312,
+        "high": 1022
+      },
+      "thresholdNormal": {
+        "low": 1122,
+        "high": 25
+      },
+      "thresholdHot": {
+        "low": 26,
+        "high": 35
+      },
+      "thresholdDanger": {
+        "low": 36,
+        "high": 50
+      }
+    },
+    "typeOfRoom": "Living Room",
+    "id": "6583eb6c1d23017e"
   }
 ]

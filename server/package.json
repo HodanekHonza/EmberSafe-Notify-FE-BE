@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "dependencies": {
     "@clerk/clerk-sdk-node": "^4.13.13",
     "ajv": "^8.12.0",
