@@ -1,7 +1,5 @@
-
-
-import { MongoClient, ServerApiVersion } from 'mongodb';
-import 'dotenv/config';
+const { MongoClient, ServerApiVersion } = require('mongodb');
+require('dotenv/config');
 const mongouri = process.env.MONGO_URI;
 
 const client = new MongoClient(mongouri, {
@@ -12,5 +10,4 @@ const client = new MongoClient(mongouri, {
   }
 });
 
-export { client };
-
+module.exports = { client };
