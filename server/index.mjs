@@ -9,7 +9,7 @@ import { client } from "./db/mongoConnection.mjs";
 
 import dotenv from 'dotenv';
 
-// Load environment variables from .env file
+// Load environment variables from .env.local file
 dotenv.config({ path: '.env.local' });
 
 
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-
+// only for test not mandatory
 // async function run() {
 //   try {
 //     // Connect the client to the server	(optional starting in v4.7)
