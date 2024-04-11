@@ -1,15 +1,9 @@
-const path = require("path");
 const Ajv = require("ajv").default;
-const crypto = require("crypto");
 const RoomDao = require("../../dao/room-dao");
 const TemperatureReadingDao = require("../../dao/temperature-reading-dao");
-const dao = new TemperatureReadingDao(
-  path.join(__dirname, "..", "..", "storage", "temperature-readings.json")
-);
+const dao = new TemperatureReadingDao();
 
-const roomDao = new RoomDao(
-  path.join(__dirname, "..", "..", "storage", "rooms.json")
-);
+const roomDao = new RoomDao();
 
 const schema = {
   type: "object",
@@ -26,11 +20,9 @@ async function CreateAbl(req, res) {
     const valid = ajv.validate(schema, req.body);
     if (valid) {
       let reading = req.body;
-      console.log(reading);
-      reading.id = crypto.randomBytes(8).toString("hex");
       reading.timeStamp = new Date();
       reading = await dao.createTemperatureReading(reading);
-      roomDao.updateRoom("Room12", { lastKnownTemperature: reading.temp });
+      roomDao.updateRoom("Living Room", req.body.temp);
       res.status(200);
       res.json(reading);
     } else {

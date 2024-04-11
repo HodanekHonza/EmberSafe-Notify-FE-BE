@@ -30,13 +30,6 @@ class RoomDao {
       const database = client.db("EmberNotifyDB");
       const rooms = database.collection("room");
       const query = { typeOfRoom: typeOfRoomParam };
-      // const options = {
-
-      //   sort: { "imdb.rating": -1 },
-
-      //   projection: { _id: 0, title: 1, imdb: 1 },
-      // };
-
       const room = await rooms.findOne(query);
       return room;
     } catch (e) {
@@ -100,11 +93,7 @@ class RoomDao {
       await client.connect();
       const database = client.db("EmberNotifyDB");
       const rooms = database.collection("room");
-
-      // Retrieve documents from the cursor
       const result = await rooms.find().toArray();
-      console.log(result);
-
       return result;
     } catch (e) {
       console.log(e);

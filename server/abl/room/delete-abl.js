@@ -1,8 +1,6 @@
-const path = require("path");
+
 const RoomDao = require("../../dao/room-dao");
-let dao = new RoomDao(
-  path.join(__dirname, "..", "..", "storage", "rooms.json")
-);
+let dao = new RoomDao();
 
 async function DeleteAbl(req, res) {
   try {

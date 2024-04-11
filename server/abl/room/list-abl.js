@@ -1,9 +1,6 @@
-const path = require("path");
 const Ajv = require("ajv").default;
 const RoomDao = require("../../dao/room-dao");
-let dao = new RoomDao(
-  path.join(__dirname, "..", "..", "storage", "rooms.json")
-);
+let dao = new RoomDao();
 
 let schema = {
   type: "object",
