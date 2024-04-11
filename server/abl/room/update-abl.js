@@ -55,7 +55,6 @@ const schema = {
     },
     typeOfRoom: { type: "string" },
   },
-  required: ["idOfRoom", "thresholds"],
 };
 
 async function UpdateAbl(req, res) {
@@ -64,7 +63,7 @@ async function UpdateAbl(req, res) {
     let room = req.body;
     const valid = ajv.validate(schema, room);
     if (valid) {
-      room = await dao.updateRoom(room.idOfRoom, room);
+      room = await dao.updateRoom(room.typeOfRoom, room.lastKnownTemperature);
       res.json(room);
     } else {
       res.status(400).send({
@@ -74,7 +73,7 @@ async function UpdateAbl(req, res) {
       });
     }
   } catch (e) {
-    if (e.message.startsWith("Room with given id")) {
+    if (e.message.startsWith("Room with given type")) {
       res.status(400).json({ error: e.message });
     }
     res.status(500).send(e);

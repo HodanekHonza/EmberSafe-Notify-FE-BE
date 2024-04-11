@@ -6,9 +6,12 @@ let dao = new RoomDao(
 
 async function DeleteAbl(req, res) {
   try {
-    const roomId = req.params.id;
-    await dao.deleteRoom(roomId);
-    res.json({});
+    const roomType = req.params.typeOfRoom;
+    await dao.deleteRoom(roomType);
+    res.status(200)
+    
+    //res.json({});
+
   } catch (e) {
     res.status(500).send(e.message);
   }
