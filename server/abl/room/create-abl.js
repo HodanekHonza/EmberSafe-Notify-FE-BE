@@ -2,7 +2,7 @@ const path = require("path");
 const Ajv = require("ajv").default;
 const RoomDao = require("../../dao/room-dao");
 let dao = new RoomDao(
-  path.join(__dirname, "..", "..", "storage", "rooms.json")
+  //path.join(__dirname, "..", "..", "storage", "rooms.json")
 );
 
 const schema = {
@@ -77,11 +77,7 @@ async function CreateAbl(req, res) {
       });
     }
   } catch (e) {
-    if (e.includes("Room with id")) {
-      res.status(400).send({ errorMessage: e, params: req.body });
-    } else {
-      res.status(500).send(e);
-    }
+    console.log(e);
   }
 }
 

@@ -1,114 +1,116 @@
 "use strict";
-const fs = require("fs");
-const path = require("path");
+require('dotenv/config');
+const client = require("../db/mongoDB");
+//const { client } = require("../db/mongoDB.js");
 
-const crypto = require("crypto");
-
-const rf = fs.promises.readFile;
-const wf = fs.promises.writeFile;
-const DEFAULT_STORAGE_PATH = path.join(__dirname, "storage", "rooms.json");
 
 class RoomDao {
-  constructor(storagePath) {
-    this.roomStoragePath = storagePath ? storagePath : DEFAULT_STORAGE_PATH;
-  }
-
   async createRoom(room) {
-    let roomList = await this._loadAllRooms();
-    const currentRoom = roomList.find(
-      (item) => item.idOfRoom === room.idOfRoom
-    );
+    try {
+      await client.connect();
+      const database = client.db("EmberNotifyDB");
 
-    if (currentRoom) {
-      throw `Room with id ${room.idOfRoom} already exists in db`;
+      const roomCollection = database.collection("room");
+
+      const result = await roomCollection.insertOne(room);
+
+      console.log(`A document was inserted with the _id: ${result._id}`);
+
+    } catch (e) {
+      console.log(e)
+    } finally {
+      await client.close();
     }
-    // move this to abl
-    room.id = crypto.randomBytes(8).toString("hex");
-
-    roomList.push(room);
-
-    await wf(this._getStorageLocation(), JSON.stringify(roomList, null, 2));
-
-    return room;
   }
 
-  async getRoom(id) {
-    const roomlist = await this._loadAllRooms();
-    const result = roomlist.find((video) => video.idOfRoom === id);
-    return result;
+
+  async getRoom(typeOfRoomParam) {
+    try {
+      await client.connect();
+      const database = client.db("EmberNotifyDB");
+      const rooms = database.collection("room");
+      const query = { typeOfRoom: typeOfRoomParam };
+      // const options = {
+
+      //   sort: { "imdb.rating": -1 },
+
+      //   projection: { _id: 0, title: 1, imdb: 1 },
+      // };
+
+      const room = await rooms.findOne(query);
+      return room;
+    } catch (e) {
+      console.log(e)
+    }
+    finally {
+      await client.close();
+    }
   }
 
-  async updateRoom(id, updates) {
-    let roomlist = await this._loadAllRooms();
-    const roomIndex = roomlist.findIndex((b) => b.idOfRoom === id);
-    if (roomIndex < 0) {
-      throw new Error(`Room with given id ${id} does not exist`);
-    } else {
-      // Update only the specified properties of the room
-      roomlist[roomIndex] = {
-        ...roomlist[roomIndex],
-        ...updates,
+
+  async updateRoom(typeOfRoom, temperature) {
+    try {
+      await client.connect();
+      const database = client.db("EmberNotifyDB");
+      const movies = database.collection("room");
+
+      const filter = { typeOfRoom: typeOfRoom };
+
+      const updateDoc = {
+        $set: {
+          lastKnownTemperature: temperature
+        },
       };
+
+      const result = await movies.updateOne(filter, updateDoc);
+
+      console.log(`${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,);
+    } catch (e) {
+      console.log(e);
     }
-    await wf(this._getStorageLocation(), JSON.stringify(roomlist, null, 2));
-    return roomlist[roomIndex];
+    finally {
+      await client.close();
+    }
   }
 
-  // async updateRoom(room) {
-  //   let roomlist = await this._loadAllRooms();
-  //   const roomIndex = roomlist.findIndex((b) => b.idOfRoom === room.idOfRoom);
-  //   if (roomIndex < 0) {
-  //     throw new Error(`Room with given id ${room.idOfRoom} does not exists`);
-  //   } else {
-  //     roomlist[roomIndex] = {
-  //       ...roomlist[roomIndex],
-  //       ...room,
-  //     };
-  //   }
-  //   await wf(this._getStorageLocation(), JSON.stringify(roomlist, null, 2));
-  //   return roomlist[roomIndex];
-  // }
+  async deleteRoom(typeOfRoom) {
+    try {
+      await client.connect();
+      const database = client.db("EmberNotifyDB");
+      const rooms = database.collection("room");
 
-  async deleteRoom(id) {
-    let roomList = await this._loadAllRooms();
+      const filter = { typeOfRoom: typeOfRoom };
 
-    const roomIndex = roomList.findIndex((b) => b.idOfRoom === id);
-
-    if (roomIndex >= 0) {
-      roomList.splice(roomIndex, 1);
-    } else {
-      console.log("Room not found, cannot deleting.");
+      const result = await rooms.findOneAndDelete(filter);
+      if (result) {
+        console.log("ROOM DELETED");
+      } else {
+        throw new "ROOM NOT FOUND";
+      }
+    } catch (e) {
+      console.log(e);
     }
-    await wf(this._getStorageLocation(), JSON.stringify(roomList, null, 2));
-    return {};
+    finally {
+      await client.close();
+    }
   }
 
   async listRooms() {
-    let roomlist = await this._loadAllRooms();
-    return roomlist;
-  }
-
-  async _loadAllRooms() {
-    let roomlist;
     try {
-      roomlist = JSON.parse(await rf(this._getStorageLocation()));
-    } catch (e) {
-      if (e.code === "ENOENT") {
-        console.log(e);
-        console.info("No storage found, initializing new one...");
-        roomlist = [];
-      } else {
-        throw new Error(
-          "Unable to read from storage. Wrong data format. " +
-            this._getStorageLocation()
-        );
-      }
-    }
-    return roomlist;
-  }
+      await client.connect();
+      const database = client.db("EmberNotifyDB");
+      const rooms = database.collection("room");
 
-  _getStorageLocation() {
-    return this.roomStoragePath;
+      // Retrieve documents from the cursor
+      const result = await rooms.find().toArray();
+      console.log(result);
+
+      return result;
+    } catch (e) {
+      console.log(e);
+    } finally {
+      await client.close();
+    }
   }
 }
 

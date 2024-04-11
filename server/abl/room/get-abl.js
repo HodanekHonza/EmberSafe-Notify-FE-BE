@@ -8,23 +8,22 @@ let dao = new RoomDao(
 const schema = {
   type: "object",
   properties: {
-    id: { type: "string" },
+    typeOfRoom: { type: "string" },
   },
-  required: ["id"],
+  required: ["typeOfRoom"],
 };
 
 async function GetAbl(req, res) {
   try {
     const ajv = new Ajv();
-    const body = req.query.id ? req.query : req.body;
-    const valid = ajv.validate(schema, body);
+    const valid = ajv.validate(schema, req.body);
     if (valid) {
-      const roomId = body.id;
-      const room = await dao.getRoom(roomId);
+      const room = await dao.getRoom(req.body.typeOfRoom);
+      console.log(room)
       if (!room) {
         res
           .status(400)
-          .send({ error: `Room with id '${roomId}' doesn't exist.` });
+          .send({ error: `Room with type name '${roomType}' doesn't exist.` });
       }
       res.json(room);
     } else {
