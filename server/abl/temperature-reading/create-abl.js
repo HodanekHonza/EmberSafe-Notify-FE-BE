@@ -9,8 +9,9 @@ const schema = {
   type: "object",
   properties: {
     temp: { type: "number" },
+    typeOfRoom: { type: "string" },
   },
-  required: ["temp"],
+  //required: ["temp"],
   additionalProperties: false,
 };
 
@@ -21,8 +22,13 @@ async function CreateAbl(req, res) {
     if (valid) {
       let reading = req.body;
       reading.timeStamp = new Date();
+      // //topic looks like this:  "node/skeleton:Living Room/thermometer/0:1/temperature";
+      // const parts = req.body.topic.split(":")[1].split("/"); // Split by ":", get the second part, then split by "/"
+      // const livingRoomPart = parts[0]; // Get the first element after splitting by "/"
+      // console.log(livingRoomPart); 
+
       reading = await dao.createTemperatureReading(reading);
-      roomDao.updateRoom("Living Room", req.body.temp);
+      roomDao.updateRoom(req.body.typeOfRoom, req.body.temp);
       res.status(200);
       res.json(reading);
     } else {
