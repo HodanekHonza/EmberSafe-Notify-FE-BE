@@ -7,7 +7,7 @@ const CreateAbl = require("../abl/temperature-reading/create-abl");
 // const DeleteAbl = require("../abl/temperature-reading/delete-abl");
 // const ListAbl = require("../abl/temperature-reading/list-abl");
 
-router.post("/postTemperature", async (req, res) => {
+router.post("/create", async (req, res) => {
   await CreateAbl(req, res);
 });
 
