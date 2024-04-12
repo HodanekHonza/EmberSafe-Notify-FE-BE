@@ -16,21 +16,21 @@ app.use(cors());
 app.use("/room", roomRouter);
 app.use("/temperature-reading", temperatureRouter);
 
-async function fetchUsers() {
-  try {
-    const userList = await clerkClient.users.getUserList();
-    console.log(userList)
-    return userList;
-  } catch (e) {
-    console.log(e)
-  }
-}
+// async function fetchUsers() {
+//   try {
+//     const userList = await clerkClient.users.getUserList();
+//     console.log(userList)
+//     return userList;
+//   } catch (e) {
+//     console.log(e)
+//   }
+// }
 // const response = await clerkClient.users.updateUserMetadata(userId, {
 //   publicMetadata: {
 //     "newData": "metadata"
 //   }
 // });
-fetchUsers();
+// fetchUsers();
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
