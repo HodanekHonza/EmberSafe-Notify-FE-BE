@@ -1,8 +1,6 @@
 "use strict";
 require('dotenv/config');
 const client = require("../db/mongoDB");
-//const { client } = require("../db/mongoDB.js");
-
 
 class RoomDao {
   async createRoom(room) {
@@ -41,7 +39,7 @@ class RoomDao {
   }
 
 
-  async updateRoom(typeOfRoom, temperature) {
+  async updateRoomTemperature(typeOfRoom, temperature) {
     try {
       await client.connect();
       const database = client.db("EmberNotifyDB");
