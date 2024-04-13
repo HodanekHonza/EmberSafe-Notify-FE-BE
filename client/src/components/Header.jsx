@@ -3,23 +3,22 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
+//data na usera(to defaultny z TailWindUI)
 const user = {
-    name: 'Tom Cook',
-    email: 'tom@example.com',
+    name: 'Dogy',
+    email: 'dogy@unicorn.cz',
     imageUrl:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  }
+    "https://www.researchgate.net/publication/359456368/figure/fig1/AS:11431281103138195@1669617009814/A-blank-doge-meme-template_Q320.jpg"  }
+
+  //Buttons na navigace po appce
   const navigation = [
-    { name: 'Dashboard', href: '#', current: true },
-    { name: 'Team', href: '#', current: false },
-    { name: 'Projects', href: '#', current: false },
-    { name: 'Calendar', href: '#', current: false },
-    { name: 'Reports', href: '#', current: false },
+    { name: 'Rooms', href: '/dashboard/rooms', current: true },
   ]
+
+  //Buttons pro prechod na page z user data a sign out
   const userNavigation = [
-    { name: 'Your Profile', href: '#' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
+    { name: 'Your Profile', href: '/dashboard/user-profile' },
+    { name: 'Sign out', href: '/' },
   ]
   
   function classNames(...classes) {
@@ -29,22 +28,16 @@ const user = {
   export default function Header() {
     return (
       <>
-        {/*
-          This example requires updating your template:
-  
-          ```
-          <html class="h-full bg-gray-100">
-          <body class="h-full">
-          ```
-        */}
-        <div className="min-h-full">
+        <div className="min-h-full mb-6">
           <Disclosure as="nav" className="bg-indigo-600">
             {({ open }) => (
               <>
+                {/* PC version Header */}
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                   <div className="flex h-16 items-center justify-between">
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
+                        {/* Logo(zatim ne mame) */}
                         <img
                           className="h-8 w-8"
                           src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
@@ -53,6 +46,7 @@ const user = {
                       </div>
                       <div className="hidden md:block">
                         <div className="ml-10 flex items-baseline space-x-4">
+                          {/* Ukazani buttons na navigace(Rooms) PC version */}
                           {navigation.map((item) => (
                             <a
                               key={item.name}
@@ -73,6 +67,7 @@ const user = {
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-4 flex items-center md:ml-6">
+                        {/* Icon(tlacitko) pro notification */}
                         <button
                           type="button"
                           className="relative rounded-full bg-indigo-600 p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600"
@@ -100,6 +95,7 @@ const user = {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                           >
+                            {/* Ukazani buttons (User data, sign out) */}
                             <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                               {userNavigation.map((item) => (
                                 <Menu.Item key={item.name}>
@@ -135,8 +131,9 @@ const user = {
                     </div>
                   </div>
                 </div>
-  
+                {/* Mobile version */}
                 <Disclosure.Panel className="md:hidden">
+                  {/* Ukazani buttons na navigace(Rooms) Mobile version */}
                   <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
                     {navigation.map((item) => (
                       <Disclosure.Button
@@ -157,6 +154,7 @@ const user = {
                   </div>
                   <div className="border-t border-indigo-700 pb-3 pt-4">
                     <div className="flex items-center px-5">
+                      {/* User data */}
                       <div className="flex-shrink-0">
                         <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
                       </div>
@@ -164,6 +162,7 @@ const user = {
                         <div className="text-base font-medium text-white">{user.name}</div>
                         <div className="text-sm font-medium text-indigo-300">{user.email}</div>
                       </div>
+                      {/* Icon(tlacitko) pro notification */}
                       <button
                         type="button"
                         className="relative ml-auto flex-shrink-0 rounded-full bg-indigo-600 p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600"
@@ -174,6 +173,7 @@ const user = {
                       </button>
                     </div>
                     <div className="mt-3 space-y-1 px-2">
+                      {/* Ukazani buttons (User data, sign out) */}
                       {userNavigation.map((item) => (
                         <Disclosure.Button
                           key={item.name}
@@ -190,15 +190,6 @@ const user = {
               </>
             )}
           </Disclosure>
-  
-          <header className="bg-white shadow-sm">
-            <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-              <h1 className="text-lg font-semibold leading-6 text-gray-900">Dashboard</h1>
-            </div>
-          </header>
-          <main>
-            <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{/* Your content */}</div>
-          </main>
         </div>
       </>
     )

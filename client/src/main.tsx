@@ -18,6 +18,7 @@ import ContactPage from './routes/root/ContactPage.jsx'
 import SignInPage from './routes/root/SignInPage.jsx'
 import SignUpPage from './routes/root/SignUpPage.jsx'
 import UserProfilePage from './routes/root/UserProfilePage.jsx'
+
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 const router = createBrowserRouter([
   {
