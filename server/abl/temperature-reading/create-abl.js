@@ -10,8 +10,9 @@ const schema = {
   properties: {
     temp: { type: "number" },
     typeOfRoom: { type: "string" },
+    timeStamp: { type: "string" },
   },
-  required: ["temp", "typeOfRoom"],
+  required: ["temp", "typeOfRoom", "timeStamp"],
   additionalProperties: false,
 };
 
@@ -21,8 +22,7 @@ async function CreateAbl(req, res) {
     const valid = ajv.validate(schema, req.body);
     if (valid) {
       let reading = req.body;
-      reading.timeStamp = new Date();
-      reading = await dao.createTemperatureReading(reading);
+      await dao.createTemperatureReading(reading);
       roomDao.updateRoomTemperature(req.body.typeOfRoom, req.body.temp);
       res.status(200);
       res.json(reading);
@@ -35,11 +35,8 @@ async function CreateAbl(req, res) {
       });
     }
   } catch (e) {
-    if (e.includes("Temperature reading for device with id")) {
-      res.status(400).send({ errorMessage: e, params: req.body });
-    } else {
-      res.status(500).send(e);
-    }
+    console.log(e)
+    res.status(500).send(e);
   }
 }
 

@@ -15,22 +15,33 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use("/room", roomRouter);
 app.use("/temperature-reading", temperatureRouter);
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(401).send('Unauthenticated!');
+});
 
-// async function fetchUsers() {
-//   try {
-//     const userList = await clerkClient.users.getUserList();
-//     console.log(userList)
-//     return userList;
-//   } catch (e) {
-//     console.log(e)
-//   }
-// }
+
+
+//console.log(response);
+async function fetchUsers() {
+  try {
+    const userId = 'user_2egNgObrO4tnm9CSCkUWIgq7ZNO';
+    const sessions = await clerkClient.sessions.getSessionList();
+    // const userList = await clerkClient.users.getUserList();
+    // console.log(userList)
+    // return userList;
+    console.log(sessions);
+    return sessions;
+  } catch (e) {
+    console.log(e)
+  }
+}
 // const response = await clerkClient.users.updateUserMetadata(userId, {
 //   publicMetadata: {
 //     "newData": "metadata"
 //   }
 // });
-// fetchUsers();
+fetchUsers();
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
