@@ -7,12 +7,10 @@ export default function RootLayout() {
   console.log(paramsForRooms)
   return (
     <div>
-      <h1>NAVBAR</h1>
       <SignOutButton />
       <div id="detail">
         <Outlet />
       </div>
-      <h1>FOOTER</h1>
     </div>
   )
 }

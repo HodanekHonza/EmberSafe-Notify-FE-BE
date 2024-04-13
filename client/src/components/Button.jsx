@@ -1,10 +1,14 @@
-export default function Button() {
+export default function Button({href, icon, name, color}) {
     return (
-        <button
+        <a
+        href={href}
           type="button"
-          className="rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className={`rounded-md inline-flex bg-${color? color:"indigo"}-600 px-4 py-1.5 text-sm font-semibold cursor-pointer text-white shadow-sm hover:bg-${color? color:"indigo"}-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-${color? color:"indigo"}-600`}
         >
-          Button text
-        </button>
+          <div className="flex">
+          {icon}
+          {name}
+          </div>
+        </a>
     )
   }
