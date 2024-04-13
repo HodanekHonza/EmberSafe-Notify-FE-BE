@@ -21,7 +21,7 @@ const schema = {
   additionalProperties: false,
 };
 
-let previousThreshold = null; // Declare previousThreshold outside the function
+let previousThresholds = {}; // Dictionary to store previous thresholds for each room
 
 async function CreateAbl(req, res) {
   try {
@@ -45,23 +45,24 @@ async function CreateAbl(req, res) {
       }
 
       if (temperatureMatchedThreshold !== null) {
+        const previousThreshold = previousThresholds[req.body.typeOfRoom]; // Get previous threshold for the current room
         if (temperatureMatchedThreshold !== previousThreshold) {
           console.log(`Temperature (${temp}) falls within ${temperatureMatchedThreshold} threshold.`);
           client.messages
             .create({
-              body: `EmberNotifty --- treshold: ${temperatureMatchedThreshold}`,
+              body: `EmberNotifty --- threshold reached: ${temperatureMatchedThreshold}`,
               from: '+13202881651',
               to: '+420702004704'
             })
             .then(message => console.log(message.sid))
             .catch(error => console.error(error));
-          previousThreshold = temperatureMatchedThreshold;
+          previousThresholds[req.body.typeOfRoom] = temperatureMatchedThreshold; // Update previous threshold for the current room
         } else {
           console.log(`Temperature (${temp}) falls within the same threshold as before.`);
         }
       } else {
         console.log(`Temperature (${temp}) does not fall within any threshold range.`);
-        previousThreshold = null;
+        previousThresholds[req.body.typeOfRoom] = null; // Reset previous threshold for the current room
       }
 
       console.log(temperatureRoomCheck.thresholds);
@@ -80,8 +81,5 @@ async function CreateAbl(req, res) {
     res.status(500).send(e);
   }
 }
-
-module.exports = CreateAbl;
-
 
 module.exports = CreateAbl;
