@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '../../components/Button'
-import { AroowBack } from '../../context/Icons'
+import { AroowBack } from '../../assets/Icons'
 import { useParams } from 'react-router-dom';
 
 export default function EditRoomPage() {

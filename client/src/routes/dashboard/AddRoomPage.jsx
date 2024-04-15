@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '../../components/Button.jsx'
-import { AroowBack } from '../../context/Icons.jsx'
+import { AroowBack } from '../../assets/Icons.jsx'
 
 export default function AddRoomPage() {
   return (

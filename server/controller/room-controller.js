@@ -24,10 +24,7 @@ router.delete("/delete/:typeOfRoom", async (req, res) => {
   await DeleteAbl(req, res);
 });
 
-router.get("/list", ClerkExpressRequireAuth({
-  // Add options here
-  // See the Middleware options section for more details
-}), async (req, res) => {
+router.get("/list", async (req, res) => {
   await ListAbl(req, res);
 });
 

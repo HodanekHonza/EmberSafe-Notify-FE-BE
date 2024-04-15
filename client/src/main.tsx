@@ -18,7 +18,13 @@ import ContactPage from './routes/root/ContactPage.jsx'
 import SignInPage from './routes/root/SignInPage.jsx'
 import SignUpPage from './routes/root/SignUpPage.jsx'
 import UserProfilePage from './routes/root/UserProfilePage.jsx'
+import DashboardProvider from "./providerContext/DashboardProvider.jsx"
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 
+const queryClient = new QueryClient()
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 const router = createBrowserRouter([
   {
@@ -38,7 +44,7 @@ const router = createBrowserRouter([
             element: <UserProfilePage />,
           },
           {
-            path: "/dashboard/rooms",
+            path: "/dashboard",
             element: <RoomsPage />,
           },
           {
@@ -66,8 +72,12 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <RouterProvider router={router} />
-    </ClerkProvider>
+    <QueryClientProvider client={queryClient}>
+      <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+        <DashboardProvider>
+          <RouterProvider router={router} />
+        </DashboardProvider>
+      </ClerkProvider>
+    </QueryClientProvider>
   </React.StrictMode>,
 )
