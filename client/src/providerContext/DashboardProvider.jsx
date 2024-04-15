@@ -25,7 +25,8 @@ const DashboardProvider = ({ children }) => {
 
     const value = {
         rooms,
-        fetchRoomFunction
+        fetchRoomFunction,
+        isLoading
     };
 
     return (
