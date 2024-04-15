@@ -64,12 +64,9 @@ async function CreateAbl(req, res) {
         console.log(`Temperature (${temp}) does not fall within any threshold range.`);
         previousThresholds[req.body.typeOfRoom] = null; // Reset previous threshold for the current room
       }
-
-      console.log(temperatureRoomCheck.thresholds);
       res.status(200);
       res.json(reading);
     } else {
-      console.log("NOT WORKING VALIDATION");
       res.status(400).send({
         errorMessage: "Validation of input failed",
         params: req.body,

@@ -15,10 +15,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use("/room", roomRouter);
 app.use("/temperature-reading", temperatureRouter);
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(401).send('Unauthenticated!');
-});
+// app.use((err, req, res, next) => {
+//   console.error(err.stack);
+//   res.status(401).send('Unauthenticated!');
+// });
 
 
 
@@ -41,7 +41,7 @@ async function fetchUsers() {
 //     "newData": "metadata"
 //   }
 // });
-fetchUsers();
+//fetchUsers();
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
