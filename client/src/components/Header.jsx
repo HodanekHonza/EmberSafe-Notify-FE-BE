@@ -12,7 +12,9 @@ const user = {
 
   //Buttons na navigace po appce
   const navigation = [
-    { name: 'Rooms', href: '/dashboard/rooms', current: true },
+    { name: 'Rooms', href: '/dashboard', current: true },
+    { name: 'Landing Page', href: '/', current: true },
+    
   ]
 
   //Buttons pro prechod na page z user data a sign out

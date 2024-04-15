@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '../../components/Button'
 import { AroowBack } from '../../assets/Icons'
 import Calendar from '../../components/Calendar'
@@ -9,7 +9,7 @@ import EmberNotifyContext from '../../providerContext/DashboardContext';
 import {
   useQuery,
 } from '@tanstack/react-query'
-
+import { Spinner } from "flowbite-react";
 export default function RoomPage() {
 
   const paramsForRooms = useParams();
@@ -19,6 +19,7 @@ export default function RoomPage() {
     queryKey: ['roomData', paramsForRooms.roomId],
     queryFn: () => fetchRoomFunction(paramsForRooms.roomId)
   });
+
 
   useEffect(() => {
     if (roomData !== undefined) {
@@ -179,33 +180,42 @@ export default function RoomPage() {
     { name: '23:50', Temperature: 17 }
   ];
   return (
-    <div className='max-w-7xl' style={{ margin: '0 auto' }}>
 
-      {/* button back */}
-      <Button href="/dashboard" icon={<AroowBack />} name="Back" />
 
-      {/* Room name and buttons to edit and delete */}
-      <div className='flex ite items-start justify-between max-w-7xl mb-10 h-20' style={{ margin: "0 auto", marginTop: "20px" }}>
-        <div className='text-3xl text-gray-500'>Kitchen room</div>
-        <div className='w-[230px] flex justify-between'>
-          <Button href={`/dashboard/room/${paramsForRooms}/edit/`} name="Edit Room" />
-          <Button href="" name="Delete Room" color={"red"} />
+    <>
+      {isLoading ? <div className="flex justify-center items-center h-screen">
+        <Spinner color="purple" size="xl" />
+      </div> : <div className='max-w-7xl' style={{ margin: '0 auto' }}>
+
+        {/* button back */}
+        <Button href="/dashboard" icon={<AroowBack />} name="Back" />
+
+        {/* Room name and buttons to edit and delete */}
+        <div className='flex ite items-start justify-between max-w-7xl mb-10 h-20' style={{ margin: "0 auto", marginTop: "20px" }}>
+          <div className='text-3xl text-gray-500'>{roomData.typeOfRoom}</div>
+          <div className='w-[230px] flex justify-between'>
+            <Button href={`/dashboard/room/${paramsForRooms}/edit/`} name="Edit Room" />
+            <Button href="" name="Delete Room" color={"red"} />
+          </div>
         </div>
-      </div>
 
-      {/* Calendar-flowbite */}
-      <div className='w-[300px]' style={{ margin: "0 auto" }}>
-        <Calendar />
-      </div>
-      <div className='mt-6 flex'>
-        <div className=' w-1/2'>
-          <TemperatureMetr RoomData={Roomka} />
+        {/* Calendar-flowbite */}
+        <div className='w-[300px]' style={{ margin: "0 auto" }}>
+          <Calendar />
         </div>
-        <div className='h-[500px] w-1/2'>
-          <Graf TemperatureHistory={data} RoomData={Roomka} />
+        <div className='mt-6 flex'>
+          <div className=' w-1/2'>
+            {roomData.lastKnownTemperature} NUMBERRR
+            {/* <TemperatureMetr RoomData={roomData} /> */}
+          </div>
+          <div className='h-[500px] w-1/2'>
+            <Graf TemperatureHistory={data} RoomData={Roomka} />
+          </div>
         </div>
-      </div>
 
-    </div>
+      </div>}
+
+    </>
+
   )
 }
