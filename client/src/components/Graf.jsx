@@ -17,7 +17,7 @@ const data = [
   { name: '14', pv: 130 },
 ];
 
-function Graf() {
+export default function Graf() {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart
@@ -43,5 +43,3 @@ function Graf() {
     </ResponsiveContainer>
   );
 }
-
-export default Graf;
