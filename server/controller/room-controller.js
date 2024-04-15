@@ -12,7 +12,7 @@ router.post("/create", async (req, res) => {
   await CreateAbl(req, res);
 });
 
-router.get("/get", async (req, res) => {
+router.get("/get/:typeOfRoom", async (req, res) => {
   await GetAbl(req, res);
 });
 

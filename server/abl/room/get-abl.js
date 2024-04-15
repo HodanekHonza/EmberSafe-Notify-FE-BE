@@ -11,11 +11,12 @@ const schema = {
 };
 
 async function GetAbl(req, res) {
+  const roomType = req.params.typeOfRoom;
   try {
     const ajv = new Ajv();
     const valid = ajv.validate(schema, req.body);
-    if (valid) {
-      const room = await dao.getRoom(req.body.typeOfRoom);
+    if (true) {
+      const room = await dao.getRoom(roomType);
       console.log(room)
       if (!room) {
         res

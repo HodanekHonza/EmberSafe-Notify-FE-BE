@@ -6,11 +6,12 @@ import {
     useQuery,
 } from '@tanstack/react-query'
 const DashboardProvider = ({ children }) => {
-    const [posts, setPosts] = useState([]);
+    const [rooms, setPosts] = useState([]);
     const { isLoading, error, data } = useQuery({
-        queryKey: ['roomData'],
+        queryKey: ['roomsData'],
         queryFn: fetchRooms
     });
+
     useEffect(() => {
         if (data) {
             setPosts(data);
@@ -18,8 +19,13 @@ const DashboardProvider = ({ children }) => {
     }, [data]);
 
 
+    async function fetchRoomFunction(typeOfRoom) {
+        return fetchRoom(typeOfRoom)
+    }
+
     const value = {
-        posts,
+        rooms,
+        fetchRoomFunction
     };
 
     return (
