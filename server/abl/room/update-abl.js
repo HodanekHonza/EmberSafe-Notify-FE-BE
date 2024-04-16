@@ -1,6 +1,6 @@
 const Ajv = require("ajv").default;
 const RoomDao = require("../../dao/room-dao");
-let dao = new RoomDao();
+const dao = new RoomDao();
 
 const schema = {
   type: "object",
@@ -62,6 +62,7 @@ async function UpdateAbl(req, res) {
     if (valid) {
       room = await dao.updateRoomTemperature(room.typeOfRoom, room.lastKnownTemperature);
       res.json(room);
+      res.status(200)
     } else {
       res.status(400).send({
         errorMessage: "validation of input failed",

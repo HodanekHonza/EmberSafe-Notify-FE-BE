@@ -48,6 +48,10 @@ async function CreateAbl(req, res) {
         const previousThreshold = previousThresholds[req.body.typeOfRoom]; // Get previous threshold for the current room
         if (temperatureMatchedThreshold !== previousThreshold) {
           console.log(`Temperature (${temp}) falls within ${temperatureMatchedThreshold} threshold.`);
+          (async () => {
+            await sendTelegramMessage(process.env.TELEGRAM_TOKEN, process.env.TELEGRAM_CHANEL, `TreshHoldValue is: ${temperatureMatchedThreshold}`);
+          })();
+          // use twillio for DANGER sms where temperature is off by at least 10 C by the last interval
           // client.messages
           //   .create({
           //     body: `EmberNotifty --- threshold reached: ${temperatureMatchedThreshold}`,
@@ -78,5 +82,22 @@ async function CreateAbl(req, res) {
     res.status(500).send(e);
   }
 }
+
+
+async function sendTelegramMessage(token, channel, message) {
+  try {
+    const request = await fetch(`https://api.telegram.org/${token}/sendMessage?chat_id=${channel}&text=${message}`, {
+      method: "GET",
+      redirect: 'follow'
+    });
+    const response = await request.json();
+    return response;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+
+
 
 module.exports = CreateAbl;

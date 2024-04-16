@@ -35,15 +35,20 @@ export default function RoomsPage() {
     );
 }
 
+
+
+
 function RoomBlock({ room }) {
     return (
         <a href={`/dashboard/room/${room.typeOfRoom}`} className='h-[200px] w-[300px] mb-5 rounded-2xl hover:bg-gray-200 ease-in-out duration-200 cursor-pointer ' style={{ boxShadow: "4px 4px 5px rgba(0, 0, 0, 0.25), 0px 0px 20px rgba(0, 0, 0, 0.25)" }}>
-            {/* Title of room */}
+
             <div className='text-3xl font-semibold w-full flex justify-center items-center h-20'>
                 {room.typeOfRoom}
             </div>
-            {/* Icons and temperature */}
+
             <div className='flex w-full h-24 justify-center items-center'>
+                {/* change this nonsence, need to get treshhold before this 
+                 treshhold to compare and tell if the temp is going down or up  */}
                 {room.lastKnownTemperature > room.thresholds.thresholdNormal.high ? (
                     <div><UpTemperature /> <DownTemperature className="invisible" /></div>
                 ) : (

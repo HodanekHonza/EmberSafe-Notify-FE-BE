@@ -1,17 +1,11 @@
-const Ajv = require("ajv").default;
 const RoomDao = require("../../dao/room-dao");
-let dao = new RoomDao();
-
-let schema = {
-  type: "object",
-  properties: {},
-  required: [],
-};
+const dao = new RoomDao();
 
 async function ListAbl(req, res) {
   try {
     const rooms = await dao.listRooms();
     res.json(rooms);
+    res.status(200)
   } catch (e) {
     res.status(500).send(e);
   }

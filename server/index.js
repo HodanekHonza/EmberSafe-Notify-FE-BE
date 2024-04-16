@@ -1,8 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const pkg = require('@clerk/clerk-sdk-node');
+// AUTH
 const clerkClient = pkg.default;
 const dotenv = require('dotenv');
+//
 const roomRouter = require('./controller/room-controller.js')
 const temperatureRouter = require('./controller/temperature-reading-controller.js')
 const app = express();
@@ -15,10 +17,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use("/room", roomRouter);
 app.use("/temperature-reading", temperatureRouter);
-// app.use((err, req, res, next) => {
-//   console.error(err.stack);
-//   res.status(401).send('Unauthenticated!');
-// });
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(401).send('Unauthenticated!');
+});
 
 
 

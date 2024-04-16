@@ -5,15 +5,11 @@ const client = require("../db/mongoDB");
 class RoomDao {
   async createRoom(room) {
     try {
-
       const database = client.db("EmberNotifyDB");
-
       const roomCollection = database.collection("room");
-
       const result = await roomCollection.insertOne(room);
 
-      console.log(`A document was inserted with the _id: ${result._id}`);
-
+      console.log(`A document was inserted with the _id: ${result}`);
     } catch (e) {
       console.log(e)
     }
@@ -22,11 +18,11 @@ class RoomDao {
 
   async getRoom(typeOfRoomParam) {
     try {
-
       const database = client.db("EmberNotifyDB");
       const rooms = database.collection("room");
       const query = { typeOfRoom: typeOfRoomParam };
       const room = await rooms.findOne(query);
+
       return room;
     } catch (e) {
       console.log(e)
@@ -37,10 +33,8 @@ class RoomDao {
 
   async updateRoomTemperature(typeOfRoom, temperature) {
     try {
-
       const database = client.db("EmberNotifyDB");
       const movies = database.collection("room");
-
       const filter = { typeOfRoom: typeOfRoom };
 
       const updateDoc = {
@@ -51,7 +45,7 @@ class RoomDao {
 
       const result = await movies.updateOne(filter, updateDoc);
 
-      console.log(`${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,);
+      console.log(`${result.matchedCount} document(s) ${typeOfRoom}  matched the filter, updated ${result.modifiedCount} document(s)`,);
     } catch (e) {
       console.log(e);
     }
@@ -62,12 +56,11 @@ class RoomDao {
     try {
       const database = client.db("EmberNotifyDB");
       const rooms = database.collection("room");
-
       const filter = { typeOfRoom: typeOfRoom };
-
       const result = await rooms.findOneAndDelete(filter);
+      
       if (result) {
-        console.log("ROOM DELETED");
+        console.log(`${typeOfRoom} deleted`);
       } else {
         throw new "ROOM NOT FOUND";
       }
