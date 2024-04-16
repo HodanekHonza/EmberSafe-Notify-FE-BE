@@ -6,7 +6,7 @@ class TemperatureReadingDao {
 
   async createTemperatureReading(reading) {
     try {
-      await client.connect();
+
       const database = client.db("EmberNotifyDB");
 
       const roomCollection = database.collection("temperature-reading");
@@ -17,8 +17,6 @@ class TemperatureReadingDao {
 
     } catch (e) {
       console.log(e);
-    } finally {
-      await client.close();
     }
   }
 
@@ -39,7 +37,7 @@ class TemperatureReadingDao {
 
   async listTemperatureReadings(typeOfRoom, date) {
     try {
-      await client.connect();
+
       const database = client.db("EmberNotifyDB");
       const allReadings = database.collection("temperature-reading");
       const endOfDay = new Date(date);
@@ -64,8 +62,6 @@ class TemperatureReadingDao {
       return wantedReadings;
     } catch (e) {
       console.log(e);
-    } finally {
-      await client.close();
     }
   }
 
