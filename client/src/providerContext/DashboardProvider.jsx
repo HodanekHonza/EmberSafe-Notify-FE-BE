@@ -7,8 +7,8 @@ import {
 } from '@tanstack/react-query'
 const DashboardProvider = ({ children }) => {
     const [rooms, setPosts] = useState([]);
-    const { isLoading, error, data } = useQuery({
-        queryKey: ['roomsData'],
+    const { isLoading, data } = useQuery({
+        queryKey: ['rooms', 'list'],
         queryFn: fetchRooms
     });
 

@@ -48,14 +48,14 @@ async function CreateAbl(req, res) {
         const previousThreshold = previousThresholds[req.body.typeOfRoom]; // Get previous threshold for the current room
         if (temperatureMatchedThreshold !== previousThreshold) {
           console.log(`Temperature (${temp}) falls within ${temperatureMatchedThreshold} threshold.`);
-          client.messages
-            .create({
-              body: `EmberNotifty --- threshold reached: ${temperatureMatchedThreshold}`,
-              from: '+13202881651',
-              to: '+420702004704'
-            })
-            .then(message => console.log(message.sid))
-            .catch(error => console.error(error));
+          // client.messages
+          //   .create({
+          //     body: `EmberNotifty --- threshold reached: ${temperatureMatchedThreshold}`,
+          //     from: '+13202881651',
+          //     to: '+420702004704'
+          //   })
+          //   .then(message => console.log(message.sid))
+          //   .catch(error => console.error(error));
           previousThresholds[req.body.typeOfRoom] = temperatureMatchedThreshold; // Update previous threshold for the current room
         } else {
           console.log(`Temperature (${temp}) falls within the same threshold as before.`);
