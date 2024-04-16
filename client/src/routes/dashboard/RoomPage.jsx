@@ -19,12 +19,14 @@ export default function RoomPage() {
 
   const { isLoading, data: roomData } = useQuery({
     queryKey: ['room', "list", paramsForRooms.roomId],
-    queryFn: () => fetchRoomFunction(paramsForRooms.roomId)
+    queryFn: () => fetchRoomFunction(paramsForRooms.roomId),
+    refetchInterval: 10000,
   });
 
   const { isLoading: isLoadingTemperature, data: temperatureData } = useQuery({
     queryKey: ['temperature-reading', paramsForRooms.roomId, dateCalendar],
-    queryFn: () => fetchRoomTemperatureHistoryFunction(paramsForRooms.roomId, dateCalendar)
+    queryFn: () => fetchRoomTemperatureHistoryFunction(paramsForRooms.roomId, dateCalendar),
+    refetchInterval: 10000
   });
 
 

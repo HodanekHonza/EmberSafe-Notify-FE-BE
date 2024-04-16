@@ -1,7 +1,6 @@
-const path = require("path");
 const Ajv = require("ajv").default;
 const RoomDao = require("../../dao/room-dao");
-let dao = new RoomDao();
+const dao = new RoomDao();
 
 const schema = {
   type: "object",
@@ -59,14 +58,15 @@ const schema = {
 };
 
 async function CreateAbl(req, res) {
+  
   try {
     const ajv = new Ajv();
     const valid = ajv.validate(schema, req.body);
     if (valid) {
       let room = req.body;
       room = await dao.createRoom(room);
-      res.status(200);
       res.json(room);
+      res.status(200);
     } else {
       res.status(400).send({
         errorMessage: "validation of input failed",

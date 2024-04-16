@@ -1,7 +1,8 @@
 const express = require("express");
-const router = express.Router();
 require("dotenv") // To read CLERK_API_KEY
+const router = express.Router();
 const { ClerkExpressRequireAuth } = require("@clerk/clerk-sdk-node");
+
 const CreateAbl = require("../abl/room/create-abl");
 const GetAbl = require("../abl/room/get-abl");
 const UpdateAbl = require("../abl/room/update-abl");

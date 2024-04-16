@@ -9,7 +9,8 @@ const DashboardProvider = ({ children }) => {
     const [rooms, setPosts] = useState([]);
     const { isLoading, data } = useQuery({
         queryKey: ['rooms', 'list'],
-        queryFn: fetchRooms
+        queryFn: fetchRooms, 
+        refetchInterval: 10000
     });
 
     useEffect(() => {
