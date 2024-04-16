@@ -1,15 +1,15 @@
 export const CurTempInfoHistory = (RoomData, TemperatureHistory) => {
-  
-    if (TemperatureHistory.Temperature >= RoomData.Cold[0] && TemperatureHistory.Temperature <= RoomData.Cold[1]) {
-      return "#4497e5";
-    } else if (TemperatureHistory.Temperature >= RoomData.Normal[0] && TemperatureHistory.Temperature <= RoomData.Normal[1]) {
-      return "#29a53a";
-    } else if (TemperatureHistory.Temperature >= RoomData.Hot[0] && TemperatureHistory.Temperature <= RoomData.Hot[1]) {
-      return "orange";
-    } else if (TemperatureHistory.Temperature >= RoomData.Dangerous[0] && TemperatureHistory.Temperature <= RoomData.Dangerous[1]) {
-      return "#d80000";
-    } else {
-      return "#d80000";
-    }
-  
-}
+  const temperature = TemperatureHistory.temp;
+
+  if (temperature >= RoomData.thresholds.thresholdCold.low && temperature <= RoomData.thresholds.thresholdCold.high) {
+    return "blue";
+  } else if (temperature >= RoomData.thresholds.thresholdNormal.low && temperature <= RoomData.thresholds.thresholdNormal.high) {
+    return "green";
+  } else if (temperature >= RoomData.thresholds.thresholdHot.low && temperature <= RoomData.thresholds.thresholdHot.high) {
+    return "orange";
+  } else if (temperature >= RoomData.thresholds.thresholdDanger.low && temperature <= RoomData.thresholds.thresholdDanger.high) {
+    return "red";
+  } else {
+    return "purple"; // Default to red for temperatures outside defined ranges
+  }
+};

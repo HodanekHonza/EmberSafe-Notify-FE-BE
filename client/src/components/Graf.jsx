@@ -16,14 +16,14 @@ import { CurTempInfoHistory } from './componentsFunction/GrafFunction';
 
 
 
-export default function Graf ({TemperatureHistory, RoomData}){
+export default function Graf ({temperatureData, RoomData}){
     return (
       <ResponsiveContainer width="100%" height="100%">
         
         <BarChart
           width={600}
           height={300}
-          data={TemperatureHistory}
+          data={temperatureData.map(entry => ({ name: new Date(entry.timeStamp).toLocaleTimeString(), Temperature: entry.temp }))}
           margin={{
             top: 5,
             right: 10,
@@ -40,9 +40,9 @@ export default function Graf ({TemperatureHistory, RoomData}){
           <Brush dataKey="name" height={30} stroke="#5bd887" />
           <Bar dataKey="Temperature" name="Temperature" fill="#8884d8" unit={"°C"}>
             {
-              TemperatureHistory.map((entry, index)=>
+              temperatureData?.map((entry, index)=>
               (
-                <Cell key={`cell-${index}`} fill={CurTempInfoHistory(RoomData, TemperatureHistory[index])}/>
+                <Cell key={`cell-${index}`}fill={CurTempInfoHistory(RoomData, temperatureData[index])}/>
               ))
             }
           </Bar>
@@ -50,3 +50,5 @@ export default function Graf ({TemperatureHistory, RoomData}){
       </ResponsiveContainer>
     );
 }
+
+//

@@ -1,7 +1,7 @@
 // DataContext.js
 import React, { useState, useEffect } from 'react';
 import EmberNotifyContext from './DashboardContext';
-import { fetchRoom, fetchRooms } from '../services/apiService';
+import { fetchRoom, fetchRooms, fetchRoomTemperatureHistory } from '../services/apiService';
 import {
     useQuery,
 } from '@tanstack/react-query'
@@ -23,9 +23,14 @@ const DashboardProvider = ({ children }) => {
         return fetchRoom(typeOfRoom)
     }
 
+    async function fetchRoomTemperatureHistoryFunction(typeOfRoom, date) {
+        return fetchRoomTemperatureHistory(typeOfRoom, date)
+    }
+
     const value = {
         rooms,
         fetchRoomFunction,
+        fetchRoomTemperatureHistoryFunction,
         isLoading
     };
 
