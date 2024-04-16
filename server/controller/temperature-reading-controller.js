@@ -8,7 +8,7 @@ router.post("/create", async (req, res) => {
   await CreateAbl(req, res);
 });
 
-router.get("/list", async (req, res) => {
+router.get("/list/:typeOfRoom/:date", async (req, res) => {
   await ListAbl(req, res);
 });
 

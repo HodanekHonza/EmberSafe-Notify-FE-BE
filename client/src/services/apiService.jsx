@@ -29,5 +29,22 @@ async function fetchRoom(typeOfRoom) {
     }
 }
 
-export { fetchRooms, fetchRoom }
+
+async function fetchRoomTemperatureHistory(typeOfRoom, date) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/temperature-reading/list/${typeOfRoom}/${date}`, {
+            method: 'GET',
+
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch room');
+        }
+        return response.json();
+    } catch (error) {
+        console.error('Error fetching room:', error);
+        throw error;
+    }
+}
+
+export { fetchRooms, fetchRoom, fetchRoomTemperatureHistory }
 export default (fetchRooms, fetchRoom)

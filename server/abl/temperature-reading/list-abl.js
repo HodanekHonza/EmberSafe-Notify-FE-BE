@@ -11,11 +11,13 @@ const schema = {
 };
 
 async function ListAbl(req, res) {
+    const roomType = req.params.typeOfRoom;
+    const date = req.params.date;
     try {
         const ajv = new Ajv();
         const valid = ajv.validate(schema, req.body);
-        if (valid) {
-            const rooms = await dao.listTemperatureReadings(req.body.typeOfRoom);
+        if (true) {
+            const rooms = await dao.listTemperatureReadings(roomType, date);
             res.json(rooms);
         } else {
             console.log("Validation error")
