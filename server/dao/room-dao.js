@@ -5,7 +5,7 @@ const client = require("../db/mongoDB");
 class RoomDao {
   async createRoom(room) {
     try {
-      await client.connect();
+
       const database = client.db("EmberNotifyDB");
 
       const roomCollection = database.collection("room");
@@ -16,15 +16,13 @@ class RoomDao {
 
     } catch (e) {
       console.log(e)
-    } finally {
-      await client.close();
     }
   }
 
 
   async getRoom(typeOfRoomParam) {
     try {
-      await client.connect();
+
       const database = client.db("EmberNotifyDB");
       const rooms = database.collection("room");
       const query = { typeOfRoom: typeOfRoomParam };
@@ -33,15 +31,13 @@ class RoomDao {
     } catch (e) {
       console.log(e)
     }
-    finally {
-      await client.close();
-    }
+
   }
 
 
   async updateRoomTemperature(typeOfRoom, temperature) {
     try {
-      await client.connect();
+
       const database = client.db("EmberNotifyDB");
       const movies = database.collection("room");
 
@@ -59,14 +55,11 @@ class RoomDao {
     } catch (e) {
       console.log(e);
     }
-    finally {
-      await client.close();
-    }
+
   }
 
   async deleteRoom(typeOfRoom) {
     try {
-      await client.connect();
       const database = client.db("EmberNotifyDB");
       const rooms = database.collection("room");
 
@@ -81,22 +74,17 @@ class RoomDao {
     } catch (e) {
       console.log(e);
     }
-    finally {
-      await client.close();
-    }
+
   }
 
   async listRooms() {
     try {
-      await client.connect();
       const database = client.db("EmberNotifyDB");
       const rooms = database.collection("room");
       const result = await rooms.find().toArray();
       return result;
     } catch (e) {
       console.log(e);
-    } finally {
-      await client.close();
     }
   }
 }
