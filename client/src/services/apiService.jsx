@@ -41,7 +41,7 @@ async function fetchRoomTemperatureHistory(typeOfRoom, date) {
         }
         return response.json();
     } catch (error) {
-        console.error('Error fetching room:', error);
+        console.error('Error fetching room history:', error);
         throw error;
     }
 }
