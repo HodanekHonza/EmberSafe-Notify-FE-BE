@@ -8,23 +8,21 @@ export default function RoomsPage() {
     const { rooms, isLoading } = useContext(EmberNotifyContext);
 
     return (
-        <div>
+        <div className="container mx-auto">
             {isLoading ? (
                 <div className="flex justify-center items-center h-screen">
                     <Spinner color="purple" size="xl" />
                 </div>
             ) : (
                 <div>
-                    {/* Title and button */}
-                    <div className='flex items-start justify-between max-w-7xl mb-10 h-20' style={{ margin: "0 auto" }}>
-                        <div className='text-3xl font-semibold'>Rooms</div>
+                
+                    <div className='flex flex-col justify-center sm:flex-row items-center sm:items-start sm:justify-between max-w-7xl mb-10 pb-5 h-20 px-11' style={{ margin: "0 auto" }}>
+                        <h2 className='text-4xl font-extrabold dark:text-white mb-4 sm:mb-0'>Rooms</h2>
                         <div>
                             <Button href="/dashboard/room/add" name="Add new Room" />
                         </div>
                     </div>
-                    {/* Room blocks */}
-                    <div className='grid grid-cols-4 gap-1 max-w-7xl' style={{ margin: "0 auto" }}>
-                        {/* Block room */}
+                    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-w-7xl px-11' style={{ margin: "0 auto" }}>
                         {rooms.map((room) => (
                             <RoomBlock key={room._id} room={room} />
                         ))}
@@ -35,30 +33,28 @@ export default function RoomsPage() {
     );
 }
 
-
-
-
 function RoomBlock({ room }) {
+    const temperatureIcon = getTemperatureIcon(room);
+    const isTemperatureHigh = room.lastKnownTemperature > room.thresholds.thresholdNormal.high;
+
     return (
-        <a href={`/dashboard/room/${room.typeOfRoom}`} className='h-[200px] w-[300px] mb-5 rounded-2xl hover:bg-gray-200 ease-in-out duration-200 cursor-pointer ' style={{ boxShadow: "4px 4px 5px rgba(0, 0, 0, 0.25), 0px 0px 20px rgba(0, 0, 0, 0.25)" }}>
-
-            <div className='text-3xl font-semibold w-full flex justify-center items-center h-20'>
-                {room.typeOfRoom}
-            </div>
-
-            <div className='flex w-full h-24 justify-center items-center'>
-                {/* change this nonsence, need to get treshhold before this 
-                 treshhold to compare and tell if the temp is going down or up  */}
-                {room.lastKnownTemperature > room.thresholds.thresholdNormal.high ? (
-                    <div><UpTemperature /> <DownTemperature className="invisible" /></div>
-                ) : (
-                    <div><UpTemperature className="invisible" /> <DownTemperature /></div>
-                )}
-                <div className='text-3xl mx-5'>
-                    {room.lastKnownTemperature + " °C"}
-                </div>
-                <div>
-                    {getTemperatureIcon(room)}
+        <a href={`/dashboard/room/${room.typeOfRoom}`} className='sm:mt-0 mt-11 rounded-lg shadow-lg hover:bg-gray-200 transition duration-200'>
+            <div className='p-4'>
+                <div className='text-xl font-semibold'>{room.typeOfRoom}</div>
+                <div className='flex items-center mt-4'>
+                    {isTemperatureHigh ? (
+                        <>
+                            <UpTemperature className='mr-2' />
+                            <DownTemperature className='invisible mr-2' />
+                        </>
+                    ) : (
+                        <>
+                            <UpTemperature className='invisible mr-2' />
+                            <DownTemperature className='mr-2' />
+                        </>
+                    )}
+                    <div className='text-xl'>{room.lastKnownTemperature} °C</div>
+                    <div className='ml-auto'>{temperatureIcon}</div>
                 </div>
             </div>
         </a>
