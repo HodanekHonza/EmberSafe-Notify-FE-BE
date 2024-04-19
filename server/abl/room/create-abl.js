@@ -5,7 +5,6 @@ const dao = new RoomDao();
 const schema = {
   type: "object",
   properties: {
-    idOfDevice: { type: "string" },
     idOfRoom: { type: "string" },
     lastKnownTemperature: { type: "number" },
     thresholds: {
@@ -53,7 +52,7 @@ const schema = {
     },
     typeOfRoom: { type: "string" },
   },
-  required: ["idOfDevice", "lastKnownTemperature", "thresholds", "typeOfRoom"],
+  required: ["idOfRoom", "lastKnownTemperature", "thresholds", "typeOfRoom"],
   additionalProperties: false,
 };
 
@@ -64,6 +63,8 @@ async function CreateAbl(req, res) {
     const valid = ajv.validate(schema, req.body);
     if (valid) {
       let room = req.body;
+      const currentDate = new Date();
+      room.lastUpdated = currentDate.toISOString();
       room = await dao.createRoom(room);
       res.json(room);
       res.status(200);

@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 const navigationHeader = [
-  { name: 'Dashboard', href: '#' },
-  { name: 'Contact', href: '#' },
-  { name: 'FAQ', href: '#' },
+  { name: 'Dashboard', href: '/dashboard' },
+  { name: 'FAQ', href: '/faq' },
+  { name: 'Contact', href: '/contact' },
 ];
 const features = [
   {
