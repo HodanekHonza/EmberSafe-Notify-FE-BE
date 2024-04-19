@@ -14,7 +14,7 @@ export default function RoomsPage() {
                 </div>
             ) : (
                 <div>
-                    <div className="flex flex-row gap-6 flex-wrap">
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                         {rooms.map((room) => (
                             <RoomBlock key={room._id} room={room} />
                         ))}
