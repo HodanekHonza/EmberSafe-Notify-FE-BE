@@ -23,6 +23,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import Faq from './routes/root/FaqPage.jsx'
 
 const queryClient = new QueryClient()
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -35,6 +36,8 @@ const router = createBrowserRouter([
       { path: '/contact', element: <ContactPage /> },
       { path: '/sign-in', element: <SignInPage /> },
       { path: '/sign-up', element: <SignUpPage /> },
+      { path: '/faq', element: <Faq /> },
+      
       {
         element: <DashboardLayout />,
         path: 'dashboard',

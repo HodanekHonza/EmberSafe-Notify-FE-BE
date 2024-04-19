@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import EmberNotifyContext from '../../providerContext/DashboardContext';
 import { Spinner } from "flowbite-react";
-import RoomBlock from '../../components/rooms/RoomBlock';
+import RoomCard from '../../components/rooms/RoomCard';
 
 export default function RoomsPage() {
     const { rooms, isLoading } = useContext(EmberNotifyContext);
@@ -16,7 +16,7 @@ export default function RoomsPage() {
                 <div>
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                         {rooms.map((room) => (
-                            <RoomBlock key={room._id} room={room} />
+                            <RoomCard key={room._id} room={room} />
                         ))}
                     </div>
                 </div>

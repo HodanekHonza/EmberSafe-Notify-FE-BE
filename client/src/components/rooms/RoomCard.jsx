@@ -2,14 +2,19 @@ import { DownTemperature, NormalTemperature, RedAlert, Snowflake, UpTemperature,
 import { Fragment } from 'react';
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/20/solid'; // Icons
 
-export default function RoomBlock({ room }) {
+export default function RoomCard({ room }) {
     const temperatureIcon = getTemperatureIcon(room);
     const isTemperatureHigh = room.lastKnownTemperature > room.thresholds.thresholdNormal.high;
 
     return (
-        <a href={`/dashboard/room/${room.typeOfRoom}`} key={room._id} className="bg-white overflow-hidden shadow rounded-lg">
+        <a href={`/dashboard/room/${room.typeOfRoom}`} key={room._id} className="bg-white overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition duration-300">
             <div className="px-4 py-5 sm:p-6">
-                <h3 className="text-lg font-semibold leading-6 text-gray-900">{room.typeOfRoom}</h3>
+
+                <div className='flex flex-row gap-2 items-center'>
+                    <h3 className="text-lg font-semibold leading-6 text-gray-900">{room.typeOfRoom}</h3>
+                    <div className=' text-2xl mb-2'>🛋️</div>
+                </div>
+
                 <div className="mt-4 flex justify-between items-center">
                     <div className='flex flex-col items-center justify-center gap-1'>
                         <p className="text-sm font-medium text-gray-600">Temperature</p>
@@ -17,7 +22,7 @@ export default function RoomBlock({ room }) {
                     </div>
                     <div className="flex flex-col items-center justify-center gap-1">
                         <p className="text-sm font-medium text-gray-600">Last Updated</p>
-                        <p className="ml-2 text-sm text-gray-500">{room.timeStamp}22:24 </p>
+                        <p className="ml-2 text-sm text-gray-500">{room.lastUpdated}</p>
                     </div>
                 </div>
                 <div className="mt-4 flex justify-between items-center">
@@ -31,15 +36,14 @@ export default function RoomBlock({ room }) {
                         <p className="text-sm font-medium text-gray-600">Trend</p>
                         {getTemperatureStatusAndTrend(room).trend === 'up' ? (
                             <UpTemperature className='mr-2 h-5 w-5' />
-                            // <ChevronUpIcon className="h-5 w-5 ml-2 text-red-500" />
                         ) : (
-                            <DownTemperature className='p-1 mr-2  h-10 w-10' />
-                            // <ChevronDownIcon className="h-5 w-5 ml-2 text-green-500" />
+                            <DownTemperature className='p-1 mr-2 h-10 w-10' />
                         )}
                     </div>
                 </div>
             </div>
         </a>
+
     );
 }
 // <a href={`/dashboard/room/${room.typeOfRoom}`} className='flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700'>
