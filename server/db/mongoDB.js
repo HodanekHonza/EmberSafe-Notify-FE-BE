@@ -3,7 +3,7 @@ require('dotenv/config');
 const connectionString = process.env.MONGO_URI;
 const client = new MongoClient(connectionString);
 
-// Connect the client to the MongoDB server
+
 async function connectToDatabase() {
     try {
         await client.connect();
@@ -13,7 +13,6 @@ async function connectToDatabase() {
     }
 }
 
-// Call the connectToDatabase function to establish connection
 connectToDatabase();
 
 module.exports = client;

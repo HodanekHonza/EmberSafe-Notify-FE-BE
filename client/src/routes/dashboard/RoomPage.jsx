@@ -1,15 +1,14 @@
 import React, { useContext, useState } from 'react';
 import Button from '../../components/Button'
 import { AroowBack } from '../../assets/Icons'
-import Calendar from '../../components/Calendar'
+import Calendar from '../../components/room/Calendar'
 import { useParams } from 'react-router-dom';
-import TemperatureMetr from '../../components/TemperatureMetr';
-import Graf from '../../components/Graf';
+import Graf from '../../components/room/Graf';
 import EmberNotifyContext from '../../providerContext/DashboardContext';
 import {
   useQuery,
 } from '@tanstack/react-query'
-import Gauge from '../../components/Gauge';
+import Gauge from '../../components/room/Gauge';
 import { Spinner } from "flowbite-react";
 export default function RoomPage() {
 
@@ -48,8 +47,8 @@ export default function RoomPage() {
         <>
           <Button href="/dashboard" icon={<AroowBack />} name="Back" />
 
-          <div className="flex flex-row justify-between items-center mb-10 mt-6">
-            <div className="text-3xl text-gray-500">{roomData.typeOfRoom}</div>
+          <div className="flex flex-col lg:flex-row justify-between items-center mb-10 mt-6">
+            <div className="text-3xl text-gray-500 lg:mb-0">{roomData.typeOfRoom}</div>
             <div className="flex-grow flex justify-center items-center mx-auto mb-6">
               <Calendar setDateState={setDateCalendar} />
             </div>
@@ -59,11 +58,11 @@ export default function RoomPage() {
             </div>
           </div>
 
-          <div className="flex justify-between pt-20">
-            <div className="w-1/2">
-              <Gauge lastKnownTemperature={roomData.lastKnownTemperature}/>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-20">
+            <div>
+              <Gauge lastKnownTemperature={roomData.lastKnownTemperature} />
             </div>
-            <div className="w-1/2">
+            <div>
               {isLoadingTemperature ? (
                 <div className="flex justify-center items-center h-screen">
                   <Spinner color="purple" size="xl" />
@@ -76,6 +75,5 @@ export default function RoomPage() {
         </>
       )}
     </div>
-
   )
 }

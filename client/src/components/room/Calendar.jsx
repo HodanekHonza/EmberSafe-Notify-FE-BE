@@ -7,7 +7,7 @@ export default function Calendar({ setDateState }) {
 
   useEffect(() => {
     const modifiedDate = new Date(startDate);
-    modifiedDate.setHours(2, 0, 0, 0); // Set time to start of day
+    modifiedDate.setHours(2, 0, 0, 0); // Set time to start of day, this is caused mabye becuase my mongo server is in netherlands? idk weird
 
     setDateState(modifiedDate.toISOString());
   }, [startDate, setDateState]);
