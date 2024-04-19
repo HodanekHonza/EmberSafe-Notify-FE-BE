@@ -2,6 +2,7 @@ import flowbite from "flowbite-react/tailwind"
 /** @type {import('tailwindcss').Config} */
 // tailwind.config.js
 import defaultTheme from "tailwindcss/defaultTheme";
+import formsPlugin from "@tailwindcss/forms";
 export default {
   content: [
     "./index.html",
@@ -17,6 +18,7 @@ export default {
   },
   plugins: [
     flowbite.plugin(),
+    formsPlugin,
   ],
 }
 

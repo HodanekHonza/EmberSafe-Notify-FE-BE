@@ -58,7 +58,7 @@ class RoomDao {
       const rooms = database.collection("room");
       const filter = { typeOfRoom: typeOfRoom };
       const result = await rooms.findOneAndDelete(filter);
-      
+
       if (result) {
         console.log(`${typeOfRoom} deleted`);
       } else {

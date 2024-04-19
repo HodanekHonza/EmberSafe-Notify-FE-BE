@@ -8,7 +8,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { ClerkProvider, SignUp } from '@clerk/clerk-react'
+import { ClerkProvider } from '@clerk/clerk-react'
 import ErrorPage from './routes/root/ErrorPage.jsx';
 import RootLayout from './layouts/RootLayout.jsx'
 import RoomsPage from './routes/dashboard/RoomsPage.jsx'
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
             element: <RoomsPage />,
           },
           {
-            path: "/dashboard/room/:roomId/edit/",
+            path: "/dashboard/room/:roomId/edit",
             element: <EditRoomPage />,
           },
           {
@@ -59,10 +59,6 @@ const router = createBrowserRouter([
             path: "/dashboard/room/add",
             element: <AddRoomPage />,
           },
-          {
-            path: "/dashboard/signin",
-            element: <SignUp />,
-          }
         ],
       },
     ],

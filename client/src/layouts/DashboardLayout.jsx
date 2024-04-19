@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
 import { useUser } from '@clerk/clerk-react';
-
+import LayoutNavBar from '../components/layoutDashboard/LayoutNavbar';
 export default function DashboardLayout() {
   const { isSignedIn, user, isLoaded } = useUser();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(user)
- 
+
     if (!isSignedIn && isLoaded) {
-   
+
       console.log("NOT LOGGED IN ");
       navigate('/sign-in');
     }
@@ -20,8 +19,8 @@ export default function DashboardLayout() {
 
   return (
     <div>
-      <Header />
-      <Outlet />
+      {/* <Header /> */}
+      <LayoutNavBar content={<Outlet />} />
     </div>
   );
 }
