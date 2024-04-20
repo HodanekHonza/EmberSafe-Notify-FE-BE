@@ -7,42 +7,49 @@ export default function RoomCard({ room }) {
     const isTemperatureHigh = room.lastKnownTemperature > room.thresholds.thresholdNormal.high;
 
     return (
-        <a href={`/dashboard/room/${room.typeOfRoom}`} key={room._id} className="bg-white overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition duration-300">
-            <div className="px-4 py-5 sm:p-6">
-
-                <div className='flex flex-row gap-2 items-center'>
-                    <h3 className="text-lg font-semibold leading-6 text-gray-900">{room.typeOfRoom}</h3>
-                    <div className=' text-2xl mb-2'>🛋️</div>
+        <a href={`/dashboard/room/${room.typeOfRoom}`} key={room._id} className="relative bg-white overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition duration-300">
+            <div className="absolute inset-0 bg-cover bg-center z-0" style={{ backgroundImage: `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIZ1qsJb2XIowb4eiPaMINDLYh16JAK2sc3VlgXl8iVg&s')` }}></div>
+            <div className="absolute inset-0 bg-black opacity-50 z-1"></div>
+            <div className="px-4 py-5 sm:p-6 relative z-10 text-white">
+                <div className='flex flex-row justify-between'>
+                    {getTemperatureStatusAndTrend(room).trend === 'up' ? (
+                        <UpTemperature className='mr-2 h-5 w-5' />
+                    ) : (
+                        <DownTemperature className='p-1 mr-2 h-10 w-10' />
+                    )}
+                    <div className="flex flex-col  items-end justify-center gap-1">
+                        <p className="text-sm font-extrabold">Last Updated</p>
+                        <p className="ml-2 text-sm">{new Date(room.lastUpdated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                    </div>
                 </div>
 
                 <div className="mt-4 flex justify-between items-center">
-                    <div className='flex flex-col items-center justify-center gap-1'>
-                        <p className="text-sm font-medium text-gray-600">Temperature</p>
-                        <p className="text-lg font-semibold text-gray-900">{room.lastKnownTemperature}°C</p>
-                    </div>
-                    <div className="flex flex-col items-center justify-center gap-1">
-                        <p className="text-sm font-medium text-gray-600">Last Updated</p>
-                        <p className="ml-2 text-sm text-gray-500">{room.lastUpdated}</p>
+                    {/* SELF CLOSING HELPER DIV SO TEMPERATURE STAYS ON OTHER SIDE */}
+                    <div/ >                    
+                    <div className='flex flex-col items-end justify-center gap-1'>
+                        <p className="text-sm font-extrabold">Temperature</p>
+                        <p className="text-sm ">{room.lastKnownTemperature}°C</p>
                     </div>
                 </div>
                 <div className="mt-4 flex justify-between items-center">
-                    <div>
-                        <p className="text-sm font-medium text-gray-600">Status</p>
-                        <p className="text-lg font-semibold text-gray-900">
+                    <div className='flex flex-row'>
+
+                        <p className="text-lg font-semibold">
                             {temperatureIcon}
                         </p>
                     </div>
-                    <div className="flex items-center gap-3">
-                        <p className="text-sm font-medium text-gray-600">Trend</p>
-                        {getTemperatureStatusAndTrend(room).trend === 'up' ? (
-                            <UpTemperature className='mr-2 h-5 w-5' />
-                        ) : (
-                            <DownTemperature className='p-1 mr-2 h-10 w-10' />
-                        )}
-                    </div>
+
+
+                    <button className="flex flex-row gap-2 items-center justify-start border rounded-xl px-5 py-1 border-white bg-white text-black hover:bg-black/50 hover:text-white border-none bottom-4">
+                        <h3 className="text-lg font-extrabold leading-6">{room.typeOfRoom}</h3>
+                        <div className='text-2xl mb-2'>🛋️</div>
+                    </button>
                 </div>
             </div>
         </a>
+
+
+
 
     );
 }

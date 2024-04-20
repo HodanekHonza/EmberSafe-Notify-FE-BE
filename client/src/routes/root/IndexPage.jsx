@@ -145,7 +145,7 @@ export default function IndexPage() {
             ))}
           </div>
           <div className="flex flex-1 items-center justify-end gap-x-6">
-            <a href="/dashboard" className="hidden lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900">
+            <a href="/sign-in" className="hidden lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900">
               Log in
             </a>
             <a
@@ -179,7 +179,7 @@ export default function IndexPage() {
                 />
               </a>
               <a
-                href="#"
+                href="/sing-up"
                 className="ml-auto rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign up
@@ -208,7 +208,7 @@ export default function IndexPage() {
                 </div>
                 <div className="py-6">
                   <a
-                    href="#"
+                    href="/sing-in"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     Log in
