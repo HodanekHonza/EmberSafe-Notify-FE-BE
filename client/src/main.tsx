@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import EditRoomPage from './routes/dashboard/EditRoomPage.jsx'
 import RoomPage from './routes/dashboard/RoomPage.jsx'
-import AddRoomPage from './routes/dashboard/AddRoomPage.jsx'
+import CreateRoomPage from './routes/dashboard/CreateRoomPage.jsx'
 import './index.css'
 import {
   createBrowserRouter,
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/dashboard/room/add",
-            element: <AddRoomPage />,
+            element: <CreateRoomPage />,
           },
         ],
       },
