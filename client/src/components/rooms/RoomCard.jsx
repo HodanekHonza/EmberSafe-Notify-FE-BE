@@ -8,8 +8,8 @@ export default function RoomCard({ room }) {
 
     return (
         <a href={`/dashboard/room/${room.typeOfRoom}`} key={room._id} className="relative bg-white overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition duration-300">
-            <div className="absolute inset-0 bg-cover bg-center z-0" style={{ backgroundImage: `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIZ1qsJb2XIowb4eiPaMINDLYh16JAK2sc3VlgXl8iVg&s')` }}></div>
-            <div className="absolute inset-0 bg-black opacity-50 z-1"></div>
+            <div className="absolute inset-0 bg-cover bg-center z-0" style={{ backgroundImage: `url('https://plus.unsplash.com/premium_photo-1675195924412-8d00702ff4f9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmF0aCUyMGJvbWJ8ZW58MHx8MHx8fDA%3D')` }}></div>
+            <div className="absolute inset-0 bg-black opacity-35 z-1"></div>
             <div className="px-4 py-5 sm:p-6 relative z-10 text-white">
                 <div className='flex flex-row justify-between'>
                     {getTemperatureStatusAndTrend(room).trend === 'up' ? (
@@ -42,7 +42,6 @@ export default function RoomCard({ room }) {
 
                     <button className="flex flex-row gap-2 items-center justify-start border rounded-xl px-5 py-1 border-white bg-white text-black hover:bg-black/50 hover:text-white border-none bottom-4">
                         <h3 className="text-lg font-extrabold leading-6">{room.typeOfRoom}</h3>
-                        <div className='text-2xl mb-2'>🛋️</div>
                     </button>
                 </div>
             </div>
