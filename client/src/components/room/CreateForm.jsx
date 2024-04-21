@@ -8,10 +8,10 @@ export default function CreateForm() {
         idOfRoom: '',
         lastKnownTemperature: 0,
         thresholds: {
-            thresholdCold: { low: 0, high: 0 },
-            thresholdNormal: { low: 0, high: 0 },
-            thresholdHot: { low: 0, high: 0 },
-            thresholdDanger: { low: 0, high: 0 }
+            thresholdCold: { low: 5, high: 15 }, 
+            thresholdNormal: { low: 16, high: 25 },
+            thresholdHot: { low: 26, high: 35 }, 
+            thresholdDanger: { low: 36, high: 50 } 
         },
         typeOfRoom: ''
     });
@@ -77,11 +77,11 @@ export default function CreateForm() {
                         <div className='text-gray-500'>
                             <div className='w-1/2 float-left'>
                                 from
-                                <input type="number" name="cold_from" value={formData.cold_from || 5} onChange={handleChange} className='w-14 ml-2 rounded-lg text-black' placeholder='0' />
+                                <input type="number" name="cold_from" value={formData.cold_from} onChange={handleChange} className='w-14 ml-2 rounded-lg text-black' placeholder='0' />
                             </div>
                             <div className='w-1/2 float-right flex justify-end items-center'>
                                 to
-                                <input type="number" name="cold_to" value={formData.cold_to || 15} onChange={handleChange} className='w-16 ml-2 rounded-lg text-black' placeholder='0' />
+                                <input type="number" name="cold_to" value={formData.cold_to} onChange={handleChange} className='w-16 ml-2 rounded-lg text-black' placeholder='0' />
                             </div>
                         </div>
                     </div>
@@ -90,11 +90,11 @@ export default function CreateForm() {
                         <div className='text-gray-500'>
                             <div className='w-1/2 float-left'>
                                 from
-                                <input type="number" name="normal_from" value={formData.normal_from || 16} onChange={handleChange} className='w-14 ml-2 rounded-lg text-black' placeholder='0' />
+                                <input type="number" name="normal_from" value={formData.normal_from} onChange={handleChange} className='w-14 ml-2 rounded-lg text-black' placeholder='0' />
                             </div>
                             <div className='w-1/2 float-right flex justify-end items-center'>
                                 to
-                                <input type="number" name="normal_to" value={formData.normal_to || 25} onChange={handleChange} className='w-16 ml-2 rounded-lg text-black' placeholder='0' />
+                                <input type="number" name="normal_to" value={formData.normal_to} onChange={handleChange} className='w-16 ml-2 rounded-lg text-black' placeholder='0' />
                             </div>
                         </div>
                     </div>
@@ -103,11 +103,11 @@ export default function CreateForm() {
                         <div className='text-gray-500'>
                             <div className='w-1/2 float-left'>
                                 from
-                                <input type="number" name="hot_from" value={formData.hot_from || 26} onChange={handleChange} className='w-14 ml-2 rounded-lg text-black' placeholder='0' />
+                                <input type="number" name="hot_from" value={formData.hot_from} onChange={handleChange} className='w-14 ml-2 rounded-lg text-black' placeholder='0' />
                             </div>
                             <div className='w-1/2 float-right flex justify-end items-center'>
                                 to
-                                <input type="number" name="hot_to" value={formData.hot_to || 35} onChange={handleChange} className='w-16 ml-2 rounded-lg text-black' placeholder='0' />
+                                <input type="number" name="hot_to" value={formData.hot_to} onChange={handleChange} className='w-16 ml-2 rounded-lg text-black' placeholder='0' />
                             </div>
                         </div>
 
@@ -118,11 +118,11 @@ export default function CreateForm() {
 
                             <div className='w-1/2 float-left'>
                                 from
-                                <input type="number" name="dangerous_from" value={formData.dangerous_from || 36} onChange={handleChange} className='w-14 ml-2 rounded-lg text-black' placeholder='0' />
+                                <input type="number" name="dangerous_from" value={formData.dangerous_from} onChange={handleChange} className='w-14 ml-2 rounded-lg text-black' placeholder='0' />
                             </div>
                             <div className='w-1/2 float-right flex justify-end items-center'>
                                 to
-                                <input type="number" name="dangerous_to" value={formData.dangerous_to || 50} onChange={handleChange} className='w-16 ml-2 rounded-lg text-black' placeholder='0' />
+                                <input type="number" name="dangerous_to" value={formData.dangerous_to} onChange={handleChange} className='w-16 ml-2 rounded-lg text-black' placeholder='0' />
                             </div>
                         </div>
                     </div>
