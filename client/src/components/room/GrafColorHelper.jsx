@@ -1,4 +1,4 @@
-export const CurTempInfoHistory = (RoomData, TemperatureHistory) => {
+export const GrafColorHelper = (RoomData, TemperatureHistory) => {
     const temperature = TemperatureHistory.temp;
   
     if (temperature >= RoomData.thresholds.thresholdCold.low && temperature <= RoomData.thresholds.thresholdCold.high) {

@@ -1,10 +1,10 @@
 import { DownTemperature, NormalTemperature, RedAlert, Snowflake, UpTemperature, YellowAlert } from '../../assets/Icons';
-import { Fragment } from 'react';
-import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/20/solid'; // Icons
+// import { Fragment } from 'react';
+// import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/20/solid'; // Icons
 
 export default function RoomCard({ room }) {
     const temperatureIcon = getTemperatureIcon(room);
-    const isTemperatureHigh = room.lastKnownTemperature > room.thresholds.thresholdNormal.high;
+   // const isTemperatureHigh = room.lastKnownTemperature > room.thresholds.thresholdNormal.high;
 
     return (
         <a href={`/dashboard/room/${room.typeOfRoom}`} key={room._id} className="relative bg-white overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition duration-300">
