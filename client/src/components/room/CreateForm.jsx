@@ -1,31 +1,135 @@
-import React, { useContext } from 'react'
-import { PhotoIcon } from '@heroicons/react/24/solid'
+import React, { useContext, useState } from 'react';
+import { PhotoIcon } from '@heroicons/react/24/solid';
 import EmberNotifyContext from '../../providerContext/DashboardContext';
+
 export default function CreateForm() {
     const { createRoomFunction } = useContext(EmberNotifyContext);
-    async function handleCreateRoom(room) {
+    const [formData, setFormData] = useState({
+        idOfRoom: '',
+        lastKnownTemperature: 0,
+        thresholds: {
+            thresholdCold: { low: 0, high: 0 },
+            thresholdNormal: { low: 0, high: 0 },
+            thresholdHot: { low: 0, high: 0 },
+            thresholdDanger: { low: 0, high: 0 }
+        },
+        typeOfRoom: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: name.includes("from") || name.includes("to") ? parseInt(value) : value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
-            await createRoomFunction(room)
-        } catch (e) {
-            console.log(e);
+            const roomData = {
+                idOfRoom: formData.idOfRoom,
+                lastKnownTemperature: 0,
+                thresholds: {
+                    thresholdCold: {
+                        low: formData.cold_from,
+                        high: formData.cold_to
+                    },
+                    thresholdNormal: {
+                        low: formData.normal_from,
+                        high: formData.normal_to
+                    },
+                    thresholdHot: {
+                        low: formData.hot_from,
+                        high: formData.hot_to
+                    },
+                    thresholdDanger: {
+                        low: formData.dangerous_from,
+                        high: formData.dangerous_to
+                    }
+                },
+                typeOfRoom: formData.typeOfRoom
+            };
+            await createRoomFunction(roomData);
+            console.log("Form submitted:", roomData);
+        } catch (error) {
+            console.log("Error submitting form:", error);
         }
-    }
+    };
     return (
-        <>
+        <div>
             <div className="sm:px-0 text-center mt-5">
                 <h3 className="text-base font-semibold leading-7 text-gray-900">Create new Room</h3>
             </div>
-            <form className="max-w-md mx-auto">
+            <form className="max-w-xl mx-auto" onSubmit={handleSubmit}>
                 <div className="relative z-0 w-full mb-5 group">
-                    <input type="text" name="device_name" id="device_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " required />
-                    <label htmlFor="device_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Device Name</label>
+                    <input type="text" name="idOfRoom" id="idOfRoom" value={formData.idOfRoom} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " required />
+                    <label htmlFor="idOfRoom" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Room id</label>
                 </div>
                 <div className="relative z-0 w-full mb-5 group">
-                    <input type="text" name="room_name" id="room_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " required />
-                    <label htmlFor="room_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Room Name</label>
+                    <input type="text" name="typeOfRoom" id="typeOfRoom" value={formData.typeOfRoom} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " required />
+                    <label htmlFor="typeOfRoom" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Type Of Room</label>
                 </div>
 
-                <div className="col-span-full mb-1">
+                <div className="mt-6 border-t border-gray-100">
+                    <div className="px-4 py-3 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                        <div className="text-base leading-6 text-gray-900 flex items-center">Cold</div>
+                        <div className='text-gray-500'>
+                            <div className='w-1/2 float-left'>
+                                from
+                                <input type="number" name="cold_from" value={formData.cold_from || 5} onChange={handleChange} className='w-14 ml-2 rounded-lg text-black' placeholder='0' />
+                            </div>
+                            <div className='w-1/2 float-right flex justify-end items-center'>
+                                to
+                                <input type="number" name="cold_to" value={formData.cold_to || 15} onChange={handleChange} className='w-16 ml-2 rounded-lg text-black' placeholder='0' />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="px-4 py-3 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                        <div className="text-base leading-6 text-gray-900 flex items-center">Normal</div>
+                        <div className='text-gray-500'>
+                            <div className='w-1/2 float-left'>
+                                from
+                                <input type="number" name="normal_from" value={formData.normal_from || 16} onChange={handleChange} className='w-14 ml-2 rounded-lg text-black' placeholder='0' />
+                            </div>
+                            <div className='w-1/2 float-right flex justify-end items-center'>
+                                to
+                                <input type="number" name="normal_to" value={formData.normal_to || 25} onChange={handleChange} className='w-16 ml-2 rounded-lg text-black' placeholder='0' />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="px-4 py-3 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                        <div className="text-base leading-6 text-gray-900 flex items-center">Hot</div>
+                        <div className='text-gray-500'>
+                            <div className='w-1/2 float-left'>
+                                from
+                                <input type="number" name="hot_from" value={formData.hot_from || 26} onChange={handleChange} className='w-14 ml-2 rounded-lg text-black' placeholder='0' />
+                            </div>
+                            <div className='w-1/2 float-right flex justify-end items-center'>
+                                to
+                                <input type="number" name="hot_to" value={formData.hot_to || 35} onChange={handleChange} className='w-16 ml-2 rounded-lg text-black' placeholder='0' />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div className="px-4 py-3 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                        <div className="text-base leading-6 text-gray-900 flex items-center">Dangerous</div>
+                        <div className='text-gray-500'>
+
+                            <div className='w-1/2 float-left'>
+                                from
+                                <input type="number" name="dangerous_from" value={formData.dangerous_from || 36} onChange={handleChange} className='w-14 ml-2 rounded-lg text-black' placeholder='0' />
+                            </div>
+                            <div className='w-1/2 float-right flex justify-end items-center'>
+                                to
+                                <input type="number" name="dangerous_to" value={formData.dangerous_to || 50} onChange={handleChange} className='w-16 ml-2 rounded-lg text-black' placeholder='0' />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                {/* <div className="col-span-full mb-1">
                     <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
                         Cover photo
                     </label>
@@ -45,11 +149,10 @@ export default function CreateForm() {
                             <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
                         </div>
                     </div>
-                </div>
+                </div> */}
+
                 <button type="submit" className="text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
             </form>
-
-
-        </>
+        </div>
     )
 }
