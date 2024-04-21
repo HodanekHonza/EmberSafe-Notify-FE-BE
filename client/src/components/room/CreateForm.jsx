@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { PhotoIcon } from '@heroicons/react/24/solid'
+import EmberNotifyContext from '../../providerContext/DashboardContext';
 export default function CreateForm() {
+    const { createRoomFunction } = useContext(EmberNotifyContext);
+    async function handleCreateRoom(room) {
+        try {
+            await createRoomFunction(room)
+        } catch (e) {
+            console.log(e);
+        }
+    }
     return (
         <>
             <div className="sm:px-0 text-center mt-5">

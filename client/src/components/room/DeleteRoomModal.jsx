@@ -1,9 +1,23 @@
-import { Fragment, useRef } from 'react'
+import { Fragment, useRef, useContext } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
-
+import { useNavigate } from 'react-router-dom';
+import EmberNotifyContext from '../../providerContext/DashboardContext';
 export default function DeleteRoomModal({ open, setOpen, typeOfRoom }) {
+  const { deleteRoomFunction } = useContext(EmberNotifyContext);
   const cancelButtonRef = useRef(null)
+  const navigate = useNavigate();
+
+  // mabye i do need to use mutations 
+  async function handleDeleteRoom() {
+    try {
+      navigate('/dashboard');
+      await deleteRoomFunction(typeOfRoom)
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -49,13 +63,20 @@ export default function DeleteRoomModal({ open, setOpen, typeOfRoom }) {
                   </div>
                 </div>
                 <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                  <button
+                  <a >
+                    <button
+                    
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      setOpen(false)
+                      handleDeleteRoom()
+                    }}
                   >
                     Delete room
-                  </button>
+                  </button> 
+                  </a>
+                 
                   <button
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
