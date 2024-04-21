@@ -28,6 +28,40 @@ async function fetchRoom(typeOfRoom) {
         throw error;
     }
 }
+async function createRoom(room) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/room/create`, {
+            method: 'POST',
+            body: JSON.stringify(room),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error('Failed to create room');
+        }
+        return response.json();
+    } catch (error) {
+        console.error('Error create room:', error);
+        throw error;
+    }
+}
+
+async function deleteRoom(typeOfRoom) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/room/delete/${typeOfRoom}`, {
+            method: 'DELETE',
+
+        });
+        if (!response.ok) {
+            throw new Error('Failed to delete room');
+        }
+        return response.json();
+    } catch (error) {
+        console.error('Error deleting room:', error);
+        throw error;
+    }
+}
 
 
 async function fetchRoomTemperatureHistory(typeOfRoom, date) {
@@ -46,5 +80,5 @@ async function fetchRoomTemperatureHistory(typeOfRoom, date) {
     }
 }
 
-export { fetchRooms, fetchRoom, fetchRoomTemperatureHistory }
+export { fetchRooms, fetchRoom, fetchRoomTemperatureHistory, deleteRoom, createRoom }
 export default (fetchRooms, fetchRoom)

@@ -35,6 +35,7 @@ export default function RoomPage() {
 
 
 
+
   // useEffect(() => {
   //     console.log(roomData)
   //     console.log(dateCalendar)
@@ -67,9 +68,9 @@ export default function RoomPage() {
             <div>
               <Gauge lastKnownTemperature={roomData.lastKnownTemperature} />
             </div>
-          {/* EDIT ROOM MODAL */}
-          <EditRoomModal open={openEditRoom} setOpen={setOpenEditRoom} />
-          <DeleteRoomModal open={openDeleteRoom} setOpen={setOpenDeleteRoom} typeOfRoom={roomData.typeOfRoom} />
+            {/* EDIT ROOM MODAL */}
+            <EditRoomModal open={openEditRoom} setOpen={setOpenEditRoom} />
+            <DeleteRoomModal open={openDeleteRoom} setOpen={setOpenDeleteRoom} typeOfRoom={roomData.typeOfRoom} />
             <div>
               {isLoadingTemperature ? (
                 <div className="flex justify-center items-center h-screen">
