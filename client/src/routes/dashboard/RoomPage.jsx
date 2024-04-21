@@ -1,19 +1,23 @@
 import React, { useContext, useState } from 'react';
-import Button from '../../components/Button'
-import { AroowBack } from '../../assets/Icons'
-import Calendar from '../../components/room/Calendar'
+import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom';
+import Calendar from '../../components/room/Calendar'
+import { Spinner } from "flowbite-react";
+
 import Graf from '../../components/room/Graf';
 import EmberNotifyContext from '../../providerContext/DashboardContext';
-import {
-  useQuery,
-} from '@tanstack/react-query'
+import { AroowBack } from '../../assets/Icons'
 import Gauge from '../../components/room/Gauge';
-import { Spinner } from "flowbite-react";
+import EditRoomModal from '../../components/room/EditRoomModal';
+import DeleteRoomModal from '../../components/room/DeleteRoomModal';
+import Button from '../../components/Button'
+
 export default function RoomPage() {
 
   const paramsForRooms = useParams();
-  const [dateCalendar, setDateCalendar] = useState(""); // one helper state for calendar date
+  const [openEditRoom, setOpenEditRoom] = useState(false)
+  const [openDeleteRoom, setOpenDeleteRoom] = useState(false)
+  const [dateCalendar, setDateCalendar] = useState(""); // helper state for calendar date
   const { fetchRoomFunction, fetchRoomTemperatureHistoryFunction } = useContext(EmberNotifyContext);
 
 
@@ -53,8 +57,9 @@ export default function RoomPage() {
               <Calendar setDateState={setDateCalendar} />
             </div>
             <div className="flex gap-4">
-              <Button href={`/dashboard/room/${paramsForRooms.roomId}/edit/`} name="Edit Room" />
-              <Button href="" name="Delete Room" color="red" />
+              <button onClick={() => setOpenEditRoom(true)}>EDIT ROOM </button>
+              <button onClick={() => setOpenDeleteRoom(true)}>DELETE ROOM </button>
+              {/* <Button href="" name="Delete Room" color="red" /> */}
             </div>
           </div>
 
@@ -62,6 +67,9 @@ export default function RoomPage() {
             <div>
               <Gauge lastKnownTemperature={roomData.lastKnownTemperature} />
             </div>
+          {/* EDIT ROOM MODAL */}
+          <EditRoomModal open={openEditRoom} setOpen={setOpenEditRoom} />
+          <DeleteRoomModal open={openDeleteRoom} setOpen={setOpenDeleteRoom} typeOfRoom={roomData.typeOfRoom} />
             <div>
               {isLoadingTemperature ? (
                 <div className="flex justify-center items-center h-screen">

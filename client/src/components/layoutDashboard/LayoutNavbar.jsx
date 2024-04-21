@@ -3,7 +3,8 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useUser } from '@clerk/clerk-react'
-import Legend from '../rooms/Legend'
+import LegendModal from '../rooms/LegendModal'
+import CreateRoomModal from '../rooms/CreateRoomModal'
 
 
 const navigation = [
@@ -90,7 +91,8 @@ function classNames(...classes) {
 
 export default function LayoutNavBar({ content }) {
   const { isSignedIn, user, isLoaded } = useUser();
-  const [open, setOpen] = useState(false)
+  const [openLegend, setOpenLegend] = useState(false)
+  const [openCreateRoom, setOpenCreateRoom] = useState(false)
   if (user == undefined) {
     return
   }
@@ -154,7 +156,7 @@ export default function LayoutNavBar({ content }) {
 
 
                       <button
-                        onClick={() => setOpen(true)}
+                        onClick={() => setOpenLegend(true)}
                         type="button"
                         className='flex flex-row items-center border-none gap-3 rounded-md  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -169,9 +171,10 @@ export default function LayoutNavBar({ content }) {
 
 
 
-                      <a href='/dashboard/room/add'>
+                      {/* <a href='/dashboard/room/add'> */}
 
                         <button
+                          onClick={() => setOpenCreateRoom(true)}
                           type="button"
                           className="flex flex-row items-center border-none gap-3 rounded-md  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                         >
@@ -183,7 +186,7 @@ export default function LayoutNavBar({ content }) {
 
 
                         </button>
-                      </a>
+                      {/* </a> */}
 
                     </div>
                     <div className="flex lg:hidden">
@@ -312,7 +315,8 @@ export default function LayoutNavBar({ content }) {
           </header>
         </div>
         {/* LEGEND FOR TELLING USERS WHICH ICONS ARE WHICH FOR CLERIFIACTION */}
-        <Legend open={open} setOpen={setOpen} />
+        <LegendModal open={openLegend} setOpen={setOpenLegend} />
+        <CreateRoomModal open={openCreateRoom} setOpen={setOpenCreateRoom} />
         <main className="-mt-32">
           <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
             <div className="rounded-lg bg-white px-5 py-6 shadow sm:px-6">{content}</div>

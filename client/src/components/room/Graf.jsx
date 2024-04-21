@@ -12,7 +12,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from 'recharts';
-import { CurTempInfoHistory } from './GrafColorHelper';
+import { GrafColorHelper } from './GrafColorHelper';
 
 
 
@@ -41,7 +41,7 @@ export default function Graf({ temperatureData, RoomData }) {
           {
             temperatureData?.map((entry, index) =>
             (
-              <Cell key={`cell-${index}`} fill={CurTempInfoHistory(RoomData, temperatureData[index])} />
+              <Cell key={`cell-${index}`} fill={GrafColorHelper(RoomData, temperatureData[index])} />
             ))
           }
         </Bar>

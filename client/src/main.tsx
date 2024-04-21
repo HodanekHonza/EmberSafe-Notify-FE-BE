@@ -1,14 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import EditRoomPage from './routes/dashboard/EditRoomPage.jsx'
 import RoomPage from './routes/dashboard/RoomPage.jsx'
-import CreateRoomPage from './routes/dashboard/CreateRoomPage.jsx'
-import './index.css'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ClerkProvider } from '@clerk/clerk-react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+import './index.css'
 import ErrorPage from './routes/root/ErrorPage.jsx';
 import RootLayout from './layouts/RootLayout.jsx'
 import RoomsPage from './routes/dashboard/RoomsPage.jsx'
@@ -17,16 +15,14 @@ import IndexPage from './routes/root/IndexPage.jsx'
 import ContactPage from './routes/root/ContactPage.jsx'
 import SignInPage from './routes/root/SignInPage.jsx'
 import SignUpPage from './routes/root/SignUpPage.jsx'
-import UserProfilePage from './routes/root/UserProfilePage.jsx'
+import UserProfilePage from './routes/dashboard/UserProfilePage.jsx'
 import DashboardProvider from "./providerContext/DashboardProvider.jsx"
-import {
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query'
 import Faq from './routes/root/FaqPage.jsx'
 
 const queryClient = new QueryClient()
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+
+
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
@@ -34,10 +30,9 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <IndexPage /> },
       { path: '/contact', element: <ContactPage /> },
+      { path: '/faq', element: <Faq /> },
       { path: '/sign-in', element: <SignInPage /> },
       { path: '/sign-up', element: <SignUpPage /> },
-      { path: '/faq', element: <Faq /> },
-      
       {
         element: <DashboardLayout />,
         path: 'dashboard',
@@ -51,16 +46,8 @@ const router = createBrowserRouter([
             element: <RoomsPage />,
           },
           {
-            path: "/dashboard/room/:roomId/edit",
-            element: <EditRoomPage />,
-          },
-          {
             path: "/dashboard/room/:roomId",
             element: <RoomPage />,
-          },
-          {
-            path: "/dashboard/room/add",
-            element: <CreateRoomPage />,
           },
         ],
       },
