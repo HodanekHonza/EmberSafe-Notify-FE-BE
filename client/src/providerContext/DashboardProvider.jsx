@@ -40,7 +40,7 @@ const DashboardProvider = ({ children }) => {
     }
 
     async function createRoomFunction(room) {
-        setPosts(...rooms, room);
+        setPosts(prevRooms => [...prevRooms, room]);
         return createRoom(room);
     }
 
