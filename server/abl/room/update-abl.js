@@ -60,7 +60,7 @@ async function UpdateAbl(req, res) {
     let room = req.body;
     const valid = ajv.validate(schema, room);
     if (valid) {
-      room = await dao.updateRoomTemperature(room.typeOfRoom, room.lastKnownTemperature);
+      room = await dao.updateRoom(room.typeOfRoom, room);
       res.json(room);
       res.status(200)
     } else {

@@ -5,6 +5,7 @@ const client = require("../db/mongoDB");
 class TemperatureReadingDao {
 
   async createTemperatureReading(reading) {
+    console.log(reading)
     try {
       const database = client.db("EmberNotifyDB");
       const roomCollection = database.collection("temperature-reading");
@@ -35,7 +36,7 @@ class TemperatureReadingDao {
 
       const projection = {
         timeStamp: 1,
-        temp: 1,
+        lastKnownTemperature: 1,
         _id: 0
       };
 

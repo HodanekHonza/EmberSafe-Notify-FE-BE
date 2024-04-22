@@ -1,7 +1,7 @@
 // DataContext.js
 import React, { useState, useEffect } from 'react';
 import EmberNotifyContext from './DashboardContext';
-import { createRoom, deleteRoom, fetchRoom, fetchRooms, fetchRoomTemperatureHistory } from '../services/apiService';
+import { createRoom, deleteRoom, fetchRoom, fetchRooms, fetchRoomTemperatureHistory, updateRoom } from '../services/apiService';
 import {
     useQuery,
 } from '@tanstack/react-query'
@@ -32,6 +32,25 @@ const DashboardProvider = ({ children }) => {
     async function fetchRoomFunction(typeOfRoom) {
         return fetchRoom(typeOfRoom)
     }
+    async function createRoomFunction(room) {
+        setPosts(prevRooms => [...prevRooms, room]);
+        return createRoom(room);
+    }
+    async function updateRoomFunction(updatedRoom) {
+        try {
+            const response = await updateRoom(updatedRoom);
+            console.log("Update Room Response:", response);
+            setPosts(prevRooms =>
+                prevRooms.map(room =>
+                    room.typeOfRoom === updatedRoom.typeOfRoom ? updatedRoom : room
+                )
+            );
+            return response;
+        } catch (error) {
+            console.error("Error updating room:", error);
+            throw error;
+        }
+    }
 
     async function deleteRoomFunction(typeOfRoom) {
         const updatedRooms = rooms.filter((room) => room.typeOfRoom !== typeOfRoom);
@@ -39,10 +58,7 @@ const DashboardProvider = ({ children }) => {
         return deleteRoom(typeOfRoom)
     }
 
-    async function createRoomFunction(room) {
-        setPosts(prevRooms => [...prevRooms, room]);
-        return createRoom(room);
-    }
+
 
     async function fetchRoomTemperatureHistoryFunction(typeOfRoom, date) {
         return fetchRoomTemperatureHistory(typeOfRoom, date)
@@ -51,8 +67,9 @@ const DashboardProvider = ({ children }) => {
     const value = {
         rooms,
         fetchRoomFunction,
-        deleteRoomFunction,
         createRoomFunction,
+        updateRoomFunction,
+        deleteRoomFunction,
         fetchRoomTemperatureHistoryFunction,
         isLoading
     };
