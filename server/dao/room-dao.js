@@ -10,6 +10,7 @@ class RoomDao {
       const result = await roomCollection.insertOne(room);
 
       console.log(`A document was inserted with the _id: ${result}`);
+      return result;
     } catch (e) {
       console.log(e)
     }
@@ -49,6 +50,7 @@ class RoomDao {
       const result = await movies.updateOne(filter, updateDoc);
 
       console.log(`${result.matchedCount} document(s) ${typeOfRoom}  matched the filter, updated ${result.modifiedCount} document(s)`,);
+      return result;
     } catch (e) {
       console.log(e);
     }

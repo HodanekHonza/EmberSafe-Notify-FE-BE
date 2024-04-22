@@ -36,10 +36,22 @@ const DashboardProvider = ({ children }) => {
         setPosts(prevRooms => [...prevRooms, room]);
         return createRoom(room);
     }
-    async function updateRoomFunction(room) {
-        setPosts(prevRooms => [...prevRooms, room]);
-        return updateRoom(room);
+    async function updateRoomFunction(updatedRoom) {
+        try {
+            const response = await updateRoom(updatedRoom);
+            console.log("Update Room Response:", response);
+            setPosts(prevRooms =>
+                prevRooms.map(room =>
+                    room.typeOfRoom === updatedRoom.typeOfRoom ? updatedRoom : room
+                )
+            );
+            return response;
+        } catch (error) {
+            console.error("Error updating room:", error);
+            throw error;
+        }
     }
+
     async function deleteRoomFunction(typeOfRoom) {
         const updatedRooms = rooms.filter((room) => room.typeOfRoom !== typeOfRoom);
         setPosts(updatedRooms);
