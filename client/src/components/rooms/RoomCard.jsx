@@ -8,7 +8,7 @@ export default function RoomCard({ room }) {
 
     return (
         <a href={`/dashboard/room/${room.typeOfRoom}`} key={room._id} className="relative bg-white overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition duration-300">
-            <div className="absolute inset-0 bg-cover bg-center z-0" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1595526051245-4506e0005bd0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YmVkJTIwcm9vbXxlbnwwfHwwfHx8MA%3D%3D')` }}></div>
+            <div className="absolute inset-0 bg-cover bg-center z-0" style={{ backgroundImage: `url(${room.photoOfRoom})` }}></div>
             <div className="absolute inset-0 bg-black opacity-35 z-1"></div>
             <div className="px-4 py-5 sm:p-6 relative z-10 text-white">
                 <div className='flex flex-row justify-between'>
