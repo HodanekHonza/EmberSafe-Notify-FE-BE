@@ -6,6 +6,7 @@ const schema = {
   type: "object",
   properties: {
     idOfRoom: { type: "string" },
+    photoOfRoom: { type: "string"},
     lastKnownTemperature: { type: "number" },
     thresholds: {
       type: "object",
