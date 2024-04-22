@@ -52,6 +52,7 @@ export default function CreateForm() {
                 },
                 typeOfRoom: formData.typeOfRoom
             };
+            console.log(roomData)
             await createRoomFunction(roomData);
             console.log("Form submitted:", roomData);
         } catch (error) {
