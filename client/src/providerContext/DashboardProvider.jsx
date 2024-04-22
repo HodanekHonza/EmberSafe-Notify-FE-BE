@@ -1,7 +1,7 @@
 // DataContext.js
 import React, { useState, useEffect } from 'react';
 import EmberNotifyContext from './DashboardContext';
-import { createRoom, deleteRoom, fetchRoom, fetchRooms, fetchRoomTemperatureHistory } from '../services/apiService';
+import { createRoom, deleteRoom, fetchRoom, fetchRooms, fetchRoomTemperatureHistory, updateRoom } from '../services/apiService';
 import {
     useQuery,
 } from '@tanstack/react-query'
@@ -32,17 +32,21 @@ const DashboardProvider = ({ children }) => {
     async function fetchRoomFunction(typeOfRoom) {
         return fetchRoom(typeOfRoom)
     }
-
+    async function createRoomFunction(room) {
+        setPosts(prevRooms => [...prevRooms, room]);
+        return createRoom(room);
+    }
+    async function updateRoomFunction(room) {
+        setPosts(prevRooms => [...prevRooms, room]);
+        return updateRoom(room);
+    }
     async function deleteRoomFunction(typeOfRoom) {
         const updatedRooms = rooms.filter((room) => room.typeOfRoom !== typeOfRoom);
         setPosts(updatedRooms);
         return deleteRoom(typeOfRoom)
     }
 
-    async function createRoomFunction(room) {
-        setPosts(prevRooms => [...prevRooms, room]);
-        return createRoom(room);
-    }
+
 
     async function fetchRoomTemperatureHistoryFunction(typeOfRoom, date) {
         return fetchRoomTemperatureHistory(typeOfRoom, date)
@@ -51,8 +55,9 @@ const DashboardProvider = ({ children }) => {
     const value = {
         rooms,
         fetchRoomFunction,
-        deleteRoomFunction,
         createRoomFunction,
+        updateRoomFunction,
+        deleteRoomFunction,
         fetchRoomTemperatureHistoryFunction,
         isLoading
     };

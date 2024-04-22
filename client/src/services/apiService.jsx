@@ -47,6 +47,27 @@ async function createRoom(room) {
     }
 }
 
+
+async function updateRoom(room) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/room/update`, {
+            method: 'POST',
+            body: JSON.stringify(room),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error('Failed to update room');
+        }
+        return response.json();
+    } catch (error) {
+        console.error('Error update room:', error);
+        throw error;
+    }
+}
+
+
 async function deleteRoom(typeOfRoom) {
     try {
         const response = await fetch(`${API_BASE_URL}/room/delete/${typeOfRoom}`, {
@@ -80,5 +101,5 @@ async function fetchRoomTemperatureHistory(typeOfRoom, date) {
     }
 }
 
-export { fetchRooms, fetchRoom, fetchRoomTemperatureHistory, deleteRoom, createRoom }
+export { fetchRooms, fetchRoom, fetchRoomTemperatureHistory, deleteRoom, createRoom, updateRoom }
 export default (fetchRooms, fetchRoom)

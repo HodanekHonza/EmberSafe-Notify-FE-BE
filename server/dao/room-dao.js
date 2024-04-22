@@ -31,7 +31,8 @@ class RoomDao {
   }
 
 
-  async updateRoomTemperature(typeOfRoom, temperature) {
+  async updateRoom(typeOfRoom, room) {
+    console.log("updating room temp")
     try {
       const database = client.db("EmberNotifyDB");
       const movies = database.collection("room");
@@ -39,7 +40,9 @@ class RoomDao {
 
       const updateDoc = {
         $set: {
-          lastKnownTemperature: temperature
+          typeOfRoom: room.typeOfRoom,
+          thresholds: room.thresholds,
+          photoOfRoom: room.photoOfRoom
         },
       };
 
@@ -51,6 +54,30 @@ class RoomDao {
     }
 
   }
+
+
+  async updateRoomTemperature(typeOfRoom, temperature) {
+    console.log("updating room temp")
+    try {
+      const database = client.db("EmberNotifyDB");
+      const movies = database.collection("room");
+      const filter = { typeOfRoom: typeOfRoom };
+
+      const updateDoc = {
+        $set: {
+          lastKnownTemperature: temperature,
+        },
+      };
+
+      const result = await movies.updateOne(filter, updateDoc);
+
+      console.log(`${result.matchedCount} document(s) ${typeOfRoom}  matched the filter, updated ${result.modifiedCount} document(s)`,);
+    } catch (e) {
+      console.log(e);
+    }
+
+  }
+
 
   async deleteRoom(typeOfRoom) {
     try {

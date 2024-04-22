@@ -13,11 +13,11 @@ const roomDao = new RoomDao();
 const schema = {
   type: "object",
   properties: {
-    temp: { type: "number" },
+    lastKnownTemperature: { type: "number" },
     typeOfRoom: { type: "string" },
     timeStamp: { type: "string" },
   },
-  required: ["temp", "typeOfRoom", "timeStamp"],
+  required: ["lastKnownTemperature", "typeOfRoom", "timeStamp"],
   additionalProperties: false,
 };
 
@@ -29,16 +29,16 @@ async function CreateAbl(req, res) {
     const valid = ajv.validate(schema, req.body);
     if (valid) {
       let reading = req.body;
-      const temp = req.body.temp;
+      const lastKnownTemperature = req.body.lastKnownTemperature;
       await temperatureDao.createTemperatureReading(reading);
-      await roomDao.updateRoomTemperature(req.body.typeOfRoom, req.body.temp);
+      await roomDao.updateRoomTemperature(req.body.typeOfRoom, lastKnownTemperature);
       const temperatureRoomCheck = await roomDao.getRoom(req.body.typeOfRoom);
       const temperatureTreshholds = temperatureRoomCheck.thresholds;
       let temperatureMatchedThreshold = null;
 
       for (const [thresholdName, thresholdValues] of Object.entries(temperatureTreshholds)) {
         const { low, high } = thresholdValues;
-        if (temp >= low && temp <= high) {
+        if (lastKnownTemperature >= low && lastKnownTemperature <= high) {
           temperatureMatchedThreshold = thresholdName;
           break;
         }
@@ -47,7 +47,7 @@ async function CreateAbl(req, res) {
       if (temperatureMatchedThreshold !== null) {
         const previousThreshold = previousThresholds[req.body.typeOfRoom]; // Get previous threshold for the current room
         if (temperatureMatchedThreshold !== previousThreshold) {
-          console.log(`Temperature (${temp}) falls within ${temperatureMatchedThreshold} threshold.`);
+          console.log(`Temperature (${lastKnownTemperature}) falls within ${temperatureMatchedThreshold} threshold.`);
           (async () => {
             await sendTelegramMessage(process.env.TELEGRAM_TOKEN, process.env.TELEGRAM_CHANEL, `TreshHoldValue is: ${temperatureMatchedThreshold}`);
           })();
@@ -62,10 +62,10 @@ async function CreateAbl(req, res) {
           //   .catch(error => console.error(error));
           previousThresholds[req.body.typeOfRoom] = temperatureMatchedThreshold; // Update previous threshold for the current room
         } else {
-          console.log(`Temperature (${temp}) falls within the same threshold as before.`);
+          console.log(`Temperature (${lastKnownTemperature}) falls within the same threshold as before.`);
         }
       } else {
-        console.log(`Temperature (${temp}) does not fall within any threshold range.`);
+        console.log(`Temperature (${lastKnownTemperature}) does not fall within any threshold range.`);
         previousThresholds[req.body.typeOfRoom] = null; // Reset previous threshold for the current room
       }
       res.status(200);

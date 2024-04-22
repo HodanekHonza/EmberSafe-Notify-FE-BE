@@ -69,7 +69,7 @@ export default function RoomPage() {
               <Gauge lastKnownTemperature={roomData.lastKnownTemperature} />
             </div>
             {/* EDIT ROOM MODAL */}
-            <EditRoomModal open={openEditRoom} setOpen={setOpenEditRoom} />
+            <EditRoomModal open={openEditRoom} setOpen={setOpenEditRoom} roomData={roomData} />
             <DeleteRoomModal open={openDeleteRoom} setOpen={setOpenDeleteRoom} typeOfRoom={roomData.typeOfRoom} />
             <div>
               {isLoadingTemperature ? (
