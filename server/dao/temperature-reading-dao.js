@@ -10,8 +10,8 @@ class TemperatureReadingDao {
       const database = client.db("EmberNotifyDB");
       const roomCollection = database.collection("temperature-reading");
       const result = await roomCollection.insertOne(reading);
-
       console.log(`A document was inserted with the _id: ${result._id}`);
+      return result;
     } catch (e) {
       console.log(e);
     }

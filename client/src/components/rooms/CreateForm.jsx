@@ -3,7 +3,7 @@ import { PhotoIcon } from '@heroicons/react/24/solid';
 import EmberNotifyContext from '../../providerContext/DashboardContext';
 
 export default function CreateForm({ setOpen }) {
-    const { createRoomFunction } = useContext(EmberNotifyContext);
+    const { createRoomFunction, setShowNotification, setIsNotificationCreate } = useContext(EmberNotifyContext);
     const [formData, setFormData] = useState({
         idOfRoom: '',
         photoOfRoom:'',
@@ -55,6 +55,8 @@ export default function CreateForm({ setOpen }) {
             console.log(roomData)
             await createRoomFunction(roomData);
             setOpen(false)
+            setIsNotificationCreate(true)
+            setShowNotification(true)
             console.log("Form submitted:", roomData);
         } catch (error) {
             console.log("Error submitting form:", error);
