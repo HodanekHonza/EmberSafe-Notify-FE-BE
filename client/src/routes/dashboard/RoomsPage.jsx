@@ -3,6 +3,7 @@ import EmberNotifyContext from '../../providerContext/DashboardContext';
 import { Spinner } from "flowbite-react";
 import RoomCard from '../../components/rooms/RoomCard';
 import Notification from '../../components/room/Notification';
+import PageHeading from '../../components/rooms/PageHeading';
 
 export default function RoomsPage() {
     const { rooms, isLoading, showNotification, setShowNotification, isNotificationCreate } = useContext(EmberNotifyContext);
@@ -15,6 +16,7 @@ export default function RoomsPage() {
                 </div>
             ) : (
                 <div>
+                    <PageHeading/>
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                         <Notification show={showNotification} setShow={setShowNotification} text={isNotificationCreate ? "Created" : "Deleted"} />
                         {rooms.map((room) => (
