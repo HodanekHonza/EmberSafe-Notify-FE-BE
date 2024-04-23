@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import CreateForm from '../../components/room/CreateForm.jsx'
+import CreateForm from './CreateForm.jsx'
 export default function CreateRoomModal({ open, setOpen }) {
     return (
         <Transition.Root show={open} as={Fragment}>

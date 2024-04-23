@@ -8,6 +8,9 @@ import {
 
 
 const DashboardProvider = ({ children }) => {
+    const [openEditRoom, setOpenEditRoom] = useState(false);
+    const [openDeleteRoom, setOpenDeleteRoom] = useState(false);
+    const [showNotification, setShowNotification] = useState(false);
 
     const [rooms, setPosts] = useState([]);
     const { isLoading, data } = useQuery({
@@ -71,7 +74,13 @@ const DashboardProvider = ({ children }) => {
         updateRoomFunction,
         deleteRoomFunction,
         fetchRoomTemperatureHistoryFunction,
-        isLoading
+        isLoading,
+        openDeleteRoom,
+        openEditRoom,
+        setOpenDeleteRoom,
+        setOpenEditRoom, 
+        showNotification,
+        setShowNotification
     };
 
     return (

@@ -3,8 +3,8 @@ import { Dialog, Transition } from '@headlessui/react';
 import Button from '../../components/Button';
 import EmberNotifyContext from '../../providerContext/DashboardContext';
 
-export default function EditRoomModal({ open, setOpen, roomData }) {
-    const { updateRoomFunction } = useContext(EmberNotifyContext);
+export default function EditRoomModal({ roomData }) {
+    const { updateRoomFunction, openEditRoom, setOpenEditRoom, setShowNotification } = useContext(EmberNotifyContext);
     const [formData, setFormData] = useState({
         typeOfRoom: roomData.typeOfRoom,
         photoOfRoom: roomData.photoOfRoom,
@@ -55,15 +55,16 @@ export default function EditRoomModal({ open, setOpen, roomData }) {
             };
             await updateRoomFunction(roomDataFinal);
             console.log("Form submitted:", roomDataFinal);
-            setOpen(false);
+            setOpenEditRoom(false);
+            setShowNotification(true)
         } catch (error) {
             console.log("Error submitting form:", error);
         }
     };
 
     return (
-        <Transition.Root show={open} as={Fragment}>
-            <Dialog as="div" className="fixed inset-0 overflow-y-auto" onClose={setOpen}>
+        <Transition.Root show={openEditRoom} as={Fragment}>
+            <Dialog as="div" className="fixed inset-0 overflow-y-auto" onClose={setOpenEditRoom}>
                 <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <Transition.Child
                         as={Fragment}
@@ -160,7 +161,7 @@ export default function EditRoomModal({ open, setOpen, roomData }) {
 
                                 <div className="bg-gray-50 px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse">
                                     <button type="submit" className="text-white bg-indigo-600 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center sm:ml-3 w-full sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
-                                    <button type="button" onClick={() => setOpen(false)} className="text-gray-700 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center sm:mt-0 mt-2 w-full sm:w-auto">Cancel</button>
+                                    <button type="button" onClick={() => setOpenEditRoom(false)} className="text-gray-700 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center sm:mt-0 mt-2 w-full sm:w-auto">Cancel</button>
                                 </div>
                             </form>
                         </div>

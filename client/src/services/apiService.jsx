@@ -91,9 +91,9 @@ async function fetchRoomTemperatureHistory(typeOfRoom, date) {
             method: 'GET',
 
         });
-        // if (!response.ok) {
-        //     throw new Error('Failed to fetch room');
-        // }
+        if (!response.ok) {
+            throw new Error('Failed to fetch room history');
+        }
         return response.json();
     } catch (error) {
         console.error('Error fetching room history:', error);
@@ -102,4 +102,3 @@ async function fetchRoomTemperatureHistory(typeOfRoom, date) {
 }
 
 export { fetchRooms, fetchRoom, fetchRoomTemperatureHistory, deleteRoom, createRoom, updateRoom }
-export default (fetchRooms, fetchRoom)

@@ -11,18 +11,18 @@ import Gauge from '../../components/room/Gauge';
 import EditRoomModal from '../../components/room/EditRoomModal';
 import DeleteRoomModal from '../../components/room/DeleteRoomModal';
 import Button from '../../components/Button'
+import Notification from '../../components/room/Notification';
 
 export default function RoomPage() {
 
   const paramsForRooms = useParams();
-  const [openEditRoom, setOpenEditRoom] = useState(false)
-  const [openDeleteRoom, setOpenDeleteRoom] = useState(false)
+  // move this state to provider as well 
   const [dateCalendar, setDateCalendar] = useState(""); // helper state for calendar date
-  const { fetchRoomFunction, fetchRoomTemperatureHistoryFunction } = useContext(EmberNotifyContext);
+  const { fetchRoomFunction, fetchRoomTemperatureHistoryFunction, setOpenDeleteRoom, setOpenEditRoom, showNotification, setShowNotification } = useContext(EmberNotifyContext);
 
 
   const { isLoading, data: roomData } = useQuery({
-    queryKey: ['room', "list", paramsForRooms.roomId],
+    queryKey: ['room', 'get', paramsForRooms.roomId],
     queryFn: () => fetchRoomFunction(paramsForRooms.roomId),
     refetchInterval: 10000,
   });
@@ -32,15 +32,6 @@ export default function RoomPage() {
     queryFn: () => fetchRoomTemperatureHistoryFunction(paramsForRooms.roomId, dateCalendar),
     refetchInterval: 10000
   });
-
-
-
-
-  // useEffect(() => {
-  //     console.log(roomData)
-  //     console.log(dateCalendar)
-  //     console.log(temperatureData)
-  // }, [roomData, error, temperatureData, dateCalendar])
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -69,8 +60,9 @@ export default function RoomPage() {
               <Gauge lastKnownTemperature={roomData.lastKnownTemperature} />
             </div>
             {/* EDIT ROOM MODAL */}
-            <EditRoomModal open={openEditRoom} setOpen={setOpenEditRoom} roomData={roomData} />
-            <DeleteRoomModal open={openDeleteRoom} setOpen={setOpenDeleteRoom} typeOfRoom={roomData.typeOfRoom} />
+            <EditRoomModal roomData={roomData} />
+            <DeleteRoomModal typeOfRoom={roomData.typeOfRoom} />
+            <Notification show={showNotification} setShow={setShowNotification} text={"Edited"}/>
             <div>
               {isLoadingTemperature ? (
                 <div className="flex justify-center items-center h-screen">
