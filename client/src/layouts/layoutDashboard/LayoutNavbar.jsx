@@ -1,11 +1,11 @@
-//THIS COMPONENT NEEDS TO BE SPLIT UP INTO MANY DIFFERENT FILES, MOVE INTO DASHBOARD LAYOUT AND COMPONENT OUT 
 import { Fragment, useState, useContext } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
+import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useUser } from '@clerk/clerk-react'
 import LegendModal from '../../components/rooms/LegendModal'
 import CreateRoomModal from '../../components/rooms/CreateRoomModal'
-import EmberNotifyContext from '../../providerContext/DashboardContext';
+import EmberNotifyContext from '../../providerContext/DashboardContext'
 
 const navigation = [
 
@@ -111,7 +111,7 @@ export default function LayoutNavBar({ content }) {
                         <img
                           className="block h-8 w-8"
                           src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
-                          alt="EmberNotify"
+                          alt="Your Company"
                         />
                       </div>
                       <div className="hidden lg:ml-10 lg:block">
@@ -141,12 +141,21 @@ export default function LayoutNavBar({ content }) {
                                   : <></>}
                                 {item.name}
                               </div>
+
+
+
+
                             </a>
+
                           ))}
+
+
                         </div>
                       </div>
                     </div>
                     <div className="flex flex-1 justify-center gap-5 px-2 lg:ml-6 lg:justify-end">
+
+
                       <button
                         onClick={() => setOpenLegend(true)}
                         type="button"
@@ -159,6 +168,12 @@ export default function LayoutNavBar({ content }) {
                           Legend
                         </p>
                       </button>
+
+
+
+
+                      {/* <a href='/dashboard/room/add'> */}
+
                         <button
                           onClick={() => setOpenCreateRoom(true)}
                           type="button"
@@ -169,7 +184,11 @@ export default function LayoutNavBar({ content }) {
                           </svg>
 
                            Room
+
+
                         </button>
+                      {/* </a> */}
+
                     </div>
                     <div className="flex lg:hidden">
                       {/* Mobile menu button */}
@@ -262,7 +281,7 @@ export default function LayoutNavBar({ content }) {
                       </div>
                       <div className="ml-3">
                         <div className="text-base font-medium text-white">{user.fullName}</div>
-                        <div className="text-sm font-medium text-indigo-300">{user.emailAddresses}</div>
+                        <div className="text-sm font-medium text-indigo-300">{user.emailAddress}</div>
                       </div>
                       <button
                         type="button"
