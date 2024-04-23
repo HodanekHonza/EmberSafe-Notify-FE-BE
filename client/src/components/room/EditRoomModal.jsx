@@ -4,7 +4,7 @@ import Button from '../../components/Button';
 import EmberNotifyContext from '../../providerContext/DashboardContext';
 
 export default function EditRoomModal({ roomData }) {
-    const { updateRoomFunction, openEditRoom, setOpenEditRoom, setShowNotification } = useContext(EmberNotifyContext);
+    const { updateRoomFunction, openEditRoom, setOpenEditRoom, setShowNotification, setIsNotificationCreate } = useContext(EmberNotifyContext);
     const [formData, setFormData] = useState({
         typeOfRoom: roomData.typeOfRoom,
         photoOfRoom: roomData.photoOfRoom,
@@ -56,6 +56,7 @@ export default function EditRoomModal({ roomData }) {
             await updateRoomFunction(roomDataFinal);
             console.log("Form submitted:", roomDataFinal);
             setOpenEditRoom(false);
+            setIsNotificationCreate(false);
             setShowNotification(true)
         } catch (error) {
             console.log("Error submitting form:", error);

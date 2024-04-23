@@ -1,11 +1,11 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useContext } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useUser } from '@clerk/clerk-react'
 import LegendModal from '../rooms/LegendModal'
 import CreateRoomModal from '../rooms/CreateRoomModal'
-
+import EmberNotifyContext from '../../providerContext/DashboardContext';
 
 const navigation = [
 
@@ -90,9 +90,10 @@ function classNames(...classes) {
 }
 
 export default function LayoutNavBar({ content }) {
+    const { openCreateRoom, setOpenCreateRoom } = useContext(EmberNotifyContext);
   const { isSignedIn, user, isLoaded } = useUser();
   const [openLegend, setOpenLegend] = useState(false)
-  const [openCreateRoom, setOpenCreateRoom] = useState(false)
+
   if (user == undefined) {
     return
   }
