@@ -19,10 +19,11 @@ import { GrafColorHelper } from './GrafColorHelper';
 export default function Graf({ temperatureData, RoomData }) {
   return (
     <ResponsiveContainer width="100%" height="100%">
+        <BarChart
 
-      <BarChart
-
-        data={temperatureData.map(entry => ({ name: new Date(entry.timeStamp).toLocaleTimeString(), Temperature: entry.lastKnownTemperature }))}
+            data={temperatureData.map(entry => ({
+                name: new Date(entry.timeStamp).toLocaleTimeString(),
+                Temperature: entry.lastKnownTemperature }))}
         margin={{
           top: 5,
           right: 10,

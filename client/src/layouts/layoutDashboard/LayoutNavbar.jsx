@@ -90,9 +90,8 @@ function classNames(...classes) {
 }
 
 export default function LayoutNavBar({ content }) {
-    const { openCreateRoom, setOpenCreateRoom } = useContext(EmberNotifyContext);
+    const { openCreateRoom, setOpenCreateRoom, openLegend, setOpenLegend } = useContext(EmberNotifyContext);
   const { isSignedIn, user, isLoaded } = useUser();
-  const [openLegend, setOpenLegend] = useState(false)
 
   if (user == undefined) {
     return
@@ -156,38 +155,36 @@ export default function LayoutNavBar({ content }) {
                     <div className="flex flex-1 justify-center gap-5 px-2 lg:ml-6 lg:justify-end">
 
 
-                      <button
-                        onClick={() => setOpenLegend(true)}
-                        type="button"
-                        className='flex flex-row items-center border-none gap-3 rounded-md  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />
-                        </svg>
+                      {/*<button*/}
+                      {/*  onClick={() => setOpenLegend(true)}*/}
+                      {/*  type="button"*/}
+                      {/*  className='flex flex-row items-center border-none gap-3 rounded-md  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'>*/}
+                      {/*  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">*/}
+                      {/*    <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />*/}
+                      {/*  </svg>*/}
 
-                        <p>
-                          Legend
-                        </p>
-                      </button>
-
-
+                      {/*  <p>*/}
+                      {/*    Legend*/}
+                      {/*  </p>*/}
+                      {/*</button>*/}
 
 
-                      {/* <a href='/dashboard/room/add'> */}
-
-                        <button
-                          onClick={() => setOpenCreateRoom(true)}
-                          type="button"
-                          className="flex flex-row items-center border-none gap-3 rounded-md  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                          </svg>
-
-                           Room
 
 
-                        </button>
-                      {/* </a> */}
+
+                      {/*  <button*/}
+                      {/*    onClick={() => setOpenCreateRoom(true)}*/}
+                      {/*    type="button"*/}
+                      {/*    className="flex flex-row items-center border-none gap-3 rounded-md  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"*/}
+                      {/*  >*/}
+                      {/*    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">*/}
+                      {/*      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />*/}
+                      {/*    </svg>*/}
+
+                      {/*     Room*/}
+
+
+                      {/*  </button>*/}
 
                     </div>
                     <div className="flex lg:hidden">
@@ -309,7 +306,7 @@ export default function LayoutNavBar({ content }) {
               </>
             )}
           </Disclosure>
-          <header className="py-10">
+          <header className="py-5">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <h1 className="text-3xl font-bold tracking-tight text-white">EmberNotify</h1>
             </div>
