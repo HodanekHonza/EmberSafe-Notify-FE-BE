@@ -1,13 +1,12 @@
-import { Fragment } from 'react'
-import { Transition } from '@headlessui/react'
-import { CheckCircleIcon } from '@heroicons/react/24/outline'
-import { XMarkIcon } from '@heroicons/react/20/solid'
+import {Fragment} from 'react'
+import {Transition} from '@headlessui/react'
+import {CheckCircleIcon} from '@heroicons/react/24/outline'
+import {XMarkIcon} from '@heroicons/react/20/solid'
 
-export default function Notification({ show, setShow, text }) {
+export default function Notification({show, setShow, text}) {
 
 
-    return (
-        <>
+    return (<>
             {/* Global notification live region, render this permanently at the end of the document */}
             <div
                 aria-live="assertive"
@@ -25,11 +24,12 @@ export default function Notification({ show, setShow, text }) {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+                        <div
+                            className="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
                             <div className="p-4">
                                 <div className="flex items-start">
                                     <div className="flex-shrink-0">
-                                        <CheckCircleIcon className="h-6 w-6 text-green-400" aria-hidden="true" />
+                                        <CheckCircleIcon className="h-6 w-6 text-green-400" aria-hidden="true"/>
                                     </div>
                                     <div className="ml-3 w-0 flex-1 pt-0.5">
                                         <p className="text-sm font-medium text-gray-900">Successfully {text}</p>
@@ -43,7 +43,7 @@ export default function Notification({ show, setShow, text }) {
                                             }}
                                         >
                                             <span className="sr-only">Close</span>
-                                            <XMarkIcon className="h-5 w-5" aria-hidden="true" />
+                                            <XMarkIcon className="h-5 w-5" aria-hidden="true"/>
                                         </button>
                                     </div>
                                 </div>
@@ -52,6 +52,5 @@ export default function Notification({ show, setShow, text }) {
                     </Transition>
                 </div>
             </div>
-        </>
-    )
+        </>)
 }
