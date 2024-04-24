@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import RoomPage from './routes/dashboard/RoomPage.jsx'
-
+import RoomGraphPage from './routes/dashboard/RoomGraphPage.jsx'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ClerkProvider } from '@clerk/clerk-react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -20,8 +20,9 @@ import DashboardProvider from "./providerContext/DashboardProvider.jsx"
 import Faq from './routes/root/FaqPage.jsx'
 
 const queryClient = new QueryClient()
+// @ts-ignore
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
-
+//MFML
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/room/:roomId",
             element: <RoomPage />,
+          },
+          {
+            path: "/dashboard/room/graph",
+            element: <RoomGraphPage />,
           },
         ],
       },

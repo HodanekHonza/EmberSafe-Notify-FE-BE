@@ -12,7 +12,9 @@ const DashboardProvider = ({ children }) => {
     const [openDeleteRoom, setOpenDeleteRoom] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
     const [openCreateRoom, setOpenCreateRoom] = useState(false)
-
+    const [openLegend, setOpenLegend] = useState(false)
+    //condicional rendering on room page either Meter is shown if false or Graph if this state is true
+    const [openGraphOrTempMeter, setOpenGraphOrTempMeter] = useState(false)
     const [isNotificationCreate, setIsNotificationCreate] = useState(false);
 
     const [rooms, setPosts] = useState([]);
@@ -78,7 +80,11 @@ const DashboardProvider = ({ children }) => {
         updateRoomFunction,
         deleteRoomFunction,
         fetchRoomTemperatureHistoryFunction,
+        openGraphOrTempMeter,
+        setOpenGraphOrTempMeter,
         isLoading,
+        openLegend,
+        setOpenLegend,
         openDeleteRoom,
         openEditRoom,
         setOpenDeleteRoom,
