@@ -43,27 +43,27 @@ export default function RoomPage() {
     });
 
     return (
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto min-h-">
             {isLoading ? (
                 <div className="flex justify-center items-center h-screen">
                     <Spinner color="purple" size="xl"/>
                 </div>
             ) : (
                 <>
-                    <RoomHeader/>
-                    <Button href="/dashboard" icon={<AroowBack/>} name="Back"/>
+                    <RoomHeader calendar={<Calendar setDateState={setDateCalendar}/>} nameOfRoom={roomData.typeOfRoom}/>
 
-                    <div className="flex flex-col lg:flex-row justify-between items-center mb-10 mt-6">
-                        <div className="text-3xl text-gray-500 lg:mb-0">{roomData.typeOfRoom}</div>
-                        <div className="flex-grow flex justify-center items-center mx-auto mb-6">
-                            <Calendar setDateState={setDateCalendar}/>
-                        </div>
-                        <div className="flex gap-4">
-                            {/*<button onClick={() => setOpenEditRoom(true)}>EDIT ROOM</button>*/}
-                            {/*<button onClick={() => setOpenDeleteRoom(true)}>DELETE ROOM</button>*/}
-                            {/* <Button href="" name="Delete Room" color="red" /> */}
-                        </div>
-                    </div>
+
+                    {/*<div className="flex flex-col lg:flex-row justify-between items-center mb-10 mt-6">*/}
+                    {/*    <div className="text-3xl text-gray-500 lg:mb-0">{roomData.typeOfRoom}</div>*/}
+                    {/*    /!*<div className="flex-grow flex justify-center items-center mx-auto mb-6">*!/*/}
+                    {/*    /!*    <Calendar setDateState={setDateCalendar}/>*!/*/}
+                    {/*    /!*</div>*!/*/}
+                    {/*    <div className="flex gap-4">*/}
+                    {/*        /!*<button onClick={() => setOpenEditRoom(true)}>EDIT ROOM</button>*!/*/}
+                    {/*        /!*<button onClick={() => setOpenDeleteRoom(true)}>DELETE ROOM</button>*!/*/}
+                    {/*        /!* <Button href="" name="Delete Room" color="red" /> *!/*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-20">
                         <div>
@@ -73,6 +73,7 @@ export default function RoomPage() {
                         <EditRoomModal roomData={roomData}/>
                         <DeleteRoomModal typeOfRoom={roomData.typeOfRoom}/>
                         <Notification show={showNotification} setShow={setShowNotification} text={"Edited"}/>
+
                         <div>
                             {isLoadingTemperature ? (
                                 <div className="flex justify-center items-center h-screen">

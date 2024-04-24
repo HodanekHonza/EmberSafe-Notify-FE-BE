@@ -16,7 +16,7 @@ export default function PageHeading() {
 
     } = useContext(EmberNotifyContext);
     return (
-        <div className="px-3 pb-6 sm:px-6 lg:px-4">
+        <div className="px-3 pb-4 sm:px-6 lg:px-4">
             <div className="mx-auto flex items-center justify-between gap-x-8 lg:mx-0">
                 <div className="flex items-center gap-x-6">
                     <img
