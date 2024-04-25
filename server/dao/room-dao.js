@@ -1,7 +1,7 @@
 "use strict";
 require('dotenv/config');
 const client = require("../db/mongoDB");
-
+const { clerkClient } = require('@clerk/clerk-sdk-node');
 class RoomDao {
   async createRoom(room) {
     try {
@@ -9,6 +9,24 @@ class RoomDao {
       const roomCollection = database.collection("room");
       const result = await roomCollection.insertOne(room);
 
+
+      // Retrieve the MongoDB ObjectId of the inserted document
+      const insertedId = result.insertedId;
+      const insertedIdString = insertedId.toString();
+      // Fetch the user's existing private metadata
+      const user = await clerkClient.users.getUser(room.userId);
+      const existingRoomIds = user.privateMetadata && user.privateMetadata.roomIds ? user.privateMetadata.roomIds : [];
+
+      // Append the new roomId to the existing array of roomIds
+      const updatedRoomIds = [...existingRoomIds, insertedIdString];
+      console.log("LIST OF IDS NOW " + updatedRoomIds)
+
+
+      await clerkClient.users.updateUserMetadata(room.userId, {
+        privateMetadata: {
+          roomIds: updatedRoomIds
+        }
+      });
       console.log(`A document was inserted with the _id: ${result}`);
       return result;
     } catch (e) {

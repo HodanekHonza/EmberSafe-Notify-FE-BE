@@ -9,7 +9,7 @@ export default function DashboardLayout() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    //console.log(user)
+    console.log(user)
 
     if (!isSignedIn && isLoaded) {
 

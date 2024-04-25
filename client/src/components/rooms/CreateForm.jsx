@@ -3,8 +3,9 @@ import { PhotoIcon } from '@heroicons/react/24/solid';
 import EmberNotifyContext from '../../providerContext/DashboardContext';
 
 export default function CreateForm({ setOpen }) {
-    const { createRoomFunction, setShowNotification, setIsNotificationCreate } = useContext(EmberNotifyContext);
+    const { createRoomFunction, setShowNotification, setIsNotificationCreate, user } = useContext(EmberNotifyContext);
     const [formData, setFormData] = useState({
+
         photoOfRoom:'',
         lastKnownTemperature: 0,
         thresholds: {
@@ -28,6 +29,7 @@ export default function CreateForm({ setOpen }) {
         e.preventDefault();
         try {
             const roomData = {
+                userId: user.id,
                 photoOfRoom: formData.photoOfRoom,
                 lastKnownTemperature: 0,
                 thresholds: {

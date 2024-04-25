@@ -1,5 +1,6 @@
 // DataContext.js
 import React, { useState, useEffect } from 'react';
+import { useUser } from '@clerk/clerk-react';
 import EmberNotifyContext from './DashboardContext';
 import { createRoom, deleteRoom, fetchRoom, fetchRooms, fetchRoomTemperatureHistory, updateRoom } from '../services/apiService';
 import {
@@ -8,6 +9,7 @@ import {
 
 
 const DashboardProvider = ({ children }) => {
+    const { isSignedIn, user, isLoaded } = useUser();
     const [openEditRoom, setOpenEditRoom] = useState(false);
     const [openDeleteRoom, setOpenDeleteRoom] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
@@ -94,7 +96,8 @@ const DashboardProvider = ({ children }) => {
         openCreateRoom, 
         setOpenCreateRoom,
         isNotificationCreate,
-        setIsNotificationCreate
+        setIsNotificationCreate,
+        user
     };
 
     return (

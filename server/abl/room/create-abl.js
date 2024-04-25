@@ -5,6 +5,7 @@ const dao = new RoomDao();
 const schema = {
     type: "object",
     properties: {
+        userId: {type: "string"},
         photoOfRoom: {type: "string"},
         lastKnownTemperature: {type: "number"},
         thresholds: {
