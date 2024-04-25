@@ -14,7 +14,7 @@ const navigation = [
 
     {name: 'Dashboard', href: '/dashboard', current: true},
     {name: 'Landing Page', href: '/', current: false},
-    {name: 'Notification History', href: '/', current: false},
+    // {name: 'Notification History', href: '/', current: false},
 ]
 const userNavigation = [
 
@@ -101,7 +101,7 @@ export default function LayoutNavBar({content}) {
 
     console.log(location.pathname);
 
-    if (user == undefined) {
+    if (user === undefined) {
         return
     }
     return (

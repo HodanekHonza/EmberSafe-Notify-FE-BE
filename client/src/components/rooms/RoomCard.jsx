@@ -22,6 +22,9 @@ export default function RoomCard({ room }) {
                 </div>
 
                 <div className="mt-4 flex justify-between items-center">
+                    <div>
+
+                    </div>
                     <div className="flex flex-col items-end justify-center gap-1">
                         <p className="text-sm font-extrabold">Temperature</p>
                         <p className="text-sm">{room.lastKnownTemperature}°C</p>
