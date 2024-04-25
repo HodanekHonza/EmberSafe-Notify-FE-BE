@@ -33,9 +33,9 @@ export default function PageHeading() {
                 </div>
                 <div className="flex items-center gap-x-2 sm:gap-x-3">
                     <div className='hidden sm:flex gap-3 flex-row items-center justify-center'>
-                        <button type="button" className="hidden text-sm font-semibold leading-6 text-gray-900 sm:block">
-                            Copy URL
-                        </button>
+                        {/*<button type="button" className="hidden text-sm font-semibold leading-6 text-gray-900 sm:block">*/}
+                        {/*    Copy URL*/}
+                        {/*</button>*/}
                         <button
                             // onClick={() => setOpenLegend(true)}
                             type="button"

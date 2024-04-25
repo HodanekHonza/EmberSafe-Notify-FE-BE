@@ -91,9 +91,9 @@ class RoomDao {
 
       if (result) {
         console.log(`${typeOfRoom} deleted`);
-      } else {
-        throw new "ROOM NOT FOUND";
-      }
+      }// else {
+      //   throw new "ROOM NOT FOUND";
+      // }
       return result;
     } catch (e) {
       console.log(e);
