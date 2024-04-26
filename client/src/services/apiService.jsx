@@ -68,9 +68,9 @@ async function updateRoom(room) {
 }
 
 
-async function deleteRoom(typeOfRoom) {
+async function deleteRoom(roomId, userId) {
     try {
-        const response = await fetch(`${API_BASE_URL}/room/delete/${typeOfRoom}`, {
+        const response = await fetch(`${API_BASE_URL}/room/delete/${roomId}/${userId}`, {
             method: 'DELETE',
 
         });

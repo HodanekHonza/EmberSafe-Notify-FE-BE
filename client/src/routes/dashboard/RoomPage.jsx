@@ -1,6 +1,6 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useQuery} from '@tanstack/react-query'
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import Calendar from '../../components/room/Calendar'
 import {Spinner} from "flowbite-react";
 import RoomHeader from "../../components/room/RoomHeader.jsx";
@@ -14,9 +14,11 @@ import Button from '../../components/Button'
 import Notification from '../../components/room/Notification';
 
 export default function RoomPage() {
-
+    const navigate = useNavigate();
     const paramsForRooms = useParams();
-
+    if (paramsForRooms === undefined) {
+        navigate("/dashboard");
+    }
     // move this state to provider as well
     const [dateCalendar, setDateCalendar] = useState(""); // helper state for calendar date
     const {

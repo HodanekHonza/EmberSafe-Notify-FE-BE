@@ -4,7 +4,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom';
 import EmberNotifyContext from '../../providerContext/DashboardContext';
 export default function DeleteRoomModal({ typeOfRoom }) {
-  const { deleteRoomFunction, openDeleteRoom, setOpenDeleteRoom, setShowNotification } = useContext(EmberNotifyContext);
+  const { deleteRoomFunction, openDeleteRoom, setOpenDeleteRoom, setShowNotification, user } = useContext(EmberNotifyContext);
   const cancelButtonRef = useRef(null)
   const navigate = useNavigate();
 
@@ -12,7 +12,7 @@ export default function DeleteRoomModal({ typeOfRoom }) {
   async function handleDeleteRoom() {
     try {
       navigate('/dashboard');
-      await deleteRoomFunction(typeOfRoom)
+      await deleteRoomFunction(typeOfRoom, user.id)
     } catch (e) {
       console.log(e);
     }

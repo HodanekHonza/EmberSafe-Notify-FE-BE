@@ -21,7 +21,7 @@ router.post("/update", async (req, res) => {
   await UpdateAbl(req, res);
 });
 
-router.delete("/delete/:typeOfRoom", async (req, res) => {
+router.delete("/delete/:roomId/:userId", async (req, res) => {
   await DeleteAbl(req, res);
 });
 
