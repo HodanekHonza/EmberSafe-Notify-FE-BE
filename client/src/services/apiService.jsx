@@ -1,8 +1,8 @@
 const API_BASE_URL = 'http://localhost:3000';
 
-async function fetchRooms() {
+async function fetchRooms(userId) {
     try {
-        const response = await fetch(`${API_BASE_URL}/room/list`);
+        const response = await fetch(`${API_BASE_URL}/room/list/${userId}`);
         if (!response.ok) {
             throw new Error('Failed to fetch rooms');
         }

@@ -5,7 +5,7 @@ export default function RoomCard({ room }) {
     const { status, trend } = getTemperatureStatusAndTrend(room);
 
     return (
-        <a href={`/dashboard/room/${room.typeOfRoom}`} className="relative bg-white overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition duration-300">
+        <a href={`/dashboard/room/${room._id}`} className="relative bg-white overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition duration-300">
             <div className="absolute inset-0 bg-cover bg-center z-0" style={{ backgroundImage: `url(${room.photoOfRoom})` }}></div>
             <div className="absolute inset-0 bg-black opacity-35 z-1"></div>
             <div className="px-4 py-5 sm:p-6 relative z-10 text-white">

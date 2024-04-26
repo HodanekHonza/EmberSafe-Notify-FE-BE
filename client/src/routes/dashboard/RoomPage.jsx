@@ -71,7 +71,7 @@ export default function RoomPage() {
                         </div>
                         {/* EDIT ROOM MODAL */}
                         <EditRoomModal roomData={roomData}/>
-                        <DeleteRoomModal typeOfRoom={roomData.typeOfRoom}/>
+                        <DeleteRoomModal typeOfRoom={paramsForRooms.roomId}/>
                         <Notification show={showNotification} setShow={setShowNotification} text={"Edited"}/>
 
                         <div>
