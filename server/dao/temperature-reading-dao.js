@@ -1,6 +1,7 @@
 "use strict";
 require('dotenv/config');
 const client = require("../db/mongoDB");
+const {ObjectId} = require("mongodb");
 
 class TemperatureReadingDao {
 
@@ -10,7 +11,7 @@ class TemperatureReadingDao {
       const database = client.db("EmberNotifyDB");
       const roomCollection = database.collection("temperature-reading");
       const result = await roomCollection.insertOne(reading);
-      console.log(`A document was inserted with the _id: ${result._id}`);
+      console.log(`A document was inserted with the _id: ${result.insertedId}`);
       return result;
     } catch (e) {
       console.log(e);

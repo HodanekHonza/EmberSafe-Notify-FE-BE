@@ -23,7 +23,7 @@ const DashboardProvider = ({ children }) => {
 
     const { isLoading, data } = useQuery({
         queryKey: ['rooms', 'list'],
-        queryFn: fetchRooms,
+        queryFn: () => fetchRooms(user.id),
         refetchInterval: 10000,
     });
 
@@ -64,7 +64,7 @@ const DashboardProvider = ({ children }) => {
     }
 
     async function deleteRoomFunction(typeOfRoom) {
-        const updatedRooms = rooms.filter((room) => room.typeOfRoom !== typeOfRoom);
+        const updatedRooms = rooms.filter((room) => room._id !== typeOfRoom);
         setPosts(updatedRooms);
         return deleteRoom(typeOfRoom)
     }

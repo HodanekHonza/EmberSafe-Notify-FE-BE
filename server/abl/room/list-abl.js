@@ -3,7 +3,8 @@ const dao = new RoomDao();
 
 async function ListAbl(req, res) {
   try {
-    const rooms = await dao.listRooms();
+    const userId = req.params.userId;
+    const rooms = await dao.listRooms(userId);
     res.json(rooms);
     res.status(200)
   } catch (e) {

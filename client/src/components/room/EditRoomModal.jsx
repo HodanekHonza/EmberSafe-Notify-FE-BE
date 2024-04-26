@@ -32,6 +32,7 @@ export default function EditRoomModal({ roomData }) {
         e.preventDefault();
         try {
             const roomDataFinal = {
+                idOfRoom: roomData._id,
                 photoOfRoom: formData.photoOfRoom,
                 typeOfRoom: formData.typeOfRoom,
                 thresholds: {

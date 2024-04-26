@@ -5,7 +5,7 @@ const dao = new RoomDao();
 const schema = {
   type: "object",
   properties: {
-    idOfDevice: { type: "string" },
+    idOfRoom: { type: "string" },
     lastKnownTemperature: { type: "number" },
     thresholds: {
       type: "object",
@@ -60,7 +60,7 @@ async function UpdateAbl(req, res) {
     let room = req.body;
     const valid = ajv.validate(schema, room);
     if (valid) {
-      room = await dao.updateRoom(room.typeOfRoom, room);
+      room = await dao.updateRoom(room.idOfRoom, room);
       res.json(room);
       res.status(200)
     } else {

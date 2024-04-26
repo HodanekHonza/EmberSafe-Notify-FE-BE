@@ -13,7 +13,7 @@ router.post("/create", async (req, res) => {
   await CreateAbl(req, res);
 });
 
-router.get("/get/:typeOfRoom", async (req, res) => {
+router.get("/get/:roomId", async (req, res) => {
   await GetAbl(req, res);
 });
 
@@ -25,7 +25,7 @@ router.delete("/delete/:typeOfRoom", async (req, res) => {
   await DeleteAbl(req, res);
 });
 
-router.get("/list", async (req, res) => {
+router.get("/list/:userId", async (req, res) => {
   await ListAbl(req, res);
 });
 
