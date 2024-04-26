@@ -1,15 +1,22 @@
 // DataContext.js
-import React, { useState, useEffect } from 'react';
-import { useUser } from '@clerk/clerk-react';
+import React, {useState, useEffect} from 'react';
+import {useUser} from '@clerk/clerk-react';
 import EmberNotifyContext from './DashboardContext';
-import { createRoom, deleteRoom, fetchRoom, fetchRooms, fetchRoomTemperatureHistory, updateRoom } from '../services/apiService';
+import {
+    createRoom,
+    deleteRoom,
+    fetchRoom,
+    fetchRooms,
+    fetchRoomTemperatureHistory,
+    updateRoom
+} from '../services/apiService';
 import {
     useQuery,
 } from '@tanstack/react-query'
 
 
-const DashboardProvider = ({ children }) => {
-    const { isSignedIn, user, isLoaded } = useUser();
+const DashboardProvider = ({children}) => {
+    const {isSignedIn, user, isLoaded} = useUser();
     const [openEditRoom, setOpenEditRoom] = useState(false);
     const [openDeleteRoom, setOpenDeleteRoom] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
@@ -21,7 +28,7 @@ const DashboardProvider = ({ children }) => {
 
     const [rooms, setPosts] = useState([]);
 
-    const { isLoading, data } = useQuery({
+    const {isLoading, data} = useQuery({
         queryKey: ['rooms', 'list'],
         queryFn: () => fetchRooms(user.id),
         refetchInterval: 10000,
@@ -43,10 +50,12 @@ const DashboardProvider = ({ children }) => {
     async function fetchRoomFunction(typeOfRoom) {
         return fetchRoom(typeOfRoom)
     }
+
     async function createRoomFunction(room) {
         setPosts(prevRooms => [...prevRooms, room]);
         return createRoom(room);
     }
+
     async function updateRoomFunction(updatedRoom) {
         try {
             const response = await updateRoom(updatedRoom);
@@ -63,12 +72,11 @@ const DashboardProvider = ({ children }) => {
         }
     }
 
-    async function deleteRoomFunction(typeOfRoom) {
-        const updatedRooms = rooms.filter((room) => room._id !== typeOfRoom);
+    async function deleteRoomFunction(roomId) {
+        const updatedRooms = rooms.filter((room) => room._id !== roomId);
         setPosts(updatedRooms);
-        return deleteRoom(typeOfRoom)
+        return deleteRoom(roomId, user.id)
     }
-
 
 
     async function fetchRoomTemperatureHistoryFunction(typeOfRoom, date) {
@@ -93,7 +101,7 @@ const DashboardProvider = ({ children }) => {
         setOpenEditRoom,
         showNotification,
         setShowNotification,
-        openCreateRoom, 
+        openCreateRoom,
         setOpenCreateRoom,
         isNotificationCreate,
         setIsNotificationCreate,
@@ -106,6 +114,6 @@ const DashboardProvider = ({ children }) => {
         </EmberNotifyContext.Provider>
     );
 };
-export { DashboardProvider };
+export {DashboardProvider};
 export default DashboardProvider;
 

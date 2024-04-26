@@ -11,15 +11,12 @@ class RoomDao {
             const roomCollection = database.collection("room");
             const result = await roomCollection.insertOne(room);
 
-
-            // Retrieve the MongoDB ObjectId of the inserted document
             const insertedId = result.insertedId;
             const insertedIdString = insertedId.toString();
-            // Fetch the user's existing private metadata
+
             const user = await clerkClient.users.getUser(room.userId);
             const existingRoomIds = user.privateMetadata && user.privateMetadata.roomIds ? user.privateMetadata.roomIds : [];
 
-            // Append the new roomId to the existing array of roomIds
             const updatedRoomIds = [...existingRoomIds, insertedIdString];
             console.log("LIST OF IDS NOW " + updatedRoomIds)
 
@@ -55,7 +52,6 @@ class RoomDao {
         try {
             const database = client.db("EmberNotifyDB");
             const movies = database.collection("room");
-        //    const filter = {typeOfRoom: typeOfRoom};
             const filter = {_id: new ObjectId(roomId)};
             const updateDoc = {
                 $set: {
@@ -99,19 +95,27 @@ class RoomDao {
 
     }
 
-
-    async deleteRoom(roomId) {
+// add deleting private metadata, we dont need to keep old ids of rooms
+    async deleteRoom(roomId, userId) {
         try {
             const database = client.db("EmberNotifyDB");
             const rooms = database.collection("room");
             const filter = {_id: new ObjectId(roomId)};
             const result = await rooms.findOneAndDelete(filter);
+            const user = await clerkClient.users.getUser(userId);
 
+            const updatedRoomIds = user.privateMetadata.roomIds.filter(id => id !== roomId);
+            console.log("LIST OF IDS NOW " + updatedRoomIds)
+
+            await clerkClient.users.updateUserMetadata(userId, {
+                privateMetadata: {
+                    roomIds: updatedRoomIds
+                }
+            });
+            console.log(`A document was inserted with the _id: ${result}`);
             if (result) {
                 console.log(`${roomId} deleted`);
-            }// else {
-            //   throw new "ROOM NOT FOUND";
-            // }
+            }
             return result;
         } catch (e) {
             console.log(e);
@@ -124,8 +128,6 @@ class RoomDao {
             const user = await clerkClient.users.getUser(userId);
             const roomIds = user.privateMetadata.roomIds.map(id => new ObjectId(id));
             const database = client.db("EmberNotifyDB");
-            // const rooms = database.collection("room");
-            // const result = await rooms.find().toArray();
             return await database.collection("room").find({_id: {$in: roomIds}}).toArray();
         } catch (e) {
             console.log(e);

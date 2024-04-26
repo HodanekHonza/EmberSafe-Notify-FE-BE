@@ -1,13 +1,15 @@
-import {Fragment, useState, useContext} from 'react'
-import {Disclosure, Menu, Transition} from '@headlessui/react'
-import {MagnifyingGlassIcon} from '@heroicons/react/20/solid'
-import EmberNotifyLogo from "../../assets/Icons.jsx";
+import {useContext} from 'react'
+import {Disclosure, Menu} from '@headlessui/react'
+
 import {Bars3Icon, BellIcon, XMarkIcon} from '@heroicons/react/24/outline'
 import {useUser} from '@clerk/clerk-react'
 import LegendModal from '../../components/rooms/LegendModal'
 import CreateRoomModal from '../../components/rooms/CreateRoomModal'
 import EmberNotifyContext from '../../providerContext/DashboardContext'
-import {useLocation} from 'react-router-dom';
+
+import {
+    UserButton,
+} from "@clerk/clerk-react";
 
 const navigation = [
 
@@ -16,13 +18,7 @@ const navigation = [
     {name: 'Landing Page', href: '/', current: false},
     // {name: 'Notification History', href: '/', current: false},
 ]
-const userNavigation = [
 
-
-    {name: 'Your Profile', href: '/dashboard/user-profile'},
-    {name: 'Settings', href: '#'},
-    {name: 'Sign out', href: '#'},
-]
 const navigationFooter = [
 
 
@@ -96,11 +92,7 @@ function classNames(...classes) {
 
 export default function LayoutNavBar({content}) {
     const {openCreateRoom, setOpenCreateRoom, openLegend, setOpenLegend} = useContext(EmberNotifyContext);
-    const {isSignedIn, user, isLoaded} = useUser();
-    const location = useLocation();
-
-    console.log(location.pathname);
-
+    const {user} = useUser();
     if (user === undefined) {
         return
     }
@@ -149,7 +141,7 @@ export default function LayoutNavBar({content}) {
                                                         >
                                                             <div
                                                                 className='flex flex-row gap-2 justify-center items-center'>
-                                                                {item.name == "Dashboard" ?
+                                                                {item.name === "Dashboard" ?
                                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                          viewBox="0 0 24 24" strokeWidth={1.5}
                                                                          stroke="currentColor" className="w-4 h-4">
@@ -157,7 +149,7 @@ export default function LayoutNavBar({content}) {
                                                                               strokeLinejoin="round"
                                                                               d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
                                                                     </svg> : <></>}
-                                                                {item.name == "Landing Page" ?
+                                                                {item.name === "Landing Page" ?
                                                                     <svg xmlns="http://www.w3.org/2000/svg"
                                                                          viewBox="0 0 24 24" fill="currentColor"
                                                                          className="w-4 h-4">
@@ -174,36 +166,6 @@ export default function LayoutNavBar({content}) {
                                             </div>
                                         </div>
                                         <div className="flex flex-1 justify-center gap-5 px-2 lg:ml-6 lg:justify-end">
-
-
-                                            {/*<button*/}
-                                            {/*  onClick={() => setOpenLegend(true)}*/}
-                                            {/*  type="button"*/}
-                                            {/*  className='flex flex-row items-center border-none gap-3 rounded-md  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'>*/}
-                                            {/*  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">*/}
-                                            {/*    <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />*/}
-                                            {/*  </svg>*/}
-
-                                            {/*  <p>*/}
-                                            {/*    Legend*/}
-                                            {/*  </p>*/}
-                                            {/*</button>*/}
-
-
-                                            {/*  <button*/}
-                                            {/*    onClick={() => setOpenCreateRoom(true)}*/}
-                                            {/*    type="button"*/}
-                                            {/*    className="flex flex-row items-center border-none gap-3 rounded-md  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"*/}
-                                            {/*  >*/}
-                                            {/*    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">*/}
-                                            {/*      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />*/}
-                                            {/*    </svg>*/}
-
-                                            {/*     Room*/}
-
-
-                                            {/*  </button>*/}
-
                                         </div>
                                         <div className="flex lg:hidden">
                                             {/* Mobile menu button */}
@@ -224,50 +186,11 @@ export default function LayoutNavBar({content}) {
                                                     type="button"
                                                     className="relative flex-shrink-0 rounded-full bg-indigo-600 p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600"
                                                 >
-                                                    {/*<span className="absolute -inset-1.5"/>*/}
-                                                    {/*<span className="sr-only">View notifications</span>*/}
-                                                    {/*<BellIcon className="h-6 w-6" aria-hidden="true"/>*/}
                                                 </button>
 
                                                 {/* Profile dropdown */}
                                                 <Menu as="div" className="relative ml-3 flex-shrink-0">
-                                                    <div>
-                                                        <Menu.Button
-                                                            className="relative flex rounded-full bg-indigo-600 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
-                                                            <span className="absolute -inset-1.5"/>
-                                                            <span className="sr-only">Open user menu</span>
-                                                            <img className="h-8 w-8 rounded-full" src={user.imageUrl}
-                                                                 alt=""/>
-                                                        </Menu.Button>
-                                                    </div>
-                                                    <Transition
-                                                        as={Fragment}
-                                                        enter="transition ease-out duration-100"
-                                                        enterFrom="transform opacity-0 scale-95"
-                                                        enterTo="transform opacity-100 scale-100"
-                                                        leave="transition ease-in duration-75"
-                                                        leaveFrom="transform opacity-100 scale-100"
-                                                        leaveTo="transform opacity-0 scale-95"
-                                                    >
-                                                        <Menu.Items
-                                                            className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                                            {userNavigation.map((item) => (
-                                                                <Menu.Item key={item.name}>
-                                                                    {({active}) => (
-                                                                        <a
-                                                                            href={item.href}
-                                                                            className={classNames(
-                                                                                active ? 'bg-gray-100' : '',
-                                                                                'block px-4 py-2 text-sm text-gray-700'
-                                                                            )}
-                                                                        >
-                                                                            {item.name}
-                                                                        </a>
-                                                                    )}
-                                                                </Menu.Item>
-                                                            ))}
-                                                        </Menu.Items>
-                                                    </Transition>
+                                                    <UserButton/>
                                                 </Menu>
                                             </div>
                                         </div>
@@ -296,7 +219,7 @@ export default function LayoutNavBar({content}) {
                                     <div className="border-t border-indigo-700 pb-3 pt-4">
                                         <div className="flex items-center px-5">
                                             <div className="flex-shrink-0">
-                                                <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt=""/>
+                                                <UserButton/>
                                             </div>
                                             <div className="ml-3">
                                                 <div className="text-base font-medium text-white">{user.fullName}</div>
@@ -312,22 +235,11 @@ export default function LayoutNavBar({content}) {
                                                 <BellIcon className="h-6 w-6" aria-hidden="true"/>
                                             </button>
                                         </div>
-                                        <div className="mt-3 space-y-1 px-2">
-                                            {userNavigation.map((item) => (
-                                                <Disclosure.Button
-                                                    key={item.name}
-                                                    as="a"
-                                                    href={item.href}
-                                                    className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-500 hover:bg-opacity-75"
-                                                >
-                                                    {item.name}
-                                                </Disclosure.Button>
-                                            ))}
-                                        </div>
                                     </div>
                                 </Disclosure.Panel>
                             </>
-                        )}
+                        )
+                        }
                     </Disclosure>
                     <header className="py-5">
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -335,7 +247,7 @@ export default function LayoutNavBar({content}) {
                         </div>
                     </header>
                 </div>
-                {/* LEGEND FOR TELLING USERS WHICH ICONS ARE WHICH FOR CLERIFIACTION */}
+                {/* LEGEND FOR TELLING USERS WHICH ICONS ARE WHICH FOR CLARIFICATION */}
                 <LegendModal open={openLegend} setOpen={setOpenLegend}/>
                 <CreateRoomModal open={openCreateRoom} setOpen={setOpenCreateRoom}/>
                 <main className="-mt-32">

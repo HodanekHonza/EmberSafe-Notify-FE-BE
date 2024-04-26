@@ -25,19 +25,12 @@ app.use((err, req, res, next) => {
 
 async function fetchUsers() {
   try {
-    const userList = await clerkClient.users.getUserList();
-    console.log(userList);
-    await clerkClient.users.updateUserMetadata('user_2egNgObrO4tnm9CSCkUWIgq7ZNO', {
-      privateMetadata: {
-        stripeId: "test"
-      }
-    });
-    console.log("success")
+    return await clerkClient.users.getUserList()
   } catch (e) {
     console.log(e)
   }
 }
-fetchUsers();
+fetchUsers().then(userList => console.log(userList[1].privateMetadata.roomIds));
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
