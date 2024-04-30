@@ -41,9 +41,7 @@ class TemperatureReadingDao {
         _id: 0
       };
 
-      const wantedReadings = await allReadings.find(query).project(projection).toArray();
-
-      return wantedReadings;
+      return await allReadings.find(query).project(projection).toArray();
     } catch (e) {
       console.log(e);
     }

@@ -1,7 +1,11 @@
 const API_BASE_URL = 'http://localhost:3000';
+import fetch from 'isomorphic-fetch';
+
 
 async function fetchRooms(userId) {
+
     try {
+
         const response = await fetch(`${API_BASE_URL}/room/list/${userId}`);
         if (!response.ok) {
             throw new Error('Failed to fetch rooms');
@@ -13,11 +17,15 @@ async function fetchRooms(userId) {
     }
 }
 
-async function fetchRoom(typeOfRoom) {
+async function fetchRoom(typeOfRoom, token) {
     try {
         const response = await fetch(`${API_BASE_URL}/room/get/${typeOfRoom}`, {
             method: 'GET',
-
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+                mode: 'cors',
+            },
         });
         if (!response.ok) {
             throw new Error('Failed to fetch room');
