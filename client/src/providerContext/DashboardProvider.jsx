@@ -1,6 +1,6 @@
 // DataContext.js
 import React, {useState, useEffect} from 'react';
-import {useUser} from '@clerk/clerk-react';
+import {useUser, useAuth} from '@clerk/clerk-react';
 import EmberNotifyContext from './DashboardContext';
 import {
     createRoom,
@@ -15,7 +15,11 @@ import {
 } from '@tanstack/react-query'
 
 
-const DashboardProvider = ({children}) => {
+const DashboardProvider =  ({children}) => {
+    const { getToken } = useAuth()
+
+
+
     const {isSignedIn, user, isLoaded} = useUser();
     const [openEditRoom, setOpenEditRoom] = useState(false);
     const [openDeleteRoom, setOpenDeleteRoom] = useState(false);
@@ -29,6 +33,7 @@ const DashboardProvider = ({children}) => {
     const [rooms, setPosts] = useState([]);
 
     const {isLoading, data} = useQuery({
+
         queryKey: ['rooms', 'list'],
         queryFn: () => fetchRooms(user.id),
         refetchInterval: 10000,
@@ -48,7 +53,8 @@ const DashboardProvider = ({children}) => {
 
 
     async function fetchRoomFunction(typeOfRoom) {
-        return fetchRoom(typeOfRoom)
+        const token = await getToken();
+        return fetchRoom(typeOfRoom, token)
     }
 
     async function createRoomFunction(room) {

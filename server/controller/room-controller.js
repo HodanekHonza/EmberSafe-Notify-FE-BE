@@ -3,6 +3,7 @@ require("dotenv") // To read CLERK_API_KEY
 const router = express.Router();
 const { ClerkExpressRequireAuth } = require("@clerk/clerk-sdk-node");
 
+
 const CreateAbl = require("../abl/room/create-abl");
 const GetAbl = require("../abl/room/get-abl");
 const UpdateAbl = require("../abl/room/update-abl");
@@ -13,7 +14,10 @@ router.post("/create", async (req, res) => {
   await CreateAbl(req, res);
 });
 
-router.get("/get/:roomId", async (req, res) => {
+router.get("/get/:roomId",   ClerkExpressRequireAuth({
+  // Add options here
+  // See the Middleware options section for more details
+}), async (req, res) => {
   await GetAbl(req, res);
 });
 
