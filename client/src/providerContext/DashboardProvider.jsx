@@ -61,13 +61,15 @@ const DashboardProvider = ({children}) => {
     }
 
     async function createRoomFunction(room) {
+        const token = await getToken();
         setPosts(prevRooms => [...prevRooms, room]);
-        return createRoom(room);
+        return createRoom(room, token);
     }
 
     async function updateRoomFunction(updatedRoom) {
+        const token = await getToken();
         try {
-            const response = await updateRoom(updatedRoom);
+            const response = await updateRoom(updatedRoom, token);
             console.log("Update Room Response:", response);
             setPosts(prevRooms =>
                 prevRooms.map(room =>
@@ -82,14 +84,16 @@ const DashboardProvider = ({children}) => {
     }
 
     async function deleteRoomFunction(roomId) {
+        const token = await getToken();
         const updatedRooms = rooms.filter((room) => room._id !== roomId);
         setPosts(updatedRooms);
-        return deleteRoom(roomId, user.id)
+        return deleteRoom(roomId, user.id, token)
     }
 
 
     async function fetchRoomTemperatureHistoryFunction(typeOfRoom, date) {
-        return fetchRoomTemperatureHistory(typeOfRoom, date)
+        const token = await getToken();
+        return fetchRoomTemperatureHistory(typeOfRoom, date, token)
     }
 
     const value = {

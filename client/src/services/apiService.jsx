@@ -44,13 +44,15 @@ async function fetchRoom(typeOfRoom, token) {
     }
 }
 
-async function createRoom(room) {
+async function createRoom(room, token) {
     try {
         const response = await fetch(`${API_BASE_URL}/room/create`, {
             method: 'POST',
             body: JSON.stringify(room),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+                mode: 'cors',
             }
         });
         if (!response.ok) {
@@ -64,13 +66,15 @@ async function createRoom(room) {
 }
 
 
-async function updateRoom(room) {
+async function updateRoom(room, token) {
     try {
         const response = await fetch(`${API_BASE_URL}/room/update`, {
             method: 'POST',
             body: JSON.stringify(room),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+                mode: 'cors',
             }
         });
         if (!response.ok) {
@@ -84,11 +88,15 @@ async function updateRoom(room) {
 }
 
 
-async function deleteRoom(roomId, userId) {
+async function deleteRoom(roomId, userId, token) {
     try {
         const response = await fetch(`${API_BASE_URL}/room/delete/${roomId}/${userId}`, {
             method: 'DELETE',
-
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+                mode: 'cors',
+            }
         });
         if (!response.ok) {
             console.log('Failed to delete room');
@@ -101,11 +109,15 @@ async function deleteRoom(roomId, userId) {
 }
 
 
-async function fetchRoomTemperatureHistory(typeOfRoom, date) {
+async function fetchRoomTemperatureHistory(typeOfRoom, date, token) {
     try {
         const response = await fetch(`${API_BASE_URL}/temperature-reading/list/${typeOfRoom}/${date}`, {
             method: 'GET',
-
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+                mode: 'cors',
+            }
         });
         // if (!response.ok) {
         //     console.log('Failed to fetch room history');

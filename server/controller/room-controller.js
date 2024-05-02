@@ -10,7 +10,10 @@ const UpdateAbl = require("../abl/room/update-abl");
 const DeleteAbl = require("../abl/room/delete-abl");
 const ListAbl = require("../abl/room/list-abl");
 
-router.post("/create", async (req, res) => {
+router.post("/create", ClerkExpressRequireAuth({
+    // Add options here
+    // See the Middleware options section for more details
+}), async (req, res) => {
     await CreateAbl(req, res);
 });
 
@@ -25,7 +28,10 @@ router.post("/update", async (req, res) => {
     await UpdateAbl(req, res);
 });
 
-router.delete("/delete/:roomId/:userId", async (req, res) => {
+router.delete("/delete/:roomId/:userId", ClerkExpressRequireAuth({
+    // Add options here
+    // See the Middleware options section for more details
+}), async (req, res) => {
     await DeleteAbl(req, res);
 });
 
