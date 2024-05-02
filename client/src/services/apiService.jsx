@@ -2,13 +2,20 @@ const API_BASE_URL = 'http://localhost:3000';
 import fetch from 'isomorphic-fetch';
 
 
-async function fetchRooms(userId) {
+async function fetchRooms(userId, token) {
 
     try {
 
-        const response = await fetch(`${API_BASE_URL}/room/list/${userId}`);
+        const response = await fetch(`${API_BASE_URL}/room/list/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+                mode: 'cors',
+            },
+        });
         if (!response.ok) {
-            throw new Error('Failed to fetch rooms');
+            console.log('Failed to fetch rooms');
         }
         return response.json();
     } catch (error) {
@@ -27,15 +34,16 @@ async function fetchRoom(typeOfRoom, token) {
                 mode: 'cors',
             },
         });
-        if (!response.ok) {
-            throw new Error('Failed to fetch room');
-        }
+        // if (!response.ok) {
+        //     console.log('Failed to fetch room');
+        // }
         return response.json();
     } catch (error) {
         console.error('Error fetching room:', error);
         throw error;
     }
 }
+
 async function createRoom(room) {
     try {
         const response = await fetch(`${API_BASE_URL}/room/create`, {
@@ -46,7 +54,7 @@ async function createRoom(room) {
             }
         });
         if (!response.ok) {
-            throw new Error('Failed to create room');
+            console.log('Failed to create room');
         }
         return response.json();
     } catch (error) {
@@ -66,7 +74,7 @@ async function updateRoom(room) {
             }
         });
         if (!response.ok) {
-            throw new Error('Failed to update room');
+            console.log('Failed to update room');
         }
         return response.json();
     } catch (error) {
@@ -83,7 +91,7 @@ async function deleteRoom(roomId, userId) {
 
         });
         if (!response.ok) {
-            throw new Error('Failed to delete room');
+            console.log('Failed to delete room');
         }
         return response.json();
     } catch (error) {
@@ -99,9 +107,9 @@ async function fetchRoomTemperatureHistory(typeOfRoom, date) {
             method: 'GET',
 
         });
-        if (!response.ok) {
-            throw new Error('Failed to fetch room history');
-        }
+        // if (!response.ok) {
+        //     console.log('Failed to fetch room history');
+        // }
         return response.json();
     } catch (error) {
         console.error('Error fetching room history:', error);
@@ -109,4 +117,4 @@ async function fetchRoomTemperatureHistory(typeOfRoom, date) {
     }
 }
 
-export { fetchRooms, fetchRoom, fetchRoomTemperatureHistory, deleteRoom, createRoom, updateRoom }
+export {fetchRooms, fetchRoom, fetchRoomTemperatureHistory, deleteRoom, createRoom, updateRoom}

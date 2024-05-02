@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv") // To read CLERK_API_KEY
 const router = express.Router();
-const { ClerkExpressRequireAuth } = require("@clerk/clerk-sdk-node");
+const {ClerkExpressRequireAuth} = require("@clerk/clerk-sdk-node");
 
 
 const CreateAbl = require("../abl/room/create-abl");
@@ -11,26 +11,29 @@ const DeleteAbl = require("../abl/room/delete-abl");
 const ListAbl = require("../abl/room/list-abl");
 
 router.post("/create", async (req, res) => {
-  await CreateAbl(req, res);
+    await CreateAbl(req, res);
 });
 
-router.get("/get/:roomId",   ClerkExpressRequireAuth({
-  // Add options here
-  // See the Middleware options section for more details
+router.get("/get/:roomId", ClerkExpressRequireAuth({
+    // Add options here
+    // See the Middleware options section for more details
 }), async (req, res) => {
-  await GetAbl(req, res);
+    await GetAbl(req, res);
 });
 
 router.post("/update", async (req, res) => {
-  await UpdateAbl(req, res);
+    await UpdateAbl(req, res);
 });
 
 router.delete("/delete/:roomId/:userId", async (req, res) => {
-  await DeleteAbl(req, res);
+    await DeleteAbl(req, res);
 });
 
-router.get("/list/:userId", async (req, res) => {
-  await ListAbl(req, res);
+router.get("/list/:userId", ClerkExpressRequireAuth({
+    // Add options here
+    // See the Middleware options section for more details
+}), async (req, res) => {
+    await ListAbl(req, res);
 });
 
 module.exports = router;

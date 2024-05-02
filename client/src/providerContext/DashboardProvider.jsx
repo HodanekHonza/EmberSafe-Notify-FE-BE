@@ -15,9 +15,8 @@ import {
 } from '@tanstack/react-query'
 
 
-const DashboardProvider =  ({children}) => {
-    const { getToken } = useAuth()
-
+const DashboardProvider = ({children}) => {
+    const {getToken} = useAuth()
 
 
     const {isSignedIn, user, isLoaded} = useUser();
@@ -35,7 +34,7 @@ const DashboardProvider =  ({children}) => {
     const {isLoading, data} = useQuery({
 
         queryKey: ['rooms', 'list'],
-        queryFn: () => fetchRooms(user.id),
+        queryFn: fetchRoomsFunction,
         refetchInterval: 10000,
     });
 
@@ -51,6 +50,10 @@ const DashboardProvider =  ({children}) => {
 
     }, [rooms]);
 
+    async function fetchRoomsFunction() {
+        const token = await getToken();
+        return await fetchRooms(user.id, token)
+    }
 
     async function fetchRoomFunction(typeOfRoom) {
         const token = await getToken();
