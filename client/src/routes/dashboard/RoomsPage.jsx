@@ -4,6 +4,7 @@ import { Spinner } from "flowbite-react";
 import RoomCard from '../../components/rooms/RoomCard';
 import Notification from '../../components/room/Notification';
 import PageHeading from '../../components/rooms/PageHeading';
+import Pagination from "../../components/rooms/Pagination.jsx";
 
 export default function RoomsPage() {
     const { rooms, isLoading, showNotification, setShowNotification, isNotificationCreate } = useContext(EmberNotifyContext);
@@ -17,12 +18,13 @@ export default function RoomsPage() {
             ) : (
                 <div>
                     <PageHeading/>
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 pb-5">
                         <Notification show={showNotification} setShow={setShowNotification} text={isNotificationCreate ? "Created" : "Deleted"} />
                         {rooms.map((room) => (
                             <RoomCard key={room._id} room={room} />
                         ))}
                     </div>
+                    <Pagination/>
                 </div>
             )}
         </div>
