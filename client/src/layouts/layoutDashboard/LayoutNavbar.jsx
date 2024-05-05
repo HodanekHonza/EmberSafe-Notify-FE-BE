@@ -3,7 +3,7 @@ import {Disclosure, Menu} from '@headlessui/react'
 
 import {Bars3Icon, BellIcon, XMarkIcon} from '@heroicons/react/24/outline'
 import {useUser} from '@clerk/clerk-react'
-import LegendModal from '../../components/rooms/LegendModal'
+import LegendSlideOver from '../../components/rooms/LegendSlideOver.jsx'
 import CreateRoomModal from '../../components/rooms/CreateRoomModal'
 import EmberNotifyContext from '../../providerContext/DashboardContext'
 
@@ -248,7 +248,7 @@ export default function LayoutNavBar({content}) {
                     </header>
                 </div>
                 {/* LEGEND FOR TELLING USERS WHICH ICONS ARE WHICH FOR CLARIFICATION */}
-                <LegendModal open={openLegend} setOpen={setOpenLegend}/>
+                <LegendSlideOver open={openLegend} setOpen={setOpenLegend}/>
                 <CreateRoomModal open={openCreateRoom} setOpen={setOpenCreateRoom}/>
                 <main className="-mt-32">
                     <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
