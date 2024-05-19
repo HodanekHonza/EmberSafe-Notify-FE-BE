@@ -53,11 +53,7 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/room/:roomId",
             element: <RoomPage />,
-          },
-          {
-            path: "/dashboard/room/graph",
-            element: <RoomGraphPage />,
-          },
+          }
         ],
       },
     ],

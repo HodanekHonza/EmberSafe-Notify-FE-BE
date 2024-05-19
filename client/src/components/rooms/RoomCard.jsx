@@ -1,8 +1,47 @@
 import {Snowflake, NormalTemperature, YellowAlert, RedAlert, UpTemperature, DownTemperature} from '../../assets/Icons';
 
 export default function RoomCard({room}) {
+    let lastKnownTemperature = room.lastKnownTemperature
     const temperatureIcon = getTemperatureIcon(room);
-    const {status, trend} = getTemperatureStatusAndTrend(room);
+
+    const {status, trend} = getTemperatureStatusAndTrend(room, lastKnownTemperature);
+
+    function getTemperatureStatusAndTrend(room) {
+        const {lastKnownTemperature, thresholds} = room;
+        let status, trend;
+
+        if (lastKnownTemperature < thresholds.thresholdCold.low) {
+            status = 'Cold';
+        } else if (lastKnownTemperature < thresholds.thresholdNormal.low) {
+            status = 'Normal';
+        } else if (lastKnownTemperature < thresholds.thresholdHot.low) {
+            status = 'Hot';
+        } else {
+            status = 'Danger';
+        }
+
+        // Assume trend based on previous temperature (for demonstration)
+        trend = status === 'Hot' || status === 'Danger' ? 'up' : 'down';
+
+        return {status, trend};
+    }
+
+    function getTemperatureIcon(room) {
+        const temperature = room.lastKnownTemperature;
+        const thresholds = room.thresholds;
+
+        if (temperature <= thresholds.thresholdCold.high && temperature >= thresholds.thresholdCold.low) {
+            return <Snowflake/>;
+        } else if (temperature <= thresholds.thresholdNormal.high && temperature >= thresholds.thresholdNormal.low) {
+            return <NormalTemperature/>;
+        } else if (temperature <= thresholds.thresholdHot.high && temperature >= thresholds.thresholdHot.low) {
+            return <YellowAlert/>;
+        } else if (temperature <= thresholds.thresholdDanger.high && temperature >= thresholds.thresholdDanger.low) {
+            return <RedAlert/>;
+        } else {
+            return "?";
+        }
+    }
 
     return (
         <a href={`/dashboard/room/${room._id}`}
@@ -46,41 +85,4 @@ export default function RoomCard({room}) {
             </div>
         </a>
     );
-}
-
-function getTemperatureStatusAndTrend(room) {
-    const {lastKnownTemperature, thresholds} = room;
-    let status, trend;
-
-    if (lastKnownTemperature < thresholds.thresholdCold.low) {
-        status = 'Cold';
-    } else if (lastKnownTemperature < thresholds.thresholdNormal.low) {
-        status = 'Normal';
-    } else if (lastKnownTemperature < thresholds.thresholdHot.low) {
-        status = 'Hot';
-    } else {
-        status = 'Danger';
-    }
-
-    // Assume trend based on previous temperature (for demonstration)
-    trend = status === 'Hot' || status === 'Danger' ? 'up' : 'down';
-
-    return {status, trend};
-}
-
-function getTemperatureIcon(room) {
-    const temperature = room.lastKnownTemperature;
-    const thresholds = room.thresholds;
-
-    if (temperature <= thresholds.thresholdCold.high) {
-        return <Snowflake/>;
-    } else if (temperature <= thresholds.thresholdNormal.high) {
-        return <NormalTemperature/>;
-    } else if (temperature <= thresholds.thresholdHot.high) {
-        return <YellowAlert/>;
-    } else if (temperature >= thresholds.thresholdDanger.low) {
-        return <RedAlert/>;
-    } else {
-        return "?";
-    }
 }
