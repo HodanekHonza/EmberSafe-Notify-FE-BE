@@ -78,10 +78,12 @@ class RoomDao {
             const database = client.db("EmberNotifyDB");
             const movies = database.collection("room");
             const filter = {_id: new ObjectId(roomId)};
+            const now = new Date().toISOString();
 
             const updateDoc = {
                 $set: {
                     lastKnownTemperature: temperature,
+                    lastUpdated: now,
                 },
             };
 
