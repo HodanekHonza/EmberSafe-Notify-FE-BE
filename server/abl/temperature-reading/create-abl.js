@@ -28,11 +28,29 @@ async function CreateAbl(req, res) {
         const ajv = new Ajv();
         const valid = ajv.validate(schema, req.body);
         if (valid) {
+
             let reading = req.body;
+            const typeOfRoom = req.body.typeOfRoom;
             const lastKnownTemperature = req.body.lastKnownTemperature;
+
+            //fetching current data
+            const fetchRoomForComparingTemperatures = await roomDao.getRoom(typeOfRoom)
+
+
+            //fetching room data before updating with new temperature, to find out if the temp is going up or down
+            if (fetchRoomForComparingTemperatures.lastKnownTemperature < lastKnownTemperature) {
+                await roomDao.updateRoomTempStatus(typeOfRoom, {isTempHigherThanBefore: true})
+            } else {
+                await roomDao.updateRoomTempStatus(typeOfRoom, {isTempHigherThanBefore: false})
+            }
+
+
             await temperatureDao.createTemperatureReading(reading);
-            await roomDao.updateRoomTemperature(req.body.typeOfRoom, lastKnownTemperature);
-            const temperatureRoomCheck = await roomDao.getRoom(req.body.typeOfRoom);
+            await roomDao.updateRoomTemperature(typeOfRoom, lastKnownTemperature);
+
+            const temperatureRoomCheck = await roomDao.getRoom(typeOfRoom);
+
+
             const temperatureTreshholds = temperatureRoomCheck.thresholds;
             let temperatureMatchedThreshold = null;
 
@@ -90,6 +108,7 @@ async function sendTelegramMessage(token, channel, message) {
             method: "GET",
             redirect: 'follow'
         });
+        console.log('telegram message sent')
         const response = await request.json();
         return response;
     } catch (error) {

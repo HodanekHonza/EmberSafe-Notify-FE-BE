@@ -1,30 +1,8 @@
 import {Snowflake, NormalTemperature, YellowAlert, RedAlert, UpTemperature, DownTemperature} from '../../assets/Icons';
 
 export default function RoomCard({room}) {
-    let lastKnownTemperature = room.lastKnownTemperature
     const temperatureIcon = getTemperatureIcon(room);
-
-    const {status, trend} = getTemperatureStatusAndTrend(room, lastKnownTemperature);
-
-    function getTemperatureStatusAndTrend(room) {
-        const {lastKnownTemperature, thresholds} = room;
-        let status, trend;
-
-        if (lastKnownTemperature < thresholds.thresholdCold.low) {
-            status = 'Cold';
-        } else if (lastKnownTemperature < thresholds.thresholdNormal.low) {
-            status = 'Normal';
-        } else if (lastKnownTemperature < thresholds.thresholdHot.low) {
-            status = 'Hot';
-        } else {
-            status = 'Danger';
-        }
-
-        // Assume trend based on previous temperature (for demonstration)
-        trend = status === 'Hot' || status === 'Danger' ? 'up' : 'down';
-
-        return {status, trend};
-    }
+    const isTempHigher = room.isTempHigherThanBefore;
 
     function getTemperatureIcon(room) {
         const temperature = room.lastKnownTemperature;
@@ -51,7 +29,7 @@ export default function RoomCard({room}) {
             <div className="absolute inset-0 bg-black opacity-35 z-1"></div>
             <div className="px-4 py-5 sm:p-6 relative z-10 text-white">
                 <div className="flex flex-row justify-between items-center">
-                    {trend === 'up' ? (
+                    {isTempHigher ? (
                         <UpTemperature className="mr-2 h-5 w-5"/>
                     ) : (
                         <DownTemperature className="p-1 mr-2 h-10 w-10"/>
