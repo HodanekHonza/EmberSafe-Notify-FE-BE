@@ -9,9 +9,10 @@ class RoomDao {
         try {
             const database = client.db("EmberNotifyDB");
             const roomCollection = database.collection("room");
-            const result = await roomCollection.insertOne(room);
+            room.isTempHigherThanBefore = false;
+            const createdRoom = await roomCollection.insertOne(room);
 
-            const insertedId = result.insertedId;
+            const insertedId = createdRoom.insertedId;
             const insertedIdString = insertedId.toString();
 
             const user = await clerkClient.users.getUser(room.userId);
@@ -20,14 +21,13 @@ class RoomDao {
             const updatedRoomIds = [...existingRoomIds, insertedIdString];
             console.log("LIST OF IDS NOW " + updatedRoomIds)
 
-
             await clerkClient.users.updateUserMetadata(room.userId, {
                 privateMetadata: {
                     roomIds: updatedRoomIds
                 }
             });
-            console.log(`A document was inserted with the _id: ${result}`);
-            return result;
+            console.log(`A document was inserted with the _id: ${createdRoom}`);
+            return createdRoom;
         } catch (e) {
             console.log(e)
         }
@@ -46,7 +46,7 @@ class RoomDao {
 
     }
 
-
+    // this method is only for form, if used for updating anything else it will turn all things below null
     async updateRoom(roomId, room) {
         console.log("updating room temp")
         try {
@@ -56,6 +56,7 @@ class RoomDao {
             const updateDoc = {
                 $set: {
                     typeOfRoom: room.typeOfRoom,
+                    isTempHigherThanBefore: room.isTempHigherThanBefore,
                     thresholds: room.thresholds,
                     photoOfRoom: room.photoOfRoom
                 },
@@ -90,6 +91,31 @@ class RoomDao {
             const result = await movies.updateOne(filter, updateDoc);
 
             console.log(`${result.matchedCount} document(s) ${roomId}  matched the filter, updated ${result.modifiedCount} document(s)`,);
+            return result;
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
+
+// maybe try to think of one function that would handle all updates(temp,room,status), not overwriting those that are empty to null
+    async updateRoomTempStatus(roomId, status) {
+        console.log("updating room temp status")
+        try {
+            const database = client.db("EmberNotifyDB");
+            const movies = database.collection("room");
+            const filter = {_id: new ObjectId(roomId)};
+            const now = new Date().toISOString();
+
+            const updateDoc = {
+                $set: {
+                    isTempHigherThanBefore: status.isTempHigherThanBefore,
+                },
+            };
+
+            const result = await movies.updateOne(filter, updateDoc);
+
+            console.log(`${result.matchedCount} document(s) ${roomId}  matched the filter, updated status ${result.modifiedCount} document(s)`,);
             return result;
         } catch (e) {
             console.log(e);

@@ -61,7 +61,7 @@ export default function RoomPage() {
                         <EditRoomModal roomData={roomData}/>
                         <DeleteRoomModal typeOfRoom={paramsForRooms.roomId}/>
                         <Notification show={showNotification} setShow={setShowNotification} text={"Edited"}/>
-                        Edited<div>
+                        <div>
                             {isLoadingTemperature ? (
                                 <div className="flex justify-center items-center h-screen">
                                     <Spinner color="purple" size="xl"/>
