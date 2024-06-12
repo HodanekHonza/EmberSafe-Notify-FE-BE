@@ -29,7 +29,7 @@ export default function PageHeading() {
                         <div className="text-sm leading-6 text-gray-500">
                             EN instance <span className="text-gray-700">#00011</span>
                         </div>
-                        <div className="mt-1 text-base font-semibold leading-6 text-gray-900">Jan's units</div>
+                        <div className="mt-1 text-base font-semibold leading-6 text-gray-900">Jan's rooms</div>
                     </h1>
                 </div>
                 <div className="flex items-center gap-x-2 sm:gap-x-3">
