@@ -1,5 +1,4 @@
 # EmberSafe Notify Backend
-{{{WORK IN PROGRESS}}}
 Welcome to the EmberSafe Notify repository! This project consists of both frontend and backend components for the EmberSafe Notify App, which provides real-time temperature monitoring, customizable thresholds for temperature alerts, historical temperature data analysis, and automated emergency response and notification functionalities.
 
 ## Table of Contents
